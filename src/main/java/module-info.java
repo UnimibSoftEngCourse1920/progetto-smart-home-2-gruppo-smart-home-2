@@ -1,5 +1,7 @@
 module smarthome2 {
-	exports application;
+	exports application.backend;
+	exports application.frontend;
+	exports application.controllers;
 	requires javafx.base;
 	requires javafx.controls;
 	requires javafx.fxml;
