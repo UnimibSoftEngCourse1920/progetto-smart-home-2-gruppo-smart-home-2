@@ -1,4 +1,5 @@
-application\Main.class
+application\backend\ClasseBackend.class
+application\frontend\ControllerJavaFX.class
 module-info.class
-application\project\Esempio.class
-application\views\Controller.class
+application\controllers\Controller.class
+application\frontend\Main.class
