@@ -19,7 +19,7 @@ public class ControllerJavaFX {
 	public void start(Stage primaryStage) throws Exception {
     	try {
     		primaryStage.setTitle("Hello World!");
-    		Parent root = FXMLLoader.load(getClass().getResource("esempio.fxml"));
+    		Parent root = FXMLLoader.load(getClass().getResource("views/esempio.fxml"));
     		Scene home = new Scene(root, 400,400);
     		primaryStage.setScene(home);
 			primaryStage.show();			
