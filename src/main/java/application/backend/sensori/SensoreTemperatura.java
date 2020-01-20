@@ -1,4 +1,6 @@
-package application.backend;
+package application.backend.sensori;
+
+import application.backend.ElementoProgrammabile;
 
 public class SensoreTemperatura extends ElementoProgrammabile {
 
