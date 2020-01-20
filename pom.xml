@@ -5,13 +5,13 @@
   <version>0.0.1-SNAPSHOT</version>
   
   <properties>
-	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	    <maven.compiler.source>1.8</maven.compiler.source>
-	    <maven.compiler.target>1.8</maven.compiler.target>
-  	<sonar.projectKey>UnimibSoftEngCourse1920_progetto-smart-home-2-gruppo-smart-home-2</sonar.projectKey>
-  <sonar.organization>unimibsoftengcourse1920</sonar.organization>
-  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-  <sonar.login>4ef19e88ab8d00786630510198d4ff63583fbddc</sonar.login>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+ 	<sonar.projectKey>UnimibSoftEngCourse1920_progetto-smart-home-2-gruppo-smart-home-2</sonar.projectKey>
+	<sonar.organization>unimibsoftengcourse1920</sonar.organization>
+	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+	<sonar.login>4ef19e88ab8d00786630510198d4ff63583fbddc</sonar.login>
 </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->

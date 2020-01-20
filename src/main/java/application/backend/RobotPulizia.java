@@ -1,3 +1,4 @@
+
 package application.backend;
 
 public class RobotPulizia extends ElementoProgrammabile {
@@ -7,9 +8,9 @@ public class RobotPulizia extends ElementoProgrammabile {
 	/*private Stanza base;
 	private Stanza posizione;
 	
-	public RobotPulizia(int id, boolean isInFunzione, Stanza base) {
+	public RobotPulizia(int id, Stanza base) {
 		this.id = id;
-		this.isInFunzione = isInFunzione;
+		this.isInFunzione = false;
 		this.base = base;
 		this.posizione = base;
 	}
