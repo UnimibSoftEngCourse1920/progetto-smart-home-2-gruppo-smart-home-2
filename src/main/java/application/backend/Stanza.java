@@ -86,4 +86,28 @@ public class Stanza {
 	public Lavastoviglie getLavastoviglie() {
 		return lavastoviglie;
 	}
+	
+	public Lampada getLampada(int id) {
+		for(Lampada lampada : getLampade()) {
+			if(lampada.getId() == id)
+				return lampada;
+		}
+		return null;
+	}
+	
+	public Finestra getFinestra(int id) {
+		for(Finestra finestra : getFinestre()) {
+			if(finestra.getId() == id)
+				return finestra;
+		}
+		return null;
+	}
+	
+	public Tapparella getTapparella(int id) {
+		for(Finestra finestra : getFinestre()) {
+			if(finestra.getTapparella().getId() == id)
+				return finestra.getTapparella();
+		}
+		return null;
+	}
 }

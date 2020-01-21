@@ -3,7 +3,7 @@ package application.frontend;
 import java.io.IOException;
 
 import application.backend.*;
-import application.controllers.Controller;
+import application.controllers.ControllerCasa;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +31,5 @@ public class ControllerJavaFX {
 	@FXML
 	public void click() throws IOException {
 		//System.out.println("ciao2");
-		Controller e = new Controller();
-		e.metodoController();
 	}
 }

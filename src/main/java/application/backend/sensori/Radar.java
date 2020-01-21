@@ -14,4 +14,7 @@ public class Radar extends Sensore {
 			this.rilevatoMovimento = true;
 		
 	}
-}
+	
+	public void rilevaMovimento(boolean casuale) {
+	}
+} 
