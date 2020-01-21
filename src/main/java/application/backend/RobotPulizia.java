@@ -5,7 +5,7 @@ public class RobotPulizia extends ElementoProgrammabile {
 
 	private int id;
 	private boolean isInFunzione;
-	/*private Stanza base;
+	private Stanza base;
 	private Stanza posizione;
 	
 	public RobotPulizia(int id, Stanza base) {
@@ -23,7 +23,6 @@ public class RobotPulizia extends ElementoProgrammabile {
 		return posizione;
 	}
 	
-	*/
 	public int getId() {
 		return id;
 	}
@@ -39,4 +38,11 @@ public class RobotPulizia extends ElementoProgrammabile {
 			this.isInFunzione = true;
 	}
 	
+	public void muovi(Stanza s) {
+		this.posizione = s;
+	}
+	
+	public void fine() {
+		this.posizione = base;
+	}
 }
