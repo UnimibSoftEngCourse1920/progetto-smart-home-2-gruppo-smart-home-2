@@ -1,7 +1,6 @@
 package application.backend.sensori;
 
 import application.backend.Finestra;
-import application.backend.observers.Observer;
 
 public class SensoreFinestra extends Sensore {
 	private boolean rilevataEffrazione;
