@@ -18,11 +18,13 @@ public class ControllerJavaFX {
 
 	public void start(Stage primaryStage) throws Exception {
     	try {
-    		primaryStage.setTitle("Hello World!");
+    		primaryStage.setTitle("Smart-Home-2");
     		Parent root = FXMLLoader.load(getClass().getResource("views/esempio.fxml"));
-    		Scene home = new Scene(root, 400,400);
+    		Scene home = new Scene(root, 600,600);
+    		home.getStylesheets().add("application.css");
     		primaryStage.setScene(home);
-			primaryStage.show();			
+			primaryStage.show();
+			
     	} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -30,6 +32,6 @@ public class ControllerJavaFX {
 
 	@FXML
 	public void click() throws IOException {
-		//System.out.println("ciao2");
+		System.out.println("ciao2");
 	}
 }
