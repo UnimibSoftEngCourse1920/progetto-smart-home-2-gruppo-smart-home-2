@@ -1,7 +1,7 @@
 package application.backend.sensori;
 
 public class Radar extends Sensore {
-	public boolean rilevatoMovimento;
+	private boolean rilevatoMovimento;
 
 	public boolean isRilevatoMovimento() {
 		return rilevatoMovimento;

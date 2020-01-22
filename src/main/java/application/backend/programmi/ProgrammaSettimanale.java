@@ -28,4 +28,6 @@ public class ProgrammaSettimanale extends Programma {
 		return settimana.get(giorno).getValoreDiSetting();
 	}
 	
+	
+	
 }

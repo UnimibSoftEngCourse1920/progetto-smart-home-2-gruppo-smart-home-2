@@ -21,8 +21,8 @@ public abstract class Programma {
 			elementi.add(e);
 	}
 
-	/*public ArrayList<ElementoProgrammabile> getElementi() {
+	public ArrayList<ElementoProgrammabile> getElementi() {
 		return elementi;
-	}*/
+	}
 	
 }

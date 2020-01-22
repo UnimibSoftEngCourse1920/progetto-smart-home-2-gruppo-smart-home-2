@@ -83,6 +83,10 @@ public class ControllerCasa {
 		return this.stanze;
 	}
 	
+	public String cercaElemento() {
+		return null;
+	}
+	
 	public void cambiaTempDesiderata(String nome, double temp) {
 		Stanza stanza = getStanza(nome);
 		SensoreTemperatura s;
