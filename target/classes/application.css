@@ -59,5 +59,15 @@
     -fx-background-color :linear-gradient(to top left, #41951C, #D4CEE3);
     -fx-background-radius :  30 30 30 30;
 }
+.home
+{
+-fx-background-color :  #FA2C56;
+-fx-background-radius :  30 0 0 30;
+}
+.home:hover
+{
+-fx-background-color : #f97c95 ;
+-fx-background-radius :  30 0 0 30;
+}
 
 

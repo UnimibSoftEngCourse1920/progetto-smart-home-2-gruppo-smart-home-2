@@ -46,6 +46,6 @@
                </font>
             </Button>
          </children></AnchorPane>
-      <BorderPane fx:id="borderPaneProgrammi" layoutX="261.0" prefHeight="649.0" prefWidth="779.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <BorderPane fx:id="borderPane" layoutX="262.0" prefHeight="649.0" prefWidth="778.0" />
    </children>
 </AnchorPane>
