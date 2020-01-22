@@ -1,13 +1,13 @@
 package application.controllers;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ArrayList;
 import application.backend.programmi.*;
 import application.backend.*;
 
 public class ControllerProgramma {
 
+	private ControllerCasa casa;
 	private int counter;
 	private ArrayList<Programma> programmi;
 
@@ -49,12 +49,33 @@ public class ControllerProgramma {
 	}
 	
 	public void accensione(LocalTime ora, DayOfWeek giorno) {
-		
+		for (Programma p : programmi) {
+			if((p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getInizio()== ora) ||
+				p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getInizio(giorno)== ora)
+				cambiaStatoElementi(p.getElementi(),false);
+		}
 	}
 	
 	public void spegnimento(LocalTime ora, DayOfWeek giorno) {
-		
+		for (Programma p : programmi) {
+			if((p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getInizio()== ora) ||
+				p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getInizio(giorno)== ora)
+				cambiaStatoElementi(p.getElementi(),true);
+		}
 	}
 	
+	public void cambiaStatoElementi(ArrayList<ElementoProgrammabile> elementi, boolean stato) {
+		for (ElementoProgrammabile e : elementi) {
+			if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato)
+				((RobotPulizia) e).cambiaStato();
+			else {
+				String stanza=casa.cercaElemento();
+				if(e instanceof Lavatrice && ((Lavatrice) e).isInFunzione()== stato)
+					casa.cambiaStatoLavatrice(stanza, ((Lavatrice) e).getId());
+				if(e instanceof Lavastoviglie && ((Lavastoviglie) e).isInFunzione()== stato)
+					casa.cambiaStatoLavastoviglie(stanza, ((Lavastoviglie) e).getId());
+			}
+		}
+	}
 	
 }
