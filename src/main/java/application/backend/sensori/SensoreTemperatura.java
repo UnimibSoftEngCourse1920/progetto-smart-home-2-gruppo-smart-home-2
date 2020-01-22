@@ -4,10 +4,10 @@ import application.backend.ElementoProgrammabile;
 
 public class SensoreTemperatura extends ElementoProgrammabile {
 
-	public String stato;
-	public double temperaturaCorrente;
-	public double temperaturaDesiderata;
-	public static double temperaturaDefault= 17;
+	private String stato;
+	private double temperaturaCorrente;
+	private double temperaturaDesiderata;
+	private static final double temperaturaDefault= 17;
 	
 	public SensoreTemperatura() {
 		this.stato = "off";
