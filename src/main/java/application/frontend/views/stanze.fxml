@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="618.0" style="-fx-background-color: #2F2B43;" styleClass="button2" stylesheets="@../../../../resources/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.frontend.ControllerJavaFX">
+<Pane prefHeight="840.0" prefWidth="975.0" style="-fx-background-color: #2F2B43;" styleClass="button2" stylesheets="@../../../../resources/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.frontend.ControllerJavaFX">
    <children>
-      <Label layoutX="91.0" layoutY="38.0" prefHeight="54.0" prefWidth="234.0" text="STANZE" textFill="WHITE">
+      <Label fx:id="titoloStanze" layoutX="91.0" layoutY="38.0" prefHeight="54.0" prefWidth="554.0" text="STANZE" textFill="WHITE">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="89.0" layoutY="111.0" mnemonicParsing="false" onAction="#visualizzaStanzeTabella" prefHeight="54.0" prefWidth="189.0" styleClass="button2" text="Visualizza Stanze" textFill="WHITE">
+      <Button fx:id="bottoneVisualizzaStanze" layoutX="91.0" layoutY="100.0" mnemonicParsing="false" onAction="#visualizzaStanzeTabella" prefHeight="45.0" prefWidth="154.0" styleClass="button2" text="Visualizza Stanze" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <BorderPane fx:id="borderPaneTabellaStanze" layoutX="89.0" layoutY="194.0" prefHeight="366.0" prefWidth="572.0">
+      <BorderPane fx:id="borderPaneTabellaStanze" layoutX="91.0" layoutY="168.0" prefHeight="403.0" prefWidth="572.0">
          <center>
             <TableView fx:id="tabellaStanze" prefHeight="366.0" prefWidth="600.0" visible="false" BorderPane.alignment="CENTER" />
          </center>

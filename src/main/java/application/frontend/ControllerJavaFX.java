@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,20 +28,26 @@ import javafx.stage.Stage;
 public class ControllerJavaFX {
 	public ControllerCasa c = new ControllerCasa(this);
 	
-	//menu---------------------------------------------------------------------------
+	//MENU---------------------------------------------------------------------------
 	@FXML
 	public BorderPane borderPane;
-	public VBox vbox;
 	
 	
-	//stanze-------------------------------------------------------------------------
+	//STANZE-------------------------------------------------------------------------
 	@FXML
 	public BorderPane borderPaneTabellaStanze;
 	@FXML
 	public TableView<Stanza> tabellaStanze;
 	@FXML
 	public TableColumn nomeStanza = new TableColumn("Nome Stanza");
+	@FXML
+	public Label titoloStanze;
+	@FXML
+	public Button bottoneVisualizzaStanze;
 	
+	
+	//STANZA------------------------------------------------------------------------
+
 	
 	
 	public void start(Stage primaryStage) throws Exception {
@@ -62,7 +69,7 @@ public class ControllerJavaFX {
 		return this.c;
 	}
 
-	//metodi relativi ai programmi------------------------------------------------------------------------------
+	//metodi relativi ai PROGRAMMI------------------------------------------------------------------------------
 	@FXML
 	public void viewProgrammi() throws IOException {
 		Parent programmi = FXMLLoader.load(getClass().getResource("views/programmi.fxml"));
@@ -70,7 +77,7 @@ public class ControllerJavaFX {
 		//vbox.getChildren().addAll(programmi);
 	}
 	
-	//metodi relativi alla homepage-------------------------------------------------------------------------------
+	//metodi relativi alla HOMEPAGE-------------------------------------------------------------------------------
 	@FXML
 	public void viewHomePage() throws IOException {
 		Parent homepage = FXMLLoader.load(getClass().getResource("views/homepage.fxml"));
@@ -79,7 +86,7 @@ public class ControllerJavaFX {
 		
 	}
 	
-	//metodi relativi alle stanze---------------------------------------------------------------------------------
+	//metodi relativi alle STANZE---------------------------------------------------------------------------------
 	@FXML
 	public void viewStanze() throws IOException {
 		Parent stanze = FXMLLoader.load(getClass().getResource("views/stanze.fxml"));
@@ -117,10 +124,25 @@ public class ControllerJavaFX {
 			public void handle(Event arg0) {
 				Stanza stanzaSelezionata = tabellaStanze.getSelectionModel().getSelectedItem();
 				if (stanzaSelezionata != null) {
-					System.out.println(stanzaSelezionata.getNome());
+					try {
+						viewStanza(stanzaSelezionata);
+						//titoloVisualizzaStanza.setText(stanzaSelezionata.getNome());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//System.out.println(stanzaSelezionata.getNome());
 				}
 			}
 		});
+	}
+	
+	//metodi relativi alla STANZA-------------------------------------------------------------------
+	public void viewStanza(Stanza stanzaSelezionata) throws IOException {
+		Parent stanza = FXMLLoader.load(getClass().getResource("views/stanza.fxml"));
+		borderPaneTabellaStanze.setCenter(stanza);
+		titoloStanze.setText(stanzaSelezionata.getNome());
+		bottoneVisualizzaStanze.setVisible(false);
 	}
 	
 	@FXML
