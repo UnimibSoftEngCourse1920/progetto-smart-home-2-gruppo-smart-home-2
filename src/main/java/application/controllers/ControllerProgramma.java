@@ -30,11 +30,17 @@ public class ControllerProgramma {
 		this.counter++;
 	}
 	
+	public void eliminaProgramma(int id) {
+		for (Programma p : programmi) {
+			if (p.getId() == id) 
+				programmi.remove(p);
+		}
+	}
+	
 	public void aggiungiElemento(int id,ElementoProgrammabile e) {
 		for (Programma p : programmi) {
-			if (p.getId() == id) {
+			if (p.getId() == id) 
 				p.aggiungiElemento(e);
-			}
 		}
 	}
 	
@@ -58,9 +64,12 @@ public class ControllerProgramma {
 	
 	public void spegnimento(LocalTime ora, DayOfWeek giorno) {
 		for (Programma p : programmi) {
-			if((p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getInizio()== ora) ||
-				p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getInizio(giorno)== ora)
+			if(p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getFine(giorno)== ora)
 				cambiaStatoElementi(p.getElementi(),true);
+			else if(p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getFine()== ora) {
+				cambiaStatoElementi(p.getElementi(),true);
+				programmi.remove(p);
+			}
 		}
 	}
 	
