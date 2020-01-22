@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="618.0" prefWidth="776.0" style="-fx-background-color: #2F2B43;" styleClass="button2" stylesheets="@../../../../resources/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.frontend.ControllerJavaFX">
+   <children>
+      <Label layoutX="91.0" layoutY="38.0" prefHeight="54.0" prefWidth="234.0" text="STANZE" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <TableView layoutX="91.0" layoutY="127.0" prefHeight="383.0" prefWidth="534.0" style="-fx-background-color: #524A7B;">
+        <columns>
+          <TableColumn prefWidth="331.0" text="Nome" />
+            <TableColumn prefWidth="202.0" text="Visualizza" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>
