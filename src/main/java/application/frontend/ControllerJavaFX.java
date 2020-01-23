@@ -8,10 +8,12 @@ import application.controllers.ControllerCasa;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -35,7 +37,7 @@ public class ControllerJavaFX {
 	
 	//STANZE-------------------------------------------------------------------------
 	@FXML
-	public BorderPane borderPaneTabellaStanze;
+	public BorderPane borderPaneStanze;
 	@FXML
 	public TableView<Stanza> tabellaStanze;
 	@FXML
@@ -44,10 +46,18 @@ public class ControllerJavaFX {
 	public Label titoloStanze;
 	@FXML
 	public Button bottoneVisualizzaStanze;
+	@FXML
+	public Button bottoneVisualizzaOggettiStanza;
 	
 	
 	//STANZA------------------------------------------------------------------------
-
+	@FXML
+	public TableView<Object> tabellaOggettiStanza;
+	@FXML
+	public TableColumn idOggetto = new TableColumn("Id Oggetto");
+	public Stanza stanzaSelezionata;
+	@FXML
+	public BorderPane borderPaneStanza;
 	
 	
 	public void start(Stage primaryStage) throws Exception {
@@ -117,15 +127,16 @@ public class ControllerJavaFX {
 		tabellaStanze.getColumns().addAll(nomeStanza);
 		tabellaStanze.setVisible(true);
 		tabellaStanze.setItems(getListaStanze());
-		borderPaneTabellaStanze.setCenter(tabellaStanze);
+		borderPaneStanze.setRight(tabellaStanze);
+		//borderPaneStanze.setCenter(tabellaStanze);
 		
 		tabellaStanze.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event arg0) {
-				Stanza stanzaSelezionata = tabellaStanze.getSelectionModel().getSelectedItem();
+				stanzaSelezionata = tabellaStanze.getSelectionModel().getSelectedItem();
 				if (stanzaSelezionata != null) {
 					try {
-						viewStanza(stanzaSelezionata);
+						viewStanza();
 						//titoloVisualizzaStanza.setText(stanzaSelezionata.getNome());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -138,11 +149,15 @@ public class ControllerJavaFX {
 	}
 	
 	//metodi relativi alla STANZA-------------------------------------------------------------------
-	public void viewStanza(Stanza stanzaSelezionata) throws IOException {
+	public void viewStanza() throws IOException {
 		Parent stanza = FXMLLoader.load(getClass().getResource("views/stanza.fxml"));
-		borderPaneTabellaStanze.setCenter(stanza);
-		titoloStanze.setText(stanzaSelezionata.getNome());
-		bottoneVisualizzaStanze.setVisible(false);
+		borderPaneStanze.setCenter(stanza);
+		tabellaStanze.setVisible(false);
+		//borderPaneStanze.setCenter(stanza);
+		//titoloStanze.setText(stanzaSelezionata.getNome());
+		//bottoneVisualizzaStanze.setVisible(false);
+		//bottoneVisualizzaOggettiStanza.setVisible(true);
+		
 	}
 	
 	@FXML
@@ -152,5 +167,49 @@ public class ControllerJavaFX {
 		a1.setTitle("ciao");
 		a1.showAndWait();
 	}	
+	
+	public void visualizzaOggettiStanzaTabella() {
+		/*
+		
+		//idOggetto.setMinWidth(570);
+		
+		//nella stringa di property devo mettere il nome preciso dell'attributo nella classe
+		//idOggetto.setCellValueFactory(new PropertyValueFactory<Object, Integer>("nome"));
+		//tabellaOggettiStanza.getColumns().addAll(idOggetto);
+		tabellaOggettiStanza.setVisible(true);
+		//tabellaOggettiStanza.setItems(getListaOggettiStanza());
+		borderPaneStanza.setCenter(tabellaOggettiStanza);
+		*/
+		/*
+		tabellaStanze.setOnMouseClicked(new EventHandler<Event>() {
+			@Override
+			public void handle(Event arg0) {
+				stanzaSelezionata = tabellaStanze.getSelectionModel().getSelectedItem();
+				if (stanzaSelezionata != null) {
+					try {
+						viewStanza();
+						//titoloVisualizzaStanza.setText(stanzaSelezionata.getNome());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//System.out.println(stanzaSelezionata.getNome());
+				}
+			}
+		});*/
+		
+		
+	}
+	
+	public ObservableList<Object> getListaOggettiStanza() {
+		ArrayList<Object> allOggettiStanza = getControllerCasa().getAllOggettiStanza(stanzaSelezionata);
+		Lampada lampada = new Lampada(1);
+		Finestra finestra = new Finestra(new Tapparella(1));
+		
+		allOggettiStanza.add(lampada);
+		allOggettiStanza.add(finestra);
+		//return FXCollections.observableArrayList(getControllerCasa().getStanze());
+		return FXCollections.observableArrayList(allOggettiStanza);
+	}
 
 }

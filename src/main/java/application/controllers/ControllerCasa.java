@@ -97,4 +97,16 @@ public class ControllerCasa {
 				s.setTemperaturaDesiderata(temp);
 		}
 	}
+	//------------------------------------------------------------------
+	public ArrayList<Object> getAllOggettiStanza(Stanza stanza) {
+		if(stanza != null) {
+			ArrayList<Object> allOggettiStanza = new ArrayList<Object>();
+			allOggettiStanza.addAll(stanza.getLampade());
+			allOggettiStanza.addAll(stanza.getFinestre());
+			allOggettiStanza.add(stanza.getLavastoviglie());
+			allOggettiStanza.add(stanza.getLavatrice());
+			return allOggettiStanza;
+		}
+		else return null;
+	} 
 }
