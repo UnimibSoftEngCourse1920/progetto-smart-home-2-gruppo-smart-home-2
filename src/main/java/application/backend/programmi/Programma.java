@@ -7,7 +7,7 @@ import application.backend.dominio.*;
 public abstract class Programma {
 
 	private int id;
-	private ArrayList<Object> elementi = new ArrayList<>();
+	private Object elemento = new Object();
 	
 	public Programma(int id) {
 		this.id = id;
@@ -19,11 +19,11 @@ public abstract class Programma {
 	
 	public void aggiungiElemento(Object e) {
 		if(e!=null)
-			elementi.add(e);
+			elemento = e;
 	}
 
-	public ArrayList<Object> getElementi() {
-		return elementi;
+	public Object getElemento() {
+		return elemento;
 	}
 	
 }

@@ -59,23 +59,22 @@ public class ControllerProgramma {
 		for (Programma p : programmi) {
 			if((p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getInizio()== ora) ||
 				p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getInizio(giorno)== ora)
-				cambiaStatoElementi(p.getElementi(),false);
+				cambiaStatoElemento(p.getElemento(),false);
 		}
 	}
 	
 	public void spegnimento(LocalTime ora, DayOfWeek giorno) {
 		for (Programma p : programmi) {
 			if(p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getFine(giorno)== ora)
-				cambiaStatoElementi(p.getElementi(),true);
+				cambiaStatoElemento(p.getElemento(),true);
 			else if(p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getFine()== ora) {
-				cambiaStatoElementi(p.getElementi(),true);
+				cambiaStatoElemento(p.getElemento(),true);
 				programmi.remove(p);
 			}
 		}
 	}
 	
-	public void cambiaStatoElementi(ArrayList<Object> elementi, boolean stato) {
-		for (Object e : elementi) {
+	public void cambiaStatoElemento(Object e, boolean stato) {
 			if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato)
 				((RobotPulizia) e).cambiaStato();
 			else {
@@ -85,7 +84,6 @@ public class ControllerProgramma {
 				if(e instanceof Lavastoviglie && ((Lavastoviglie) e).isInFunzione()== stato)
 					casa.cambiaStatoLavastoviglie(stanza, ((Lavastoviglie) e).getId());
 			}
-		}
 	}
 	
 }
