@@ -6,14 +6,11 @@ import application.frontend.*;
 import java.util.ArrayList;
 
 public class ControllerCasa {
-	private ControllerJavaFX view;
 	private ArrayList<Stanza> stanze = new ArrayList<Stanza>(); 
 	private RobotPulizia robot;
 	private Allarme allarme;
 	
-	public ControllerCasa(ControllerJavaFX view) {
-		this.view = view;
-	}
+	
 	
 	public void addStanza(Stanza s) {
 		this.stanze.add(s);
