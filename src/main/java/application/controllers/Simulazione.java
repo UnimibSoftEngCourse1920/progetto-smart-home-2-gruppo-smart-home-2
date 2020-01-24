@@ -26,4 +26,21 @@ public class Simulazione extends TimerTask{
 		cp.spegnimento(this.ora, this.giorno);
 	}
 
+	public LocalTime getOra() {
+		return ora;
+	}
+
+	public void setOra(LocalTime ora) {
+		this.ora = ora;
+	}
+
+	public DayOfWeek getGiorno() {
+		return giorno;
+	}
+
+	public void setGiorno(DayOfWeek giorno) {
+		this.giorno = giorno;
+	}
+	
+
 }

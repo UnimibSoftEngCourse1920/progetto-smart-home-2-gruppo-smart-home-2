@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import application.controllers.ControllerProgramma;
+import application.controllers.Simulazione;
 import application.frontend.views.*;
 
 import javax.swing.GroupLayout;
@@ -20,6 +22,13 @@ import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.swing.*;
+import java.util.Timer;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
 import javax.swing.BoxLayout;
@@ -36,6 +45,9 @@ public class Main extends JFrame {
 	private ProgrammiView panelProgrammi;
 	private StanzeView panelStanze;
 	private JButton bottoneStanze;
+	JLabel lblNewLabel_1;
+	Simulazione s;
+	
 
 	/**
 	 * Launch the application.
@@ -76,11 +88,15 @@ public class Main extends JFrame {
 		bottoneStanze = new JButton("Stanze");
 		panelProgrammi = new ProgrammiView(panelPrincipale);
 		panelStanze = new StanzeView();
-		
+		 s = new Simulazione(new ControllerProgramma());
+		 Timer timerSim = new Timer();
+		 timerSim.schedule(s, 1000, 1000);
 		
 		setLayoutMenu();
 		
 		gestionePanelMenu();
+		
+		startClock();
 	}
 	
 	public void setLayoutMenu() {
@@ -103,12 +119,21 @@ public class Main extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 25));
 		
+		lblNewLabel_1 = new JLabel("New label");
+		
+         
+        
+		
 		GroupLayout gl_panelMenu = new GroupLayout(panelMenu);
 		gl_panelMenu.setHorizontalGroup(
 			gl_panelMenu.createParallelGroup(Alignment.LEADING)
 				.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
 				.addComponent(bottoneProgrammi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
 				.addComponent(bottoneStanze, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addGroup(gl_panelMenu.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(34, Short.MAX_VALUE))
 		);
 		gl_panelMenu.setVerticalGroup(
 			gl_panelMenu.createParallelGroup(Alignment.LEADING)
@@ -119,7 +144,9 @@ public class Main extends JFrame {
 					.addComponent(bottoneProgrammi, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bottoneStanze, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(201, Short.MAX_VALUE))
+					.addGap(48)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(35, Short.MAX_VALUE))
 		);
 		panelMenu.setLayout(gl_panelMenu);
 	}
@@ -143,5 +170,18 @@ public class Main extends JFrame {
 				//panelStanze.setVisible(true);
 			}
 		});
+	}
+	
+	public void startClock() {
+		javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				lblNewLabel_1.setText(s.getOra().toString());
+			}
+		});
+		
+		timer.start();
 	}
 }
