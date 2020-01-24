@@ -7,12 +7,12 @@ public class SensoreTemperatura extends ElementoProgrammabile {
 	private String stato;
 	private double temperaturaCorrente;
 	private double temperaturaDesiderata;
-	private static final double temperaturaDefault= 17;
+	private static final double TEMPERATURADEFAULT= 17;
 	
 	public SensoreTemperatura() {
 		this.stato = "off";
-		this.temperaturaCorrente = this.temperaturaDefault;
-		this.temperaturaDesiderata = this.temperaturaDefault;
+		this.temperaturaCorrente = this.TEMPERATURADEFAULT;
+		this.temperaturaDesiderata = this.TEMPERATURADEFAULT;
 	}
 
 	public String getStato() {

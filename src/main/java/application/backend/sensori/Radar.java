@@ -2,6 +2,10 @@ package application.backend.sensori;
 
 public class Radar extends Sensore {
 	private boolean rilevatoMovimento;
+	
+	public Radar() {
+		this.rilevatoMovimento = false;
+	}
 
 	public boolean isRilevatoMovimento() {
 		return rilevatoMovimento;
@@ -14,7 +18,13 @@ public class Radar extends Sensore {
 			this.rilevatoMovimento = true;
 		
 	}
-	
-	public void rilevaMovimento(boolean casuale) {
+
+	@Override
+	public void run() {
+		double casuale = (int)(Math.random()*10);
+		if(casuale == 1) {
+			this.rilevatoMovimento= true;
+			super.getAllarme().notifica();
+		}
 	}
 } 

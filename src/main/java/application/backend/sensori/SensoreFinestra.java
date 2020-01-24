@@ -4,13 +4,29 @@ import application.backend.Finestra;
 
 public class SensoreFinestra extends Sensore {
 	private boolean rilevataEffrazione;
-	private Finestra finestra;
 	
+	public SensoreFinestra() {
+		this.rilevataEffrazione = false;
+	}
+
 	public boolean getEffrazione() {
 		return this.rilevataEffrazione;
 	}
 	
-	//metodo simulazione	
-	public void rilevaEffrazione(boolean casuale) {
+	public void cambiaStato() {
+		if(this.getEffrazione())
+			this.rilevataEffrazione = false;
+		else
+			this.rilevataEffrazione = true;
+		
+	}
+
+	@Override
+	public void run() {
+		double casuale = (int)(Math.random()*10);
+		if(casuale == 1) {
+			this.rilevataEffrazione= true;
+			super.getAllarme().notifica();
+		}
 	}
 }
