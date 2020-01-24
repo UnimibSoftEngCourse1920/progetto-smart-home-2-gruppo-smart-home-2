@@ -23,6 +23,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class Main extends JFrame {
 
@@ -71,7 +74,7 @@ public class Main extends JFrame {
 		panelPrincipale.setLayout(new BorderLayout(0, 0));
 		bottoneProgrammi = new JButton("Programmi");
 		bottoneStanze = new JButton("Stanze");
-		panelProgrammi = new ProgrammiView();
+		panelProgrammi = new ProgrammiView(panelPrincipale);
 		panelStanze = new StanzeView();
 		
 		
@@ -96,22 +99,27 @@ public class Main extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 		
+		JLabel lblNewLabel = new JLabel("SMART HOME");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 25));
+		
 		GroupLayout gl_panelMenu = new GroupLayout(panelMenu);
 		gl_panelMenu.setHorizontalGroup(
 			gl_panelMenu.createParallelGroup(Alignment.LEADING)
-				.addComponent(bottoneProgrammi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
-				.addGroup(gl_panelMenu.createSequentialGroup()
-					.addComponent(bottoneStanze, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+				.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addComponent(bottoneProgrammi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addComponent(bottoneStanze, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
 		);
 		gl_panelMenu.setVerticalGroup(
 			gl_panelMenu.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelMenu.createSequentialGroup()
-					.addGap(64)
-					.addComponent(bottoneProgrammi, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+					.addGap(23)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(bottoneProgrammi, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(bottoneStanze, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(207, Short.MAX_VALUE))
+					.addComponent(bottoneStanze, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(201, Short.MAX_VALUE))
 		);
 		panelMenu.setLayout(gl_panelMenu);
 	}
@@ -123,7 +131,7 @@ public class Main extends JFrame {
 				panelPrincipale.add(panelProgrammi);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
-				panelProgrammi.setVisible(true);
+				//panelProgrammi.setVisible(true);
 			}
 		});
 		bottoneStanze.addActionListener(new ActionListener() {
@@ -132,7 +140,7 @@ public class Main extends JFrame {
 				panelPrincipale.add(panelStanze);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
-				panelStanze.setVisible(true);
+				//panelStanze.setVisible(true);
 			}
 		});
 	}

@@ -1,21 +1,19 @@
 package application.frontend.views;
 
 import javax.swing.JButton;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JTree;
+import javax.swing.JRadioButton;
 
 public class StanzeView extends JPanel {
-
-	public JButton btnNewButton;
-	/**
-	 * Create the panel.
-	 */
 	public StanzeView() {
 		
-		 btnNewButton = new JButton("kKFDK");
-		add(btnNewButton);
-
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
+		add(rdbtnNewRadioButton);
+		
+		
 	}
-	public JButton getB() {
-		return btnNewButton;
-	}
+	
+	
 }
