@@ -1,6 +1,6 @@
 package application.backend;
 
-public class Lavastoviglie extends ElementoProgrammabile {
+public class Lavastoviglie {
 
 	private int id;
 	private boolean isInFunzione;

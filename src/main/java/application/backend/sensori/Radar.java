@@ -7,12 +7,12 @@ public class Radar extends Sensore {
 		this.rilevatoMovimento = false;
 	}
 
-	public boolean isRilevatoMovimento() {
+	public boolean getMovimento() {
 		return rilevatoMovimento;
 	}
 	
 	public void cambiaStato() {
-		if(this.isRilevatoMovimento())
+		if(this.getMovimento())
 			this.rilevatoMovimento = false;
 		else
 			this.rilevatoMovimento = true;

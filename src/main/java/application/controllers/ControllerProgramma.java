@@ -20,7 +20,7 @@ public class ControllerProgramma {
 		this(0);
 	}
 	
-	public void creaProgrammaGiornaliero(ElementoProgrammabile e, LocalTime inizio, LocalTime fine, double valoreDiSetting) {
+	public void creaProgrammaGiornaliero(LocalTime inizio, LocalTime fine, double valoreDiSetting) {
 		this.programmi.add(new ProgrammaGiornaliero(counter,inizio,fine,valoreDiSetting));
 		this.counter++;
 	}
@@ -37,7 +37,7 @@ public class ControllerProgramma {
 		}
 	}
 	
-	public void aggiungiElemento(int id,ElementoProgrammabile e) {
+	public void aggiungiElemento(int id,Object e) {
 		for (Programma p : programmi) {
 			if (p.getId() == id) 
 				p.aggiungiElemento(e);
@@ -73,8 +73,8 @@ public class ControllerProgramma {
 		}
 	}
 	
-	public void cambiaStatoElementi(ArrayList<ElementoProgrammabile> elementi, boolean stato) {
-		for (ElementoProgrammabile e : elementi) {
+	public void cambiaStatoElementi(ArrayList<Object> elementi, boolean stato) {
+		for (Object e : elementi) {
 			if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato)
 				((RobotPulizia) e).cambiaStato();
 			else {

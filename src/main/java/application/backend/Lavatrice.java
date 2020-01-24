@@ -1,6 +1,6 @@
 package application.backend;
 
-public class Lavatrice extends ElementoProgrammabile {
+public class Lavatrice {
 
 	private int id;
 	private boolean isInFunzione;
