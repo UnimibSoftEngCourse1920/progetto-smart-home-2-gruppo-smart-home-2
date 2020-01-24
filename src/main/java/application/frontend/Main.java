@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import application.frontend.views.*;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -16,12 +19,20 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLayeredPane;
+import javax.swing.BoxLayout;
 
 public class Main extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panelMenu;
-	private JPanel panelPrincipale;
+	private JButton bottoneProgrammi;
+	private JLayeredPane panelPrincipale;
+	private ProgrammiView panelProgrammi;
+	private StanzeView panelStanze;
+	private JButton bottoneStanze;
 
 	/**
 	 * Launch the application.
@@ -56,27 +67,73 @@ public class Main extends JFrame {
 
 	public void creazioneContentPane() {
 		panelMenu = new JPanel();
-		panelPrincipale = new JPanel();
-		panelPrincipale.setBackground(Color.LIGHT_GRAY);
+		panelPrincipale = new JLayeredPane();
+		panelPrincipale.setLayout(new BorderLayout(0, 0));
+		bottoneProgrammi = new JButton("Programmi");
+		bottoneStanze = new JButton("Stanze");
+		panelProgrammi = new ProgrammiView();
+		panelStanze = new StanzeView();
 		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelPrincipale, GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelPrincipale, GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-				.addComponent(panelMenu, GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-		);
-		contentPane.setLayout(gl_contentPane);
+		
+		setLayoutMenu();
 		
 		gestionePanelMenu();
 	}
 	
-	public void gestionePanelMenu() {
+	public void setLayoutMenu() {
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelPrincipale, GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(panelMenu, GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+				.addComponent(panelPrincipale, GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+		);
+		contentPane.setLayout(gl_contentPane);
+		
+		GroupLayout gl_panelMenu = new GroupLayout(panelMenu);
+		gl_panelMenu.setHorizontalGroup(
+			gl_panelMenu.createParallelGroup(Alignment.LEADING)
+				.addComponent(bottoneProgrammi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+				.addGroup(gl_panelMenu.createSequentialGroup()
+					.addComponent(bottoneStanze, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_panelMenu.setVerticalGroup(
+			gl_panelMenu.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelMenu.createSequentialGroup()
+					.addGap(64)
+					.addComponent(bottoneProgrammi, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottoneStanze, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(207, Short.MAX_VALUE))
+		);
+		panelMenu.setLayout(gl_panelMenu);
+	}
+	
+	public void gestionePanelMenu() {		
+		bottoneProgrammi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipale.removeAll();
+				panelPrincipale.add(panelProgrammi);
+				panelPrincipale.repaint();
+				panelPrincipale.revalidate();
+				panelProgrammi.setVisible(true);
+			}
+		});
+		bottoneStanze.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipale.removeAll();
+				panelPrincipale.add(panelStanze);
+				panelPrincipale.repaint();
+				panelPrincipale.revalidate();
+				panelStanze.setVisible(true);
+			}
+		});
 	}
 }
