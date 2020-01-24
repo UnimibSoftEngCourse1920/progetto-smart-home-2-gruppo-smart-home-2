@@ -15,8 +15,12 @@ public class ControllerCasa {
 	}
 	
 	public void cambiaStatoAllarme() {
-		if(this.allarme != null)
-			this.allarme.cambiaStato();
+		if(this.allarme != null) {
+			if(this.allarme.isAttivo())
+				this.allarme.spegni();
+			else 
+				this.allarme.accendi();
+		}
 	}
 	
 	public void cambiaStatoLavatrice(String nome, int id) {

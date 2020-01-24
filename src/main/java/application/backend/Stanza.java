@@ -46,9 +46,9 @@ public class Stanza {
 			this.radar = r;
 	}
 	
-	public void addSensoreTemperatura(SensoreTemperatura s) {
+	public void addSensoreTemperatura() {
 		if(this.sensoreTemperatura == null)
-			this.sensoreTemperatura = s;
+			this.sensoreTemperatura = new SensoreTemperatura(this);
 	}
 	
 	public void addLavatrice(Lavatrice l) {

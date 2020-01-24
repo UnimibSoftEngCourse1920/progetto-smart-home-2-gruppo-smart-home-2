@@ -25,6 +25,7 @@ public class Allarme {
 	public void notifica(Sensore s) {
 		if(s instanceof SensoreGas) {
 			System.out.println("Chiamo il gentodigiotto");
+			emergenza = true;
 			for (Stanza stanza: casa.getStanze()) {
 				stanza.stopTimerEventi();
 				if(stanza.getSensoreGas() == s)
@@ -34,6 +35,7 @@ public class Allarme {
 				}
 			}
 		else if(isAttivo()) {
+			emergenza = true;
 			System.out.println("Chiamo il gentodigiotto");
 			for (Stanza stanza: casa.getStanze()) 
 				stanza.stopTimerEventi();
@@ -58,9 +60,14 @@ public class Allarme {
 		return this.isAttivo;
 	}
 	
-	public void cambiaStato() {
-		if(isAttivo())
+	public void accendi() {
+			this.isAttivo = true;
+	}
+	
+	public void spegni() {
+		if(emergenza)
+			System.out.println("Non puoi spegnere l'allarme durante un'emergenza");
+		else
 			this.isAttivo = false;
-		else this.isAttivo = true;
 	}
 }

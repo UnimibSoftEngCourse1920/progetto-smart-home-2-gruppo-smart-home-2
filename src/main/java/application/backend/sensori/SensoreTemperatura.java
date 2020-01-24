@@ -1,6 +1,7 @@
 package application.backend.sensori;
 
 import java.util.*;
+import application.backend.*;
 
 public class SensoreTemperatura extends TimerTask {
 
@@ -8,11 +9,13 @@ public class SensoreTemperatura extends TimerTask {
 	private double temperaturaCorrente;
 	private double temperaturaDesiderata;
 	private static final double TEMPERATURADEFAULT= 17;
+	private Stanza stanza;
 	
-	public SensoreTemperatura() {
+	public SensoreTemperatura(Stanza stanza) {
 		this.stato = "off";
 		this.temperaturaCorrente = SensoreTemperatura.TEMPERATURADEFAULT;
 		this.temperaturaDesiderata = SensoreTemperatura.TEMPERATURADEFAULT;
+		this.stanza = stanza;
 	}
 
 	public String getStato() {
@@ -36,7 +39,10 @@ public class SensoreTemperatura extends TimerTask {
 	}
 	
 	public void setTemperaturaDesiderata(double temperaturaDesiderata) {
-		this.temperaturaDesiderata = temperaturaDesiderata;
+		if(temperaturaDesiderata < 28 && temperaturaDesiderata > 8)
+			this.temperaturaDesiderata = temperaturaDesiderata;
+		else
+			System.out.println("Cazzo fai, non va bene la temperatura");
 	}
 	
 	public void aumentaTemperatura() {
@@ -44,12 +50,16 @@ public class SensoreTemperatura extends TimerTask {
 	}
 	
 	public void diminuisciTemperatura() {
-		this.temperaturaCorrente = this.temperaturaCorrente - 0.10;
+		if(this.temperaturaCorrente > 5)
+			this.temperaturaCorrente = this.temperaturaCorrente - 0.10;
 	}
 
 	@Override
 	public void run() {
 		this.stato = "Misurazione";
+		for(Finestra f: stanza.getFinestre())
+			if(f.isAperta())
+				this.diminuisciTemperatura();
 		if(this.temperaturaCorrente == this.temperaturaDesiderata)
 			this.stato = "Ottimo";
 		else if (this.temperaturaCorrente > this.temperaturaDesiderata) {
