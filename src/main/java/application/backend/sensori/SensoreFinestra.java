@@ -26,7 +26,7 @@ public class SensoreFinestra extends Sensore {
 		double casuale = (int)(Math.random()*10);
 		if(casuale == 1) {
 			this.rilevataEffrazione= true;
-			super.getAllarme().notifica();
+			super.getAllarme().notifica(this);
 		}
 	}
 }

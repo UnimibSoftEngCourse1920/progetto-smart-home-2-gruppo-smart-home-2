@@ -10,8 +10,6 @@ public class ControllerCasa {
 	private RobotPulizia robot;
 	private Allarme allarme;
 	
-	
-	
 	public void addStanza(Stanza s) {
 		this.stanze.add(s);
 	}
@@ -49,11 +47,12 @@ public class ControllerCasa {
 	public void cambiaStatoFinestra(String nome, int id) {
 		Stanza s = getStanza(nome);
 		Finestra f;
-		
 		if(s != null) {
 			f = s.getFinestra(id);
-			if(f != null)
+			if(f != null && !s.getSensoreGas().getFuga())
 				f.cambiaStato();
+			if(s.getSensoreGas().getFuga())
+				System.out.println("c'è una fuga, cazzo fai?");
 		}
 	}
 	
@@ -63,8 +62,10 @@ public class ControllerCasa {
 		
 		if(s != null) {
 			t = s.getTapparella(id);
-			if(t != null)
+			if(t != null && !s.getSensoreGas().getFuga())
 				t.cambiaStato();
+			if(s.getSensoreGas().getFuga())
+				System.out.println("c'è una fuga, cazzo fai?");
 		}
 	}
 	
