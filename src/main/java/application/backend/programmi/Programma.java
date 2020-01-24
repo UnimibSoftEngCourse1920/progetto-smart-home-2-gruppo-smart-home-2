@@ -6,7 +6,7 @@ import application.backend.*;
 public abstract class Programma {
 
 	private int id;
-	private ArrayList<ElementoProgrammabile> elementi = new ArrayList<ElementoProgrammabile>();
+	private ArrayList<Object> elementi = new ArrayList<>();
 	
 	public Programma(int id) {
 		this.id = id;
@@ -16,12 +16,12 @@ public abstract class Programma {
 		return id;
 	}
 	
-	public void aggiungiElemento(ElementoProgrammabile e) {
+	public void aggiungiElemento(Object e) {
 		if(e!=null)
 			elementi.add(e);
 	}
 
-	public ArrayList<ElementoProgrammabile> getElementi() {
+	public ArrayList<Object> getElementi() {
 		return elementi;
 	}
 	

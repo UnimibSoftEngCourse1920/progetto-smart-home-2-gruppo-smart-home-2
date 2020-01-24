@@ -1,7 +1,7 @@
 
 package application.backend;
 
-public class RobotPulizia extends ElementoProgrammabile {
+public class RobotPulizia {
 
 	private int id;
 	private boolean isInFunzione;

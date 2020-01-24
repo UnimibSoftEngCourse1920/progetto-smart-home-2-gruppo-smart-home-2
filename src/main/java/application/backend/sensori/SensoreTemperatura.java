@@ -1,18 +1,18 @@
 package application.backend.sensori;
 
-import application.backend.ElementoProgrammabile;
+import java.util.*;
 
-public class SensoreTemperatura extends ElementoProgrammabile {
+public class SensoreTemperatura extends TimerTask {
 
 	private String stato;
 	private double temperaturaCorrente;
 	private double temperaturaDesiderata;
-	private static final double temperaturaDefault= 17;
+	private static final double TEMPERATURADEFAULT= 17;
 	
 	public SensoreTemperatura() {
 		this.stato = "off";
-		this.temperaturaCorrente = this.temperaturaDefault;
-		this.temperaturaDesiderata = this.temperaturaDefault;
+		this.temperaturaCorrente = SensoreTemperatura.TEMPERATURADEFAULT;
+		this.temperaturaDesiderata = SensoreTemperatura.TEMPERATURADEFAULT;
 	}
 
 	public String getStato() {
@@ -38,23 +38,27 @@ public class SensoreTemperatura extends ElementoProgrammabile {
 	public void setTemperaturaDesiderata(double temperaturaDesiderata) {
 		this.temperaturaDesiderata = temperaturaDesiderata;
 	}
-
-	public void aggiornaStato() {
-		if(this.temperaturaCorrente == this.temperaturaDesiderata)
-			this.stato = "Ottimo";
-		else if (this.temperaturaCorrente > this.temperaturaDesiderata)
-			this.stato ="Raffredda";
-		else if (this.temperaturaCorrente < this.temperaturaDesiderata)
-			this.stato ="Riscalda";
-	}
 	
 	public void aumentaTemperatura() {
 		this.temperaturaCorrente = this.temperaturaCorrente + 0.10;
-		//this.stato = "Misurazione";
 	}
 	
-	public void diminusiciTemperatura() {
+	public void diminuisciTemperatura() {
 		this.temperaturaCorrente = this.temperaturaCorrente - 0.10;
-		//this.stato = "Misurazione";
+	}
+
+	@Override
+	public void run() {
+		this.stato = "Misurazione";
+		if(this.temperaturaCorrente == this.temperaturaDesiderata)
+			this.stato = "Ottimo";
+		else if (this.temperaturaCorrente > this.temperaturaDesiderata) {
+			this.stato ="Raffredda";
+			this.diminuisciTemperatura();
+			}
+		else if (this.temperaturaCorrente < this.temperaturaDesiderata) {
+			this.stato ="Riscalda";
+			this.aumentaTemperatura();
+		}
 	}
 }

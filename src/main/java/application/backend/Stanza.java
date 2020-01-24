@@ -1,6 +1,6 @@
 package application.backend;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import application.backend.sensori.*; 
 
@@ -13,6 +13,8 @@ public class Stanza {
 	private Lavatrice lavatrice;
 	private Lavastoviglie lavastoviglie;
 	private String nome;
+	private Timer timerEventi;
+	private Timer timerTemperatura;
 	
 	public Stanza(String nome) {
 		this.nome = nome;
@@ -109,5 +111,31 @@ public class Stanza {
 				return finestra.getTapparella();
 		}
 		return null;
+	}
+	
+	public void startTimerEventi() {
+		timerEventi = new Timer();
+		if(this.sensoreGas != null)
+			timerEventi.schedule(this.sensoreGas , 10000, 10000 );
+		if(this.radar != null)
+			timerEventi.schedule(this.sensoreGas , 10000, 10000 );
+		for (Finestra f: finestre) {
+			timerEventi.schedule(f.getSensore() , 10000, 10000 );
+		}
+	}
+	
+	public void stopTimerEventi() {
+		timerEventi.cancel();
+	}
+	
+	public void accendiTermostato() {
+		this.sensoreTemperatura.on();
+		this.timerTemperatura = new Timer();
+		this.timerTemperatura.schedule(this.sensoreTemperatura, 0, 10000);
+	}
+	
+	public void spegniTermostato() {
+		this.sensoreTemperatura.off();
+		this.timerTemperatura.cancel();
 	}
 }
