@@ -1,7 +1,7 @@
 package application.backend.sensori;
 
+import application.backend.dominio.*;
 import application.controllers.*;
-import application.backend.*;
 
 public class Allarme {
 	private static Allarme istance = null;

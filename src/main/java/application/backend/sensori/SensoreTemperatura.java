@@ -1,7 +1,8 @@
 package application.backend.sensori;
 
 import java.util.*;
-import application.backend.*;
+
+import application.backend.dominio.*;
 
 public class SensoreTemperatura extends TimerTask {
 

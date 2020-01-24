@@ -1,4 +1,4 @@
-package application.backend;
+package application.backend.dominio;
 
 public class Tapparella {
 	private int id;

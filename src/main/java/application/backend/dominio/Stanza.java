@@ -1,4 +1,4 @@
-package application.backend;
+package application.backend.dominio;
 
 import java.util.*;
 

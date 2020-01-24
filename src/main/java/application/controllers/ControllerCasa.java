@@ -1,6 +1,6 @@
 package application.controllers;
 
-import application.backend.*;
+import application.backend.dominio.*;
 import application.backend.sensori.*;
 import application.frontend.*;
 import java.util.ArrayList;

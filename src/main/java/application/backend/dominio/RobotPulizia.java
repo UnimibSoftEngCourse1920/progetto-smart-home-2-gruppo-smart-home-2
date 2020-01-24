@@ -1,5 +1,5 @@
 
-package application.backend;
+package application.backend.dominio;
 
 public class RobotPulizia {
 
