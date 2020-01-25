@@ -5,8 +5,8 @@ import java.util.*;
 import application.backend.sensori.*; 
 
 public class Stanza {
-	private ArrayList<Lampada> lampade = new ArrayList<Lampada>(); 
-	private ArrayList<Finestra> finestre = new ArrayList<Finestra>(); 
+	private ArrayList<Lampada> lampade = new ArrayList<>(); 
+	private ArrayList<Finestra> finestre = new ArrayList<>(); 
 	private SensoreGas sensoreGas;
 	private Radar radar;
 	private SensoreTemperatura sensoreTemperatura;
@@ -61,11 +61,11 @@ public class Stanza {
 			this.lavastoviglie = l;
 	}
 
-	public ArrayList<Lampada> getLampade() {
+	public List<Lampada> getLampade() {
 		return lampade;
 	}
 
-	public ArrayList<Finestra> getFinestre() {
+	public List<Finestra> getFinestre() {
 		return finestre;
 	}
 

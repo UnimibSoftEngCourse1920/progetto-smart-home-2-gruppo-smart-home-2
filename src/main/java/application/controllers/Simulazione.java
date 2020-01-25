@@ -18,10 +18,10 @@ public class Simulazione extends TimerTask{
 	public void run() {
 		if(this.ora.compareTo(LocalTime.of(23, 50)) == 0) {
 			this.ora = LocalTime.of(0, 0);
-			this.giorno=this.giorno.plus(1);
+			this.giorno = this.giorno.plus(1);
 		}
 		else
-			this.ora.plusMinutes(10);
+			this.ora = this.ora.plusMinutes(10);
 		cp.accensione(this.ora, this.giorno);
 		cp.spegnimento(this.ora, this.giorno);
 	}

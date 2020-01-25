@@ -1,7 +1,5 @@
 package application.backend.sensori;
 
-import application.backend.dominio.Finestra;
-
 public class SensoreFinestra extends Sensore {
 	private boolean rilevataEffrazione;
 	
@@ -23,7 +21,7 @@ public class SensoreFinestra extends Sensore {
 
 	@Override
 	public void run() {
-		double casuale = (int)(Math.random()*10);
+		double casuale = Math.random();
 		if(casuale == 1) {
 			this.rilevataEffrazione= true;
 			super.getAllarme().notifica(this);

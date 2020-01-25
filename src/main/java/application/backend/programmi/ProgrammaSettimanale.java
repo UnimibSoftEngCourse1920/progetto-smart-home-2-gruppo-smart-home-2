@@ -1,12 +1,11 @@
 package application.backend.programmi;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.HashMap;
+import java.time.*;
+import java.util.EnumMap;
 
 public class ProgrammaSettimanale extends Programma {
 
-	private HashMap<DayOfWeek,ProgrammaGiornaliero> settimana = new HashMap<DayOfWeek,ProgrammaGiornaliero>();
+	private EnumMap<DayOfWeek,ProgrammaGiornaliero> settimana = new EnumMap<>(DayOfWeek.class);
 	
 	public ProgrammaSettimanale(int id) {
 		super(id);
