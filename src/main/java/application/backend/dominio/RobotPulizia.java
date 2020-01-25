@@ -3,13 +3,11 @@ package application.backend.dominio;
 
 public class RobotPulizia {
 
-	private int id;
 	private boolean isInFunzione;
 	private Stanza base;
 	private Stanza posizione;
 	
-	public RobotPulizia(int id, Stanza base) {
-		this.id = id;
+	public RobotPulizia(Stanza base) {
 		this.isInFunzione = false;
 		this.base = base;
 		this.posizione = base;
@@ -21,10 +19,6 @@ public class RobotPulizia {
 	
 	public Stanza getPosizione() {
 		return posizione;
-	}
-	
-	public int getId() {
-		return id;
 	}
 	
 	public boolean isInFunzione() {

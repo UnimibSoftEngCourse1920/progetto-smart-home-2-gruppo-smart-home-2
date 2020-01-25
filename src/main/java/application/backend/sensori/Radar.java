@@ -21,7 +21,7 @@ public class Radar extends Sensore {
 
 	@Override
 	public void run() {
-		double casuale = (int)(Math.random()*10);
+		double casuale = Math.random();
 		if(casuale == 1) {
 			this.rilevatoMovimento= true;
 			super.getAllarme().notifica(this);

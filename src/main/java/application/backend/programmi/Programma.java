@@ -1,7 +1,5 @@
 package application.backend.programmi;
 
-import java.util.ArrayList;
-
 import application.backend.dominio.*;
 
 public abstract class Programma {

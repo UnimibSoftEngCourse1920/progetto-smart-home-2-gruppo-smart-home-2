@@ -2,13 +2,28 @@ package application.controllers;
 
 import application.backend.dominio.*;
 import application.backend.sensori.*;
-import application.frontend.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class ControllerCasa {
-	private ArrayList<Stanza> stanze = new ArrayList<Stanza>(); 
-	private RobotPulizia robot;
+	private ArrayList<Stanza> stanze ;
+	private RobotPulizia robot ;
 	private Allarme allarme;
+	
+	public ControllerCasa() {
+		this.stanze = new ArrayList<>(); 
+		this.robot = null;
+		this.allarme = Allarme.getInstance();
+	}
+
+	//DA CONTROLLARE E MODIFICARE
+	public void muoviRobot(Stanza s) {
+		if(this.robot != null)
+			this.robot.muovi(s);
+	}
+	
+	public void addRobot(Stanza s) {
+		this.robot = new RobotPulizia(s);
+	}
 	
 	public void addStanza(Stanza s) {
 		this.stanze.add(s);
@@ -81,7 +96,7 @@ public class ControllerCasa {
 		return null;
 	}
 	
-	public ArrayList<Stanza> getStanze() {
+	public List<Stanza> getStanze() {
 		return this.stanze;
 	}
 	
@@ -100,15 +115,15 @@ public class ControllerCasa {
 		}
 	}
 	//------------------------------------------------------------------
-	public ArrayList<Object> getAllOggettiStanza(Stanza stanza) {
+	public List<Object> getAllOggettiStanza(Stanza stanza) {
 		if(stanza != null) {
-			ArrayList<Object> allOggettiStanza = new ArrayList<Object>();
+			ArrayList<Object> allOggettiStanza = new ArrayList<>();
 			allOggettiStanza.addAll(stanza.getLampade());
 			allOggettiStanza.addAll(stanza.getFinestre());
 			allOggettiStanza.add(stanza.getLavastoviglie());
 			allOggettiStanza.add(stanza.getLavatrice());
 			return allOggettiStanza;
 		}
-		else return null;
+		else return Collections.emptyList();
 	} 
 }

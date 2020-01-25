@@ -14,7 +14,7 @@ public class ControllerProgramma {
 
 	public ControllerProgramma(int counter) {
 		this.counter = counter;
-		this.programmi = new ArrayList<Programma>();
+		this.programmi = new ArrayList<>();
 	}
 	
 	public ControllerProgramma() {
