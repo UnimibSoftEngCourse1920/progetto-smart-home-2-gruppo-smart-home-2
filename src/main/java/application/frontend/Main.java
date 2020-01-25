@@ -22,6 +22,9 @@ import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,15 +41,23 @@ import javax.swing.SwingConstants;
 
 public class Main extends JFrame {
 
+	//COMPONENTI----------------------------
 	private JPanel contentPane;
 	private JPanel panelMenu;
-	private JButton bottoneProgrammi;
+	private JButton bottoneMenuProgrammi;
 	private JLayeredPane panelPrincipale;
+	private JButton bottoneMenuStanze;
+	private JButton bottoneHomepageProgrammi;
+	private JLabel clock;
+	private JLabel labelSmartHome;
+	
+	//VIEW----------------------------------
 	private ProgrammiView panelProgrammi;
 	private StanzeView panelStanze;
-	private JButton bottoneStanze;
-	JLabel lblNewLabel_1;
-	Simulazione s;
+	private HomepageView panelHomepage;
+	
+	//---------------------------------
+	private Simulazione s;
 	
 
 	/**
@@ -77,26 +88,40 @@ public class Main extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		creazioneContentPane();
+		inizializzazione();
 	}
 
-	public void creazioneContentPane() {
+	public void inizializzazione() {
 		panelMenu = new JPanel();
 		panelPrincipale = new JLayeredPane();
 		panelPrincipale.setLayout(new BorderLayout(0, 0));
-		bottoneProgrammi = new JButton("Programmi");
-		bottoneStanze = new JButton("Stanze");
+		
+		bottoneMenuProgrammi = new JButton("Programmi");
+		bottoneMenuStanze = new JButton("Stanze");
 		panelProgrammi = new ProgrammiView(panelPrincipale);
 		panelStanze = new StanzeView();
-		 s = new Simulazione(new ControllerProgramma());
-		 Timer timerSim = new Timer();
-		 timerSim.schedule(s, 1000, 1000);
+		panelHomepage = new HomepageView(panelPrincipale);
+		
+		labelSmartHome = new JLabel("SMART HOME");
+		labelSmartHome.setHorizontalAlignment(SwingConstants.CENTER);
+		labelSmartHome.setFont(new Font("Arial", Font.PLAIN, 25));
+		
+		clock = new JLabel("CLOCK");
+		clock.setEnabled(false);
+		clock.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		s = new Simulazione(new ControllerProgramma());
+		Timer timerSim = new Timer();
+		timerSim.schedule(s, 1000, 1000);
+		
 		
 		setLayoutMenu();
 		
-		gestionePanelMenu();
+		gestioneMenu();
 		
 		startClock();
+		
+		viewHomepage();
 	}
 	
 	public void setLayoutMenu() {
@@ -115,44 +140,33 @@ public class Main extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 		
-		JLabel lblNewLabel = new JLabel("SMART HOME");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 25));
-		
-		lblNewLabel_1 = new JLabel("New label");
-		
-         
-        
-		
 		GroupLayout gl_panelMenu = new GroupLayout(panelMenu);
 		gl_panelMenu.setHorizontalGroup(
 			gl_panelMenu.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-				.addComponent(bottoneProgrammi, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-				.addComponent(bottoneStanze, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-				.addGroup(gl_panelMenu.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(34, Short.MAX_VALUE))
+				.addComponent(labelSmartHome, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addComponent(clock, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addComponent(bottoneMenuProgrammi, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addComponent(bottoneMenuStanze, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
 		);
 		gl_panelMenu.setVerticalGroup(
 			gl_panelMenu.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelMenu.createSequentialGroup()
 					.addGap(23)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(bottoneProgrammi, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addComponent(labelSmartHome, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(bottoneStanze, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addGap(48)
-					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(35, Short.MAX_VALUE))
+					.addComponent(clock, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottoneMenuProgrammi, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottoneMenuStanze, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(161, Short.MAX_VALUE))
 		);
 		panelMenu.setLayout(gl_panelMenu);
+		
 	}
 	
-	public void gestionePanelMenu() {		
-		bottoneProgrammi.addActionListener(new ActionListener() {
+	public void gestioneMenu() {		
+		bottoneMenuProgrammi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelProgrammi);
@@ -161,7 +175,7 @@ public class Main extends JFrame {
 				//panelProgrammi.setVisible(true);
 			}
 		});
-		bottoneStanze.addActionListener(new ActionListener() {
+		bottoneMenuStanze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelStanze);
@@ -170,6 +184,20 @@ public class Main extends JFrame {
 				//panelStanze.setVisible(true);
 			}
 		});
+		labelSmartHome.addMouseListener(new MouseAdapter() {  
+		    public void mouseClicked(MouseEvent e)  {  
+		    	viewHomepage();
+		    }  
+		}); 
+	}
+	
+	public void viewHomepage() {
+		
+		panelPrincipale.removeAll();
+		panelPrincipale.add(panelHomepage);
+		panelPrincipale.repaint();
+		panelPrincipale.revalidate();
+		//panelStanze.setVisible(true);
 	}
 	
 	public void startClock() {
@@ -178,7 +206,7 @@ public class Main extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				lblNewLabel_1.setText(s.getOra().toString());
+				clock.setText(s.getOra().toString());
 			}
 		});
 		
