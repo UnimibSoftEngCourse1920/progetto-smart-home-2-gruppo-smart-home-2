@@ -7,7 +7,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 
-import application.frontend.Main;
+import application.frontend.MainJFrame;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -32,7 +32,7 @@ public class ProgrammiView extends JPanel {
 	
 	public ProgrammiView(JLayeredPane panelPrincipale) {
 		this.panelPrincipale = panelPrincipale;
-		ProgrammaView panelStanze = new ProgrammaView(panelPrincipale);
+		//ProgrammaView panelStanze = new ProgrammaView(panelPrincipale);
 		
 		panelTabellaProgrammi = new JPanel();
 		
@@ -41,11 +41,9 @@ public class ProgrammiView extends JPanel {
 		lblProgrammi.setFont(new Font("Arial", Font.PLAIN, 25));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(panelTabellaProgrammi, GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addComponent(lblProgrammi, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+				.addComponent(lblProgrammi, GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -58,16 +56,7 @@ public class ProgrammiView extends JPanel {
 		setLayout(groupLayout);
 		
 		bottone = new JButton("New button");
-		bottone.addActionListener(new ActionListener() {
-			//funziona anche su bottoni fuori dal panel
-			public void actionPerformed(ActionEvent e) {
-				panelPrincipale.removeAll();
-				panelPrincipale.add(panelStanze);
-				panelPrincipale.repaint();
-				panelPrincipale.revalidate();
-			}
-		});
-		panelTabellaProgrammi.add(bottone);
+		
 		
 	}
 }

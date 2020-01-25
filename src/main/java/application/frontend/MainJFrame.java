@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import application.backend.dominio.Stanza;
+import application.controllers.ControllerCasa;
 import application.controllers.ControllerProgramma;
 import application.controllers.Simulazione;
 import application.frontend.views.*;
@@ -39,7 +41,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class Main extends JFrame {
+public class MainJFrame extends JFrame {
 
 	//COMPONENTI----------------------------
 	private JPanel contentPane;
@@ -56,31 +58,30 @@ public class Main extends JFrame {
 	private StanzeView panelStanze;
 	private HomepageView panelHomepage;
 	
-	//---------------------------------
+	//DOMINIO---------------------------------
 	private Simulazione s;
-	
+	private ControllerCasa controllerCasa = new ControllerCasa(panelPrincipale);
 
 	/**
-	 * Launch the application.
+	 * Create the frame.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main frame = new Main();
-					frame.setVisible(true);
-					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+					MainJFrame mainJFrame = new MainJFrame();
+					mainJFrame.setVisible(true);
+					mainJFrame.setExtendedState(mainJFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public Main() {
+	
+	public MainJFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 450);
 		contentPane = new JPanel();
@@ -99,7 +100,7 @@ public class Main extends JFrame {
 		bottoneMenuProgrammi = new JButton("Programmi");
 		bottoneMenuStanze = new JButton("Stanze");
 		panelProgrammi = new ProgrammiView(panelPrincipale);
-		panelStanze = new StanzeView();
+		panelStanze = new StanzeView(panelPrincipale);
 		panelHomepage = new HomepageView(panelPrincipale);
 		
 		labelSmartHome = new JLabel("SMART HOME");

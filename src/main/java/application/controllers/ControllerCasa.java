@@ -3,13 +3,24 @@ package application.controllers;
 import application.backend.dominio.*;
 import application.backend.sensori.*;
 import application.frontend.*;
+import application.frontend.views.StanzeView;
+
 import java.util.ArrayList;
 
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+
 public class ControllerCasa {
+	private JLayeredPane panelPrincipale;
 	private ArrayList<Stanza> stanze = new ArrayList<Stanza>(); 
 	private RobotPulizia robot;
 	private Allarme allarme;
 	
+	public ControllerCasa(JLayeredPane panelPrincipale) {
+		this.panelPrincipale = panelPrincipale;
+		creazioneCasa();
+	}
+
 	public void addStanza(Stanza s) {
 		this.stanze.add(s);
 	}
@@ -82,6 +93,7 @@ public class ControllerCasa {
 	}
 	
 	public ArrayList<Stanza> getStanze() {
+		//System.out.print(this.stanze.size());
 		return this.stanze;
 	}
 	
@@ -111,4 +123,25 @@ public class ControllerCasa {
 		}
 		else return null;
 	} 
+	
+	public String[] getNomiStanze() {
+		String[] nomiStanze = new String[15];
+		ArrayList<Stanza> stanze = getStanze();
+		//System.out.println(stanze.size());
+		
+		for(int i = 0; i < stanze.size(); i++) {
+			//System.out.println(stanze.get(i).getNome());
+			
+			nomiStanze[i] = stanze.get(i).getNome();
+		}
+		
+		return nomiStanze;
+	}
+	
+	public void creazioneCasa() {
+		Stanza cameraMatrimoniale = new Stanza("Camera Matrimoniale");
+		Stanza cucina = new Stanza("Cucina");
+		addStanza(cameraMatrimoniale);
+		addStanza(cucina);
+	}
 }
