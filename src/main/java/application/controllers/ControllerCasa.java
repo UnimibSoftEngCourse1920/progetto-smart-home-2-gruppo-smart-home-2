@@ -131,10 +131,14 @@ public class ControllerCasa {
 	public List<Object> getAllOggettiStanza(Stanza stanza) {
 		if(stanza != null) {
 			ArrayList<Object> allOggettiStanza = new ArrayList<>();
-			allOggettiStanza.addAll(stanza.getLampade());
-			allOggettiStanza.addAll(stanza.getFinestre());
-			allOggettiStanza.add(stanza.getLavastoviglie());
-			allOggettiStanza.add(stanza.getLavatrice());
+			if(stanza.getLampade().size() != 0)
+				allOggettiStanza.addAll(stanza.getLampade());
+			if(stanza.getFinestre().size() != 0)
+				allOggettiStanza.addAll(stanza.getFinestre());
+			if(stanza.getLavastoviglie() != null)
+				allOggettiStanza.add(stanza.getLavastoviglie());
+			if(stanza.getLavatrice() != null)
+				allOggettiStanza.add(stanza.getLavatrice());
 			return allOggettiStanza;
 		}
 		else return Collections.emptyList();
@@ -154,10 +158,25 @@ public class ControllerCasa {
 		return nomiStanze;
 	}
 	
+	
 	public void creazioneCasa() {
 		Stanza cameraMatrimoniale = new Stanza("Camera Matrimoniale");
 		Stanza cucina = new Stanza("Cucina");
 		addStanza(cameraMatrimoniale);
 		addStanza(cucina);
+		
+		//CUCINA-----------------------------------------------------------------------------
+		SensoreFinestra sensoreFinestraCucina = new SensoreFinestra();
+		Lampada lampadaCucina = new Lampada(1);
+		cucina.addLampada(lampadaCucina);
+		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
+		cucina.addFinestra(finestraCucina);
+		
+		//CUCINA-----------------------------------------------------------------------------
+		SensoreFinestra sensoreFinestraCameraMatrimoniale = new SensoreFinestra();
+		Lampada lampadaCameraMatrimoniale = new Lampada(1);
+		cameraMatrimoniale.addLampada(lampadaCucina);
+		Finestra finestraCameraMatrimoniale = new Finestra(new Tapparella(1), sensoreFinestraCameraMatrimoniale);
+		cameraMatrimoniale.addFinestra(finestraCameraMatrimoniale);
 	}
 }
