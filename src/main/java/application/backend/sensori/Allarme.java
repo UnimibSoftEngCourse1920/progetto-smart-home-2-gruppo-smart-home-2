@@ -23,23 +23,25 @@ public class Allarme {
 	}
 	
 	public void notifica(Sensore s) {
+		emergenza = true;
+		System.out.println("Chiamo il gentodigiotto");
 		if(s instanceof SensoreGas) {
-			System.out.println("Chiamo il gentodigiotto");
-			emergenza = true;
-			for (Stanza stanza: casa.getStanze()) {
-				stanza.stopTimerEventi();
-				if(stanza.getSensoreGas() == s)
-					for (Finestra f:stanza.getFinestre())
-						if(!f.isAperta())
-							f.cambiaStato();
-				}
+			this.notifica(s);
 			}
 		else if(isAttivo()) {
-			emergenza = true;
-			System.out.println("Chiamo il gentodigiotto");
 			for (Stanza stanza: casa.getStanze()) 
 				stanza.stopTimerEventi();
 		}
+	}
+	
+	public void notificaSensore(SensoreGas s) {
+		for (Stanza stanza: casa.getStanze()) {
+			stanza.stopTimerEventi();
+			if(stanza.getSensoreGas() == s)
+				for (Finestra f:stanza.getFinestre())
+					if(!f.isAperta())
+						f.cambiaStato();
+			}
 	}
 	
 	public void terminaEmergenza() {

@@ -63,13 +63,15 @@ public class SensoreTemperatura extends TimerTask {
 				this.diminuisciTemperatura();
 		if(this.temperaturaCorrente == this.temperaturaDesiderata)
 			this.stato = "Ottimo";
-		else if (this.temperaturaCorrente > this.temperaturaDesiderata) {
-			this.stato ="Raffredda";
-			this.diminuisciTemperatura();
+		else {
+			if (this.temperaturaCorrente > this.temperaturaDesiderata) {
+				this.stato ="Raffredda";
+				this.diminuisciTemperatura();
 			}
-		else if (this.temperaturaCorrente < this.temperaturaDesiderata) {
-			this.stato ="Riscalda";
-			this.aumentaTemperatura();
+			else {
+				this.stato ="Riscalda";
+				this.aumentaTemperatura();
+			}
 		}
 	}
 }
