@@ -20,8 +20,8 @@ import javax.swing.table.DefaultTableModel;
 
 import application.backend.dominio.*;
 import application.controllers.*;
-
-
+import application.frontend.support.Alert;
+import application.frontend.support.ColoreCellaTabella;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class StanzeView extends JPanel {
 	private ControllerCasa controllerCasa;

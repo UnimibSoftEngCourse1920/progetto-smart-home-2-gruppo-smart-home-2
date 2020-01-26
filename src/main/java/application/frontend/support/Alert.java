@@ -1,4 +1,4 @@
-package application.frontend.views;
+package application.frontend.support;
 
 
 import javax.swing.JOptionPane;

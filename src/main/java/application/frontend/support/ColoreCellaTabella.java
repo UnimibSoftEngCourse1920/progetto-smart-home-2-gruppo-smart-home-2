@@ -1,4 +1,4 @@
-package application.frontend.views;
+package application.frontend.support;
 
 import java.awt.Color;
 import java.awt.Component;

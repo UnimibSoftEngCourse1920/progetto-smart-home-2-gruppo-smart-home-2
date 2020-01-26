@@ -14,7 +14,11 @@
 	<sonar.login>4ef19e88ab8d00786630510198d4ff63583fbddc</sonar.login>
 </properties>
     <dependencies>
-        	
+	    <dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
     </dependencies> 
   
   

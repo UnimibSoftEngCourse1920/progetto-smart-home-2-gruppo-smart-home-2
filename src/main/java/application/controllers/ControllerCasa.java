@@ -22,6 +22,7 @@ public class ControllerCasa {
 		this.stanze = new ArrayList<>(); 
 		this.robot = null;
 		this.allarme = Allarme.getInstance();
+		
 		creazioneCasa();
 	}
 
@@ -126,11 +127,11 @@ public class ControllerCasa {
 		if(stanza != null) {
 			ArrayList<Object> allOggettiStanza = new ArrayList<>();
 
-			if(stanza.getLampade().isEmpty())
+			if(!stanza.getLampade().isEmpty())
 				allOggettiStanza.addAll(stanza.getLampade());
-			if(stanza.getFinestre().isEmpty())
+			if(!stanza.getFinestre().isEmpty())
 				allOggettiStanza.addAll(stanza.getFinestre());
-			if(stanza.getElementi().isEmpty())
+			if(!stanza.getElementi().isEmpty())
 				allOggettiStanza.add(stanza.getElementi());
 
 			return allOggettiStanza;

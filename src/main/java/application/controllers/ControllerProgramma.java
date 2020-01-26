@@ -1,7 +1,14 @@
 package application.controllers;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.*;
 import java.util.ArrayList;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import application.backend.dominio.*;
 import application.backend.programmi.*;
@@ -11,10 +18,18 @@ public class ControllerProgramma {
 	private ControllerCasa casa;
 	private int counter;
 	private ArrayList<Programma> programmi;
+	private FileReader jsonProgrammi;
 
 	public ControllerProgramma(int counter) {
 		this.counter = counter;
 		this.programmi = new ArrayList<>();
+		
+		try {
+			this.jsonProgrammi =  new FileReader(getClass().getClassLoader().getResource("programmi.json").getFile());
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public ControllerProgramma() {
@@ -84,4 +99,29 @@ public class ControllerProgramma {
 			}
 	}
 	
+	public ArrayList<Programma> getAllProgrammi() {
+		return this.programmi;
+	}
+	
+	//@SuppressWarnings("uncheched")
+	public void scriviAllProgrammiJson() {
+		//JSONObject dettaglioProgramma = new JSONObject();
+		
+		JSONArray arrayProgrammi = new JSONArray();
+		
+		for(Programma p : getAllProgrammi()) { 
+			JSONObject objectProgrammi = new JSONObject();
+			JSONObject dettaglioProgramma = new JSONObject();
+			if(p instanceof ProgrammaGiornaliero) {
+				ProgrammaGiornaliero programmaGiornaliero = (ProgrammaGiornaliero) p;
+				dettaglioProgramma.put("ID", programmaGiornaliero.getId());
+				dettaglioProgramma.put("Inizio", programmaGiornaliero.getInizio());
+				dettaglioProgramma.put("Fine", programmaGiornaliero.getFine());
+				dettaglioProgramma.put("Valore Setting", programmaGiornaliero.getValoreDiSetting());
+				objectProgrammi.put(programmaGiornaliero.getClass().getSimpleName(), dettaglioProgramma);
+			}
+			
+			arrayProgrammi.add(objectProgrammi);
+		}
+	}
 }
