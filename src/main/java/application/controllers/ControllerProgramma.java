@@ -79,10 +79,8 @@ public class ControllerProgramma {
 				((RobotPulizia) e).cambiaStato();
 			else {
 				String stanza=casa.cercaElemento();
-				if(e instanceof Lavatrice && ((Lavatrice) e).isInFunzione()== stato)
-					casa.cambiaStatoLavatrice(stanza, ((Lavatrice) e).getId());
-				if(e instanceof Lavastoviglie && ((Lavastoviglie) e).isInFunzione()== stato)
-					casa.cambiaStatoLavastoviglie(stanza, ((Lavastoviglie) e).getId());
+				if(e instanceof ElementoProgrammabile && ((ElementoProgrammabile) e).isInFunzione()== stato)
+					casa.cambiaStatoLavastoviglie(stanza, ((ElementoProgrammabile) e).getId());
 			}
 	}
 	

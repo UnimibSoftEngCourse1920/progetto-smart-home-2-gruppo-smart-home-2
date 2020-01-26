@@ -10,8 +10,7 @@ public class Stanza {
 	private SensoreGas sensoreGas;
 	private Radar radar;
 	private SensoreTemperatura sensoreTemperatura;
-	private Lavatrice lavatrice;
-	private Lavastoviglie lavastoviglie;
+	private ArrayList<ElementoProgrammabile> elementi = new ArrayList<>(); 
 	private String nome;
 	private Timer timerEventi;
 	private Timer timerTemperatura;
@@ -51,14 +50,8 @@ public class Stanza {
 			this.sensoreTemperatura = new SensoreTemperatura(this);
 	}
 	
-	public void addLavatrice(Lavatrice l) {
-		if(this.lavatrice == null)
-			this.lavatrice = l;
-	}
-	
-	public void addLavastoviglie(Lavastoviglie l) {
-		if(this.lavastoviglie == null) 
-			this.lavastoviglie = l;
+	public void addLavastoviglie(ElementoProgrammabile e) {
+		this.elementi.add(e);
 	}
 
 	public List<Lampada> getLampade() {
@@ -68,7 +61,9 @@ public class Stanza {
 	public List<Finestra> getFinestre() {
 		return finestre;
 	}
-
+	public List<ElementoProgrammabile> getElementi() {
+		return elementi;
+	}
 	public SensoreGas getSensoreGas() {
 		return sensoreGas;
 	}
@@ -81,12 +76,12 @@ public class Stanza {
 		return sensoreTemperatura;
 	}
 
-	public Lavatrice getLavatrice() {
-		return lavatrice;
-	}
-
-	public Lavastoviglie getLavastoviglie() {
-		return lavastoviglie;
+	public ElementoProgrammabile getElemento(int id) {
+		for(ElementoProgrammabile e: elementi) {
+			if(e.getId() == id)
+				return e;
+		}
+		return null;
 	}
 	
 	public Lampada getLampada(int id) {

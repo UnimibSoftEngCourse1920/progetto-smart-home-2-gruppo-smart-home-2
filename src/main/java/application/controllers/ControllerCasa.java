@@ -50,18 +50,14 @@ public class ControllerCasa {
 		}
 	}
 	
-	public void cambiaStatoLavatrice(String nome, int id) {
+	public void cambiaStatoElemento(String nome, int id) {
 		Stanza s = getStanza(nome);
-		
-		if(s!= null && s.getLavatrice() != null && s.getLavatrice().getId() == id)
-			s.getLavatrice().cambiaStato();
-	}
-	
-	public void cambiaStatoLavastoviglie(String nome, int id) {
-		Stanza s = getStanza(nome);
-		
-		if(s!= null && s.getLavastoviglie() != null && s.getLavastoviglie().getId() == id)
-			s.getLavatrice().cambiaStato();
+		ElementoProgrammabile e;
+		if(s!= null) {
+			 e = s.getElemento(id);
+			if(e != null)
+				e.cambiaStato();
+		}
 	}
 	
 	public void cambiaStatoLampada(String nome, int id) {
@@ -131,6 +127,7 @@ public class ControllerCasa {
 	public List<Object> getAllOggettiStanza(Stanza stanza) {
 		if(stanza != null) {
 			ArrayList<Object> allOggettiStanza = new ArrayList<>();
+
 			if(stanza.getLampade().size() != 0)
 				allOggettiStanza.addAll(stanza.getLampade());
 			if(stanza.getFinestre().size() != 0)
@@ -139,6 +136,7 @@ public class ControllerCasa {
 				allOggettiStanza.add(stanza.getLavastoviglie());
 			if(stanza.getLavatrice() != null)
 				allOggettiStanza.add(stanza.getLavatrice());
+
 			return allOggettiStanza;
 		}
 		else return Collections.emptyList();
