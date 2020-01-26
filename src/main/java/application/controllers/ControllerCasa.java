@@ -4,14 +4,12 @@ import application.backend.dominio.*;
 import application.backend.sensori.*;
 
 import application.frontend.*;
-import application.frontend.views.StanzeView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 public class ControllerCasa {
 	private JLayeredPane panelPrincipale;
@@ -128,11 +126,11 @@ public class ControllerCasa {
 		if(stanza != null) {
 			ArrayList<Object> allOggettiStanza = new ArrayList<>();
 
-			if(stanza.getLampade().size() != 0)
+			if(stanza.getLampade().isEmpty())
 				allOggettiStanza.addAll(stanza.getLampade());
-			if(stanza.getFinestre().size() != 0)
+			if(stanza.getFinestre().isEmpty())
 				allOggettiStanza.addAll(stanza.getFinestre());
-			if(stanza.getElementi().size() != 0)
+			if(stanza.getElementi().isEmpty())
 				allOggettiStanza.add(stanza.getElementi());
 
 			return allOggettiStanza;
@@ -142,13 +140,13 @@ public class ControllerCasa {
 	
 	public String[] getNomiStanze() {
 		String[] nomiStanze = new String[15];
-		List<Stanza> stanze = getStanze();
-		//System.out.println(stanze.size());
+		List<Stanza> stanzeTemp = getStanze();
+		//System.out.println(stanzeTemp.size());
 		
-		for(int i = 0; i < stanze.size(); i++) {
-			//System.out.println(stanze.get(i).getNome());
+		for(int i = 0; i < stanzeTemp.size(); i++) {
+			//System.out.println(stanzetemp.get(i).getNome());
 			
-			nomiStanze[i] = stanze.get(i).getNome();
+			nomiStanze[i] = stanzeTemp.get(i).getNome();
 		}
 		
 		return nomiStanze;
