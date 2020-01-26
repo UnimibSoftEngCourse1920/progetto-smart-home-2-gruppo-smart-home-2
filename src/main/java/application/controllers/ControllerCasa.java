@@ -132,10 +132,8 @@ public class ControllerCasa {
 				allOggettiStanza.addAll(stanza.getLampade());
 			if(stanza.getFinestre().size() != 0)
 				allOggettiStanza.addAll(stanza.getFinestre());
-			if(stanza.getLavastoviglie() != null)
-				allOggettiStanza.add(stanza.getLavastoviglie());
-			if(stanza.getLavatrice() != null)
-				allOggettiStanza.add(stanza.getLavatrice());
+			if(stanza.getElementi().size() != 0)
+				allOggettiStanza.add(stanza.getElementi());
 
 			return allOggettiStanza;
 		}
@@ -170,10 +168,10 @@ public class ControllerCasa {
 		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
 		cucina.addFinestra(finestraCucina);
 		
-		//CUCINA-----------------------------------------------------------------------------
+		//CAMERA MATRIMONIALE-----------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraCameraMatrimoniale = new SensoreFinestra();
 		Lampada lampadaCameraMatrimoniale = new Lampada(1);
-		cameraMatrimoniale.addLampada(lampadaCucina);
+		cameraMatrimoniale.addLampada(lampadaCameraMatrimoniale);
 		Finestra finestraCameraMatrimoniale = new Finestra(new Tapparella(1), sensoreFinestraCameraMatrimoniale);
 		cameraMatrimoniale.addFinestra(finestraCameraMatrimoniale);
 	}

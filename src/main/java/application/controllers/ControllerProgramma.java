@@ -80,7 +80,7 @@ public class ControllerProgramma {
 			else {
 				String stanza=casa.cercaElemento();
 				if(e instanceof ElementoProgrammabile && ((ElementoProgrammabile) e).isInFunzione()== stato)
-					casa.cambiaStatoLavastoviglie(stanza, ((ElementoProgrammabile) e).getId());
+					casa.cambiaStatoElemento(stanza, ((ElementoProgrammabile) e).getId());
 			}
 	}
 	
