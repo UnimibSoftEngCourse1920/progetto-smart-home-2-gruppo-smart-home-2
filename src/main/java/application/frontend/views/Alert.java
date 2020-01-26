@@ -1,6 +1,6 @@
 package application.frontend.views;
 
-import javax.swing.JLayeredPane;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 

@@ -1,27 +1,27 @@
 package application.frontend.views;
 
-import javax.swing.JButton;
+
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JTree;
-import javax.swing.JRadioButton;
+
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
+
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
+
 
 import application.backend.dominio.*;
 import application.controllers.*;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
+
+
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -108,45 +108,45 @@ public class StanzeView extends JPanel {
 		);
 		setLayout(groupLayout);
 		
-		GroupLayout gl_panelTabellaStanze = new GroupLayout(panelTabellaStanze);
-		gl_panelTabellaStanze.setHorizontalGroup(
-			gl_panelTabellaStanze.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelTabellaStanze.createSequentialGroup()
+		GroupLayout glpanelTabellaStanze = new GroupLayout(panelTabellaStanze);
+		glpanelTabellaStanze.setHorizontalGroup(
+				glpanelTabellaStanze.createParallelGroup(Alignment.TRAILING)
+				.addGroup(glpanelTabellaStanze.createSequentialGroup()
 					.addGap(67)
 					.addComponent(scrollPaneTabellaStanze, GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
 					.addGap(41))
 		);
-		gl_panelTabellaStanze.setVerticalGroup(
-			gl_panelTabellaStanze.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelTabellaStanze.createSequentialGroup()
+		glpanelTabellaStanze.setVerticalGroup(
+				glpanelTabellaStanze.createParallelGroup(Alignment.LEADING)
+				.addGroup(glpanelTabellaStanze.createSequentialGroup()
 					.addGap(34)
 					.addComponent(scrollPaneTabellaStanze, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
 					.addGap(69))
 		);
-		panelTabellaStanze.setLayout(gl_panelTabellaStanze);
+		panelTabellaStanze.setLayout(glpanelTabellaStanze);
 		
-		GroupLayout gl_panelSelezioneStanze = new GroupLayout(panelSelezioneStanze);
-		gl_panelSelezioneStanze.setHorizontalGroup(
-			gl_panelSelezioneStanze.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelSelezioneStanze.createSequentialGroup()
+		GroupLayout glpanelSelezioneStanze = new GroupLayout(panelSelezioneStanze);
+		glpanelSelezioneStanze.setHorizontalGroup(
+				glpanelSelezioneStanze.createParallelGroup(Alignment.LEADING)
+				.addGroup(glpanelSelezioneStanze.createSequentialGroup()
 					.addGap(322)
 					.addComponent(labelSelezioneStanze, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(comboBoxSelezioneStanze, 0, 185, Short.MAX_VALUE)
 					.addGap(248))
 		);
-		gl_panelSelezioneStanze.setVerticalGroup(
-			gl_panelSelezioneStanze.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelSelezioneStanze.createSequentialGroup()
+		glpanelSelezioneStanze.setVerticalGroup(
+				glpanelSelezioneStanze.createParallelGroup(Alignment.TRAILING)
+				.addGroup(glpanelSelezioneStanze.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panelSelezioneStanze.createParallelGroup(Alignment.BASELINE)
-						.addGroup(gl_panelSelezioneStanze.createSequentialGroup()
+					.addGroup(glpanelSelezioneStanze.createParallelGroup(Alignment.BASELINE)
+						.addGroup(glpanelSelezioneStanze.createSequentialGroup()
 							.addGap(4)
 							.addComponent(comboBoxSelezioneStanze))
 						.addComponent(labelSelezioneStanze, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 					.addGap(57))
 		);
-		panelSelezioneStanze.setLayout(gl_panelSelezioneStanze);
+		panelSelezioneStanze.setLayout(glpanelSelezioneStanze);
 	}
 	
 	public void gestioneStanze() {
@@ -165,10 +165,7 @@ public class StanzeView extends JPanel {
                     	
                     else {
                     	(new Alert()).errore("Stanza non trovata", "Errore");
-                    	/*panelPrincipale.removeAll();
-        				panelPrincipale.add(error);
-        				panelPrincipale.repaint();
-        				panelPrincipale.revalidate();*/
+                    	
                     }
             	}
             }
@@ -176,7 +173,6 @@ public class StanzeView extends JPanel {
 		tabellaStanze.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("");
 			        Point point = e.getPoint();
 			        int column = tabellaStanze.columnAtPoint(point);
 			        int row = tabellaStanze.rowAtPoint(point);
@@ -184,27 +180,21 @@ public class StanzeView extends JPanel {
 			        //(new Alert()).errore("ciao", "Column header #" + column + " is clicked, riga "+ row);
 			         
 			        if(column == 2) {
-			        	//boolean stato = (boolean) tabellaStanze.getModel().getValueAt(row, 2);
 			        	String tipoOggetto = (String) tabellaStanze.getModel().getValueAt(row, 0);
 			        	int id = (int) tabellaStanze.getModel().getValueAt(row, 1);
-			        	Object oggetto = null;
 						
 						if(tipoOggetto.equals("Lampada")) {
 							Lampada l = stanzaSelezionata.getLampada(id);
 							l.cambiaStato();
-							oggetto = l;
 						}
 						else if(tipoOggetto.equals("Finestra")) {
 							Finestra f = stanzaSelezionata.getFinestra(id);
 							f.cambiaStato();
-							oggetto = f;
 						}
 						else if(tipoOggetto.equals("Tapparella")) {
 							Tapparella t = stanzaSelezionata.getFinestra(id).getTapparella();
 							t.cambiaStato();
-							oggetto = t;
 						}
-						//aggiornaRigaTabellaStanze(row, oggetto);
 						rimuoviRigheTabellaStanze();
 						viewTabellaStanze(stanzaSelezionata);
 			        }
@@ -216,12 +206,10 @@ public class StanzeView extends JPanel {
 	}
 	
 	public void viewTabellaStanze(Stanza stanza) {
-		//System.out.print(stanza.getNome());
 		tabellaStanze.setVisible(true);
 		List<Object> listaOggettiStanza = controllerCasa.getAllOggettiStanza(stanza);
 		
 		int numeroOggettiStanza = listaOggettiStanza.size();
-		//System.out.println(numeroOggettiStanza);
 		
 		Object oggettoStanza;
 		
@@ -237,7 +225,6 @@ public class StanzeView extends JPanel {
 						i++;
 						viewRigaTabellaStanze(f.getTapparella());
 					}
-					//System.out.println(oggettoStanza.getClass().getSimpleName());
 					
 				}
 				
@@ -275,7 +262,7 @@ public class StanzeView extends JPanel {
 			else
 				rowData[2] = "Chiusa";
 			
-			//viewRigaTabellaStanze(f.getTapparella(), rowData, model);
+			
 			
 		}
 		
@@ -288,10 +275,8 @@ public class StanzeView extends JPanel {
 			else
 				rowData[2] = "Chiusa";
 			
-			}
-		//System.out.println(rowData[0]);
+		}
 		modelTabellaStanze.addRow(rowData);
-		//System.out.println("righe" +modelTabellaStanze.getRowCount());
 	}
 	
 	public void comboBoxStanze() {
@@ -303,16 +288,8 @@ public class StanzeView extends JPanel {
 		}
 	}
 	
-	public void aggiornaRigaTabellaStanze(int riga, Object oggetto) {
-		//System.out.println("cont rimuovi"+modelTabellaStanze.getRowCount());
-        	modelTabellaStanze.removeRow(riga);
-        	viewRigaTabellaStanze(oggetto);
-        
-	}
-	
 	public void rimuoviRigheTabellaStanze() {
 		int numeroRighe = modelTabellaStanze.getRowCount();
-		//System.out.println(numeroRighe);
 		for (int i = numeroRighe - 1; i >= 0; i--) {
 		    modelTabellaStanze.removeRow(i);
 		}

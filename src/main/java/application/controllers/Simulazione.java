@@ -1,9 +1,10 @@
 package application.controllers;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
-public class Simulazione extends TimerTask{
+public class Simulazione extends TimerTask {
 	private LocalTime ora;
 	private DayOfWeek giorno;
 	private ControllerProgramma cp;

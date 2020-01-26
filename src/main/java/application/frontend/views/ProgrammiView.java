@@ -5,22 +5,22 @@ import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
 
-import application.frontend.MainJFrame;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Panel;
+
+
+
+
+
+
+
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Button;
-import javax.swing.JCheckBox;
-import javax.swing.JPasswordField;
-import javax.swing.JList;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
+
+
+
+
+
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -28,11 +28,9 @@ import javax.swing.SwingConstants;
 public class ProgrammiView extends JPanel {
 	private JLayeredPane panelPrincipale;
 	private JPanel panelTabellaProgrammi;
-	private JButton bottone;
 	
 	public ProgrammiView(JLayeredPane panelPrincipale) {
 		this.panelPrincipale = panelPrincipale;
-		//ProgrammaView panelStanze = new ProgrammaView(panelPrincipale);
 		
 		panelTabellaProgrammi = new JPanel();
 		
@@ -55,7 +53,7 @@ public class ProgrammiView extends JPanel {
 		);
 		setLayout(groupLayout);
 		
-		bottone = new JButton("New button");
+		
 		
 		
 	}
