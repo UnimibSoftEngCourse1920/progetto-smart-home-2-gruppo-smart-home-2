@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 import application.backend.dominio.ElementoProgrammabile;
 import application.backend.dominio.Stanza;
 import application.controllers.ControllerCasa;
+import application.controllers.Simulazione;
 import application.frontend.support.Alert;
 
 import javax.swing.GroupLayout;
@@ -17,16 +18,25 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.Component;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerDateModel;
 import javax.swing.JCheckBox;
+import javax.swing.JTextField;
+import javax.swing.JSpinner;
 
 
-public class ProgrammaView extends JPanel {
+public class AggiungiProgrammaView extends JPanel {
+	private Simulazione s;
 	private JLayeredPane panelPrincipale;
 	private JPanel panelSelezioneStanzaElementoTipo;
 	private JPanel panelSelezioneGiorni;
@@ -52,13 +62,17 @@ public class ProgrammaView extends JPanel {
 	private JCheckBox checkBoxSabato;
 	private JCheckBox checkBoxDomenica;
 	
+	//PalelSelezioneGiornaliero
+	private JLabel labelInizioGiornaliero;
+	private JSpinner spinnerGiornaliero;
+	private SpinnerDateModel spinnerModelGiornaliero;
 	
 	
 	
-	
-	public ProgrammaView(JLayeredPane principale) {
+	public AggiungiProgrammaView(JLayeredPane principale, Simulazione s) {
 		this.panelPrincipale = principale;
 		this.controllerCasa = new ControllerCasa(panelPrincipale); 
+		this.s = s;
 		
 		inizializzazione();
 	}
@@ -77,13 +91,15 @@ public class ProgrammaView extends JPanel {
 		comboBoxSelezioneElemento.setEnabled(false);
 		labelSelezioneTipo = new JLabel("Tipo:");
 		comboBoxSelezioneTipo = new JComboBox();
-		comboBoxSelezioneTipo.setEnabled(false);
+		
 		
 		panelSelezioneGiorni = new JPanel();
-		
+		Calendar calendar = Calendar.getInstance();
+		Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0);
 		
 		//panelSelezioneSettimanale-----------------------
 		panelSelezioneSettimanale = new JPanel();
+		panelSelezioneSettimanale.setVisible(false);
 		checkBoxLunedi = new JCheckBox("Lunedi");
 		checkBoxMartedi = new JCheckBox("Martedi");
 		checkBoxMercoledi = new JCheckBox("Mercoledi");
@@ -94,9 +110,19 @@ public class ProgrammaView extends JPanel {
 		
 		//panelSelezioneGiornaliero------------------------
 		panelSelezioneGiornaliero = new JPanel();
+		panelSelezioneGiornaliero.setVisible(false);
+		labelInizioGiornaliero = new JLabel("Ora inizio:");
+		spinnerModelGiornaliero = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+		spinnerGiornaliero = new JSpinner(spinnerModelGiornaliero);
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinnerGiornaliero, "HH:mm");
+		spinnerGiornaliero.setEditor(dateEditor);
+		
+		
+		
 		
 		
 		comboBoxStanze();
+		comboBoxTipo();
 		
 		setLayoutProgramma();
 		
@@ -206,11 +232,34 @@ public class ProgrammaView extends JPanel {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelSelezioneStanzaElementoTipo.setLayout(gl_panelStanzaElementoTipo);
+		
+		GroupLayout gl_panelSelezioneGiornaliero = new GroupLayout(panelSelezioneGiornaliero);
+		gl_panelSelezioneGiornaliero.setHorizontalGroup(
+			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSelezioneGiornaliero.createSequentialGroup()
+					.addGap(236)
+					.addComponent(labelInizioGiornaliero, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(spinnerGiornaliero, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+					.addGap(481))
+		);
+		gl_panelSelezioneGiornaliero.setVerticalGroup(
+			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSelezioneGiornaliero.createSequentialGroup()
+					.addGap(25)
+					.addGroup(gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.BASELINE)
+						.addComponent(labelInizioGiornaliero)
+						.addComponent(spinnerGiornaliero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(20, Short.MAX_VALUE))
+		);
+		panelSelezioneGiornaliero.setLayout(gl_panelSelezioneGiornaliero);
 	}
 	
 	public void gestioneProgramma() {
 		comboBoxSelezioneStanza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panelSelezioneGiornaliero.setVisible(false);
+            	panelSelezioneSettimanale.setVisible(false);
 				comboBoxSelezioneElemento.removeAllItems();
 				String nomeStanza;
             	if (comboBoxSelezioneStanza.getSelectedItem() != null) {
@@ -222,10 +271,30 @@ public class ProgrammaView extends JPanel {
             	}
 			}
 		});
+		comboBoxSelezioneTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBoxSelezioneElemento.isEnabled()) {
+					if (comboBoxSelezioneTipo.getSelectedItem() != null) {
+			            String tipo = comboBoxSelezioneTipo.getSelectedItem().toString();
+			            if(tipo.equals("Giornaliero")) {
+			            	panelSelezioneGiornaliero.setVisible(true);
+			            	panelSelezioneSettimanale.setVisible(false);
+			            }
+			            else {
+			            	panelSelezioneSettimanale.setVisible(true);
+			            	panelSelezioneGiornaliero.setVisible(false);
+			            }
+			        }
+				}
+				else
+					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
+			}
+		});
 		comboBoxSelezioneElemento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			}
+            	panelSelezioneSettimanale.setVisible(false);
+            	panelSelezioneGiornaliero.setVisible(false); 
+        	}
 		});
 	}
 	
@@ -264,6 +333,13 @@ public class ProgrammaView extends JPanel {
 				}
 			}
 		}
+	}
+	
+	public void comboBoxTipo() {
+		//System.out.println("ciao");
+		comboBoxSelezioneTipo.setEnabled(true);
+		comboBoxSelezioneTipo.addItem("Giornaliero");
+		comboBoxSelezioneTipo.addItem("Settimanale");
 		
 	}
 }

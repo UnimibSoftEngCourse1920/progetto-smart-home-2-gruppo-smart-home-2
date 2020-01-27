@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 
 import application.backend.dominio.Stanza;
 import application.controllers.ControllerProgramma;
+import application.controllers.Simulazione;
 import application.frontend.support.Alert;
 
 import javax.swing.JScrollPane;
@@ -36,6 +37,7 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 
 public class ProgrammiView extends JPanel {
+	private Simulazione s;
 	private JLayeredPane panelPrincipale;
 	private ControllerProgramma controllerProgramma;
 	private JLabel labelProgrammi;
@@ -46,11 +48,12 @@ public class ProgrammiView extends JPanel {
 	private JPanel panelTabellaProgrammi;
 	private JScrollPane scrollPaneTabellaProgrammi;
 	private JTable tabellaProgrammi;
-	private ProgrammaView panelProgramma;
+	private AggiungiProgrammaView panelProgramma;
 	
-	public ProgrammiView(JLayeredPane panelPrincipale) {
+	public ProgrammiView(JLayeredPane panelPrincipale, Simulazione s) {
 		this.panelPrincipale = panelPrincipale;
 		controllerProgramma = new ControllerProgramma();
+		this.s = s;
 		
 		inizializzazione();
 	}
@@ -60,7 +63,7 @@ public class ProgrammiView extends JPanel {
 		labelProgrammi.setFont(new Font("Arial", Font.PLAIN, 25));
 		bottoneAggiungiProgramma = new JButton("Aggiungi");
 		
-		panelProgramma = new ProgrammaView(panelPrincipale);
+		panelProgramma = new AggiungiProgrammaView(panelPrincipale, s);
 		
 		labelAggiungiProgramma = new JLabel("Nuovo programma:");
 		panelAggiungiProgramma = new JPanel();

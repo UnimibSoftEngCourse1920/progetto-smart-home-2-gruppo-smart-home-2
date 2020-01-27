@@ -99,7 +99,7 @@ public class MainJFrame extends JFrame {
 		
 		bottoneMenuProgrammi = new JButton("Programmi");
 		bottoneMenuStanze = new JButton("Stanze");
-		panelProgrammi = new ProgrammiView(panelPrincipale);
+		panelProgrammi = new ProgrammiView(panelPrincipale, s);
 		panelStanze = new StanzeView(panelPrincipale);
 		panelHomepage = new HomepageView(panelPrincipale);
 		
