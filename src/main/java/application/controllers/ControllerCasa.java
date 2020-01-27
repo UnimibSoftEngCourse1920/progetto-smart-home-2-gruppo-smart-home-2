@@ -8,6 +8,7 @@ import application.frontend.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.JLayeredPane;
 
@@ -16,6 +17,7 @@ public class ControllerCasa {
 	private ArrayList<Stanza> stanze ;
 	private RobotPulizia robot ;
 	private Allarme allarme;
+	private Timer timer= new Timer();
 	
 	public ControllerCasa(JLayeredPane panelPrincipale) {
 		this.panelPrincipale = panelPrincipale;
@@ -26,14 +28,16 @@ public class ControllerCasa {
 		creazioneCasa();
 	}
 
-	//DA CONTROLLARE E MODIFICARE
-	public void muoviRobot(Stanza s) {
-		if(this.robot != null)
-			this.robot.muovi(s);
+	public void accendiRobot() {
+		timer.schedule(robot, 30000, 30000);
+	}
+	
+	public void spegniRobot() {
+		timer.cancel();
 	}
 	
 	public void addRobot(Stanza s) {
-		this.robot = new RobotPulizia(s);
+		this.robot = new RobotPulizia(s,this);
 	}
 	
 	public void addStanza(Stanza s) {
@@ -103,13 +107,10 @@ public class ControllerCasa {
 		return null;
 	}
 	
-
 	public List<Stanza> getStanze() {
-		return this.stanze;
-	}
-	
-	public String cercaElemento() {
-		return null;
+		@SuppressWarnings("unchecked")
+		List<Stanza> clone = (List<Stanza>)this.stanze.clone();
+		return clone;
 	}
 	
 	public RobotPulizia getRobot() {

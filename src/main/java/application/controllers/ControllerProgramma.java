@@ -124,12 +124,14 @@ public class ControllerProgramma {
 	}
 	
 	public void cambiaStatoElemento(Object e, boolean stato) {
-			if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato)
-				((RobotPulizia) e).cambiaStato();
-			else {
-				String stanza=casa.cercaElemento();
-				if(e instanceof ElementoProgrammabile && ((ElementoProgrammabile) e).isInFunzione()== stato)
-					casa.cambiaStatoElemento(stanza, ((ElementoProgrammabile) e).getId());
+			if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato && stato == false)
+				casa.accendiRobot();
+			else {if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato && stato == true)
+				casa.spegniRobot();
+				else {
+					if(e instanceof ElementoProgrammabile && ((ElementoProgrammabile) e).isInFunzione()== stato)
+						((ElementoProgrammabile) e).cambiaStato();
+				}
 			}
 	}
 	
