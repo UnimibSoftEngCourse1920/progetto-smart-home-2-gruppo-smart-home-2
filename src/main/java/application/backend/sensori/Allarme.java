@@ -2,6 +2,7 @@ package application.backend.sensori;
 
 import application.backend.dominio.*;
 import application.controllers.*;
+import application.frontend.support.Alert;
 
 public class Allarme {
 	private static Allarme istance = null;
@@ -68,7 +69,8 @@ public class Allarme {
 	
 	public void spegni() {
 		if(emergenza)
-			System.out.println("Non puoi spegnere l'allarme durante un'emergenza");
+			//System.out.println("Non puoi spegnere l'allarme durante un'emergenza");
+			(new Alert()).errore("Non puoi spegnere l'allarme durante un'emergenza", "Errore");
 		else
 			this.isAttivo = false;
 	}

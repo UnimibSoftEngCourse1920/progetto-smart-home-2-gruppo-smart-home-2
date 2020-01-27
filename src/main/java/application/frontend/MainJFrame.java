@@ -50,6 +50,7 @@ public class MainJFrame extends JFrame {
 	private JLayeredPane panelPrincipale;
 	private JButton bottoneMenuStanze;
 	private JButton bottoneMenuRobotPulizia;
+	private JButton bottoneMenuAllarme;
 	
 	private JLabel clock;
 	private JLabel labelSmartHome;
@@ -59,6 +60,7 @@ public class MainJFrame extends JFrame {
 	private StanzeView panelStanze;
 	private HomepageView panelHomepage;
 	private RobotPuliziaView panelRobot;
+	private AllarmeView panelAllarme;
 	
 	//DOMINIO---------------------------------
 	private Simulazione s;
@@ -107,10 +109,12 @@ public class MainJFrame extends JFrame {
 		bottoneMenuProgrammi = new JButton("Programmi");
 		bottoneMenuStanze = new JButton("Stanze");
 		bottoneMenuRobotPulizia = new JButton("Robot Pulizia");
+		bottoneMenuAllarme = new JButton("Allarme");
 		panelProgrammi = new ProgrammiView(panelPrincipale, s, controllerProgramma);
 		panelStanze = new StanzeView(panelPrincipale, casa);
 		panelHomepage = new HomepageView(panelPrincipale, casa);
 		panelRobot = new RobotPuliziaView(panelPrincipale, casa);
+		panelAllarme = new AllarmeView(panelPrincipale, casa);
 		
 		labelSmartHome = new JLabel("SMART HOME");
 		labelSmartHome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -149,9 +153,7 @@ public class MainJFrame extends JFrame {
 				.addComponent(panelPrincipale, GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
 		);
 		contentPane.setLayout(glcontentPane);
-		
-		
-		
+
 		GroupLayout glpanelMenu = new GroupLayout(panelMenu);
 		glpanelMenu.setHorizontalGroup(
 			glpanelMenu.createParallelGroup(Alignment.LEADING)
@@ -162,6 +164,9 @@ public class MainJFrame extends JFrame {
 						.addComponent(bottoneMenuProgrammi, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(bottoneMenuStanze, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(bottoneMenuRobotPulizia, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+					.addContainerGap())
+				.addGroup(glpanelMenu.createSequentialGroup()
+					.addComponent(bottoneMenuAllarme, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		glpanelMenu.setVerticalGroup(
@@ -177,7 +182,9 @@ public class MainJFrame extends JFrame {
 					.addComponent(bottoneMenuStanze, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bottoneMenuRobotPulizia, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(99, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottoneMenuAllarme, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(37, Short.MAX_VALUE))
 		);
 		panelMenu.setLayout(glpanelMenu);
 		
@@ -210,6 +217,14 @@ public class MainJFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelRobot);
+				panelPrincipale.repaint();
+				panelPrincipale.revalidate();
+			}
+		});
+		bottoneMenuAllarme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipale.removeAll();
+				panelPrincipale.add(panelAllarme);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
 			}

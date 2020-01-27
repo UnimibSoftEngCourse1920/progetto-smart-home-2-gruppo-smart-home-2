@@ -118,6 +118,10 @@ public class ControllerCasa {
 		return this.robot;
 	}
 	
+	public Allarme getAllarme() {
+		return this.allarme;
+	}
+	
 	public void cambiaTempDesiderata(String nome, double temp) {
 		Stanza stanza = getStanza(nome);
 		SensoreTemperatura s;

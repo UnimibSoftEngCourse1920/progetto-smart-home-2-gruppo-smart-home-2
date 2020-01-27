@@ -54,30 +54,32 @@ public class RobotPuliziaView extends JPanel {
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(titolo, GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(cambiaStato, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
+					.addComponent(cambiaStato, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(aggiornaPosizioneRobot, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(posizioneRobot, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
 					.addGap(121))
+				.addComponent(titolo, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(14)
 					.addComponent(titolo, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(cambiaStato, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-								.addComponent(aggiornaPosizioneRobot, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(posizioneRobot, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(20)
-							.addComponent(posizioneRobot, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(374, Short.MAX_VALUE))
+							.addGap(16)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(cambiaStato, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+								.addComponent(aggiornaPosizioneRobot, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(442, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 	}
