@@ -26,7 +26,7 @@ public class Allarme {
 		emergenza = true;
 		System.out.println("Chiamo il gentodigiotto");
 		if(s instanceof SensoreGas) {
-			this.notifica(s);
+			this.notificaSensore((SensoreGas)s);
 			}
 		else if(isAttivo()) {
 			for (Stanza stanza: casa.getStanze()) 
