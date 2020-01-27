@@ -9,7 +9,7 @@ public class SensoreTemperatura extends TimerTask {
 	private String stato;
 	private double temperaturaCorrente;
 	private double temperaturaDesiderata;
-	private static final double TEMPERATURADEFAULT= 17;
+	public static final double TEMPERATURADEFAULT= 17;
 	private Stanza stanza;
 	
 	public SensoreTemperatura(Stanza stanza) {
