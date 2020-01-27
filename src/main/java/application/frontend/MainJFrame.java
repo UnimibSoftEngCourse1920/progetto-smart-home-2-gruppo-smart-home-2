@@ -49,6 +49,7 @@ public class MainJFrame extends JFrame {
 	private JButton bottoneMenuProgrammi;
 	private JLayeredPane panelPrincipale;
 	private JButton bottoneMenuStanze;
+	private JButton bottoneMenuRobotPulizia;
 	
 	private JLabel clock;
 	private JLabel labelSmartHome;
@@ -57,6 +58,7 @@ public class MainJFrame extends JFrame {
 	private ProgrammiView panelProgrammi;
 	private StanzeView panelStanze;
 	private HomepageView panelHomepage;
+	private RobotPuliziaView panelRobot;
 	
 	//DOMINIO---------------------------------
 	private Simulazione s;
@@ -99,9 +101,11 @@ public class MainJFrame extends JFrame {
 		
 		bottoneMenuProgrammi = new JButton("Programmi");
 		bottoneMenuStanze = new JButton("Stanze");
+		bottoneMenuRobotPulizia = new JButton("Robot Pulizia");
 		panelProgrammi = new ProgrammiView(panelPrincipale, s);
 		panelStanze = new StanzeView(panelPrincipale);
 		panelHomepage = new HomepageView(panelPrincipale);
+		panelRobot = new RobotPuliziaView(panelPrincipale);
 		
 		labelSmartHome = new JLabel("SMART HOME");
 		labelSmartHome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -141,16 +145,21 @@ public class MainJFrame extends JFrame {
 		);
 		contentPane.setLayout(glcontentPane);
 		
+		
+		
 		GroupLayout glpanelMenu = new GroupLayout(panelMenu);
 		glpanelMenu.setHorizontalGroup(
-				glpanelMenu.createParallelGroup(Alignment.LEADING)
+			glpanelMenu.createParallelGroup(Alignment.LEADING)
 				.addComponent(labelSmartHome, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
 				.addComponent(clock, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
 				.addComponent(bottoneMenuProgrammi, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
 				.addComponent(bottoneMenuStanze, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addGroup(glpanelMenu.createSequentialGroup()
+					.addComponent(bottoneMenuRobotPulizia, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		glpanelMenu.setVerticalGroup(
-				glpanelMenu.createParallelGroup(Alignment.LEADING)
+			glpanelMenu.createParallelGroup(Alignment.LEADING)
 				.addGroup(glpanelMenu.createSequentialGroup()
 					.addGap(23)
 					.addComponent(labelSmartHome, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
@@ -160,7 +169,9 @@ public class MainJFrame extends JFrame {
 					.addComponent(bottoneMenuProgrammi, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bottoneMenuStanze, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(161, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottoneMenuRobotPulizia, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(99, Short.MAX_VALUE))
 		);
 		panelMenu.setLayout(glpanelMenu);
 		
@@ -189,6 +200,14 @@ public class MainJFrame extends JFrame {
 		    	viewHomepage();
 		    }  
 		}); 
+		bottoneMenuRobotPulizia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipale.removeAll();
+				panelPrincipale.add(panelRobot);
+				panelPrincipale.repaint();
+				panelPrincipale.revalidate();
+			}
+		});
 	}
 	
 	public void viewHomepage() {
