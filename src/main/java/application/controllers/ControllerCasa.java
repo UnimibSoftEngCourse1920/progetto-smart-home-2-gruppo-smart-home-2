@@ -10,17 +10,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 
+import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
 public class ControllerCasa {
-	private JLayeredPane panelPrincipale;
+	private JFrame main;
 	private ArrayList<Stanza> stanze ;
 	private RobotPulizia robot ;
 	private Allarme allarme;
 	private Timer timer= new Timer();
 	
-	public ControllerCasa(JLayeredPane panelPrincipale) {
-		this.panelPrincipale = panelPrincipale;
+	public ControllerCasa(JFrame main) {
+		this.main = main;
 		this.stanze = new ArrayList<>(); 
 		this.robot = null;
 		this.allarme = Allarme.getInstance();
