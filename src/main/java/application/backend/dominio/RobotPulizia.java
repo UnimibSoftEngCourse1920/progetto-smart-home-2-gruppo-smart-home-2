@@ -26,8 +26,10 @@ public class RobotPulizia {
 	}
 	
 	public void cambiaStato() {
-		if(isInFunzione())
+		if(isInFunzione()) {
 			this.isInFunzione = false;
+			this.posizione = this.base;
+		}
 		else 
 			this.isInFunzione = true;
 	}
