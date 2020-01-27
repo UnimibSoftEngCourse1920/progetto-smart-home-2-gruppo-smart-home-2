@@ -99,6 +99,7 @@ public class MainJFrame extends JFrame {
 	public void inizializzazione() {
 		casa = new ControllerCasa(this);
 		controllerProgramma = new ControllerProgramma();
+		controllerProgramma.setCasa(casa);
 		panelMenu = new JPanel();
 		panelPrincipale = new JLayeredPane();
 		panelPrincipale.setLayout(new BorderLayout(0, 0));
@@ -154,12 +155,13 @@ public class MainJFrame extends JFrame {
 		GroupLayout glpanelMenu = new GroupLayout(panelMenu);
 		glpanelMenu.setHorizontalGroup(
 			glpanelMenu.createParallelGroup(Alignment.LEADING)
-				.addComponent(labelSmartHome, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-				.addComponent(clock, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-				.addComponent(bottoneMenuProgrammi, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-				.addComponent(bottoneMenuStanze, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+				.addComponent(labelSmartHome, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+				.addComponent(clock, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
 				.addGroup(glpanelMenu.createSequentialGroup()
-					.addComponent(bottoneMenuRobotPulizia, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
+					.addGroup(glpanelMenu.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(bottoneMenuProgrammi, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(bottoneMenuStanze, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(bottoneMenuRobotPulizia, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		glpanelMenu.setVerticalGroup(

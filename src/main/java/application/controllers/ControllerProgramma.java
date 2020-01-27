@@ -143,6 +143,10 @@ public class ControllerProgramma {
 		return this.casa;
 	}
 	
+	public void setCasa(ControllerCasa casa) {
+		this.casa = casa;
+	}
+	
 	/*
 	//@SuppressWarnings("uncheched")
 	public void scriviAllProgrammiJson() {

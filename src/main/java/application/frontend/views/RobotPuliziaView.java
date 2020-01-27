@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import application.controllers.ControllerCasa;
+import application.frontend.support.Alert;
+
 import java.awt.Font;
 
 public class RobotPuliziaView extends JPanel {
@@ -18,6 +20,7 @@ public class RobotPuliziaView extends JPanel {
 	public RobotPuliziaView(JLayeredPane principale, ControllerCasa casa) {
 		this.panelPrincipale = principale;
 		this.casa = casa;
+		
 		inizializzazione();
 	}
 	
@@ -31,14 +34,20 @@ public class RobotPuliziaView extends JPanel {
 		titolo.setFont(new Font("Arial", Font.PLAIN, 25));
 		
 		setLayoutRobot();
+		
 		setStato();
 	}
 	
-	private void setStato() {
-		if(this.casa.getRobot().isInFunzione())
-			cambiaStato.setText("Spegni Robot");
-		else
-			cambiaStato.setText("Accendi Robot");
+	
+	public void setStato() {
+		if(this.casa.getRobot() != null) {
+			if(this.casa.getRobot().isInFunzione())
+				cambiaStato.setText("Spegni Robot");
+			else
+				cambiaStato.setText("Accendi Robot");
+		}
+		/*else
+			(new Alert()).errore("La casa non ha un robot della pulizia", "Attenzione");*/
 	}
 
 	public void setLayoutRobot() {
