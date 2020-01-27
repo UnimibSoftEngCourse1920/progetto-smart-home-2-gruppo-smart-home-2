@@ -18,6 +18,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,6 +35,9 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import java.awt.Color;
+import javax.swing.JButton;
 
 
 public class AggiungiProgrammaView extends JPanel {
@@ -61,13 +66,28 @@ public class AggiungiProgrammaView extends JPanel {
 	private JCheckBox checkBoxVenerdi;
 	private JCheckBox checkBoxSabato;
 	private JCheckBox checkBoxDomenica;
+	private JLabel labelInizioLunedi;
+	private JLabel labelInizioMartedi;
+	private JLabel labelInizioMercoledi;
+	private JLabel labelInizioGiovedi;
+	private JLabel labelInizioVenerdi;
+	private JLabel labelInizioSabato;
+	private JLabel labelInizioDomenica;
+	private JSpinner spinnerLunedi;
+	private JSpinner spinnerMartedi;
+	private JSpinner spinnerMercoledi;
+	private JSpinner spinnerGiovedi;
+	private JSpinner spinnerVenerdi;
+	private JSpinner spinnerSabato;
+	private JSpinner spinnerDomenica;
+	private JButton bottoneAggiungiSettimanale;
 	
-	//PalelSelezioneGiornaliero
+	
+	
+	//PanelSelezioneGiornaliero
 	private JLabel labelInizioGiornaliero;
 	private JSpinner spinnerGiornaliero;
-	private SpinnerDateModel spinnerModelGiornaliero;
-	
-	
+	private JButton bottoneAggiungiGiornaliero;
 	
 	public AggiungiProgrammaView(JLayeredPane principale, Simulazione s) {
 		this.panelPrincipale = principale;
@@ -94,8 +114,11 @@ public class AggiungiProgrammaView extends JPanel {
 		
 		
 		panelSelezioneGiorni = new JPanel();
+		
+		
 		Calendar calendar = Calendar.getInstance();
 		Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0);
+		SpinnerDateModel spinnerModel = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
 		
 		//panelSelezioneSettimanale-----------------------
 		panelSelezioneSettimanale = new JPanel();
@@ -107,15 +130,46 @@ public class AggiungiProgrammaView extends JPanel {
 		checkBoxVenerdi = new JCheckBox("Venerdi");
 		checkBoxSabato = new JCheckBox("Sabato");
 		checkBoxDomenica = new JCheckBox("Domenica");
+		labelInizioLunedi = new JLabel("Ora inizio:");
+		labelInizioMartedi = new JLabel("Ora inizio:");
+		labelInizioMercoledi = new JLabel("Ora inizio:");
+		labelInizioGiovedi = new JLabel("Ora inizio:");
+		labelInizioVenerdi = new JLabel("Ora inizio:");
+		labelInizioSabato = new JLabel("Ora inizio:");
+		labelInizioDomenica = new JLabel("Ora inizio:");
+		spinnerLunedi = new JSpinner(spinnerModel);
+		spinnerMartedi = new JSpinner(spinnerModel);
+		spinnerMercoledi = new JSpinner(spinnerModel);
+		spinnerGiovedi = new JSpinner(spinnerModel);
+		spinnerVenerdi = new JSpinner(spinnerModel);
+		spinnerSabato = new JSpinner(spinnerModel);
+		spinnerDomenica = new JSpinner(spinnerModel);
+		JSpinner.DateEditor dateEditorLunedi = new JSpinner.DateEditor(spinnerLunedi, "HH:mm");
+		spinnerLunedi.setEditor(dateEditorLunedi);
+		JSpinner.DateEditor dateEditorMartedi = new JSpinner.DateEditor(spinnerMartedi, "HH:mm");
+		spinnerMartedi.setEditor(dateEditorMartedi);
+		JSpinner.DateEditor dateEditorMercoledi = new JSpinner.DateEditor(spinnerMercoledi, "HH:mm");
+		spinnerMercoledi.setEditor(dateEditorMercoledi);
+		JSpinner.DateEditor dateEditorGiovedi = new JSpinner.DateEditor(spinnerGiovedi, "HH:mm");
+		spinnerGiovedi.setEditor(dateEditorGiovedi);
+		JSpinner.DateEditor dateEditorVenerdi = new JSpinner.DateEditor(spinnerVenerdi, "HH:mm");
+		spinnerVenerdi.setEditor(dateEditorVenerdi);
+		JSpinner.DateEditor dateEditorSabato = new JSpinner.DateEditor(spinnerSabato, "HH:mm");
+		spinnerSabato.setEditor(dateEditorSabato);
+		JSpinner.DateEditor dateEditorDomenica = new JSpinner.DateEditor(spinnerDomenica, "HH:mm");
+		spinnerDomenica.setEditor(dateEditorDomenica);
+		bottoneAggiungiSettimanale = new JButton("Aggiungi");
+		
 		
 		//panelSelezioneGiornaliero------------------------
 		panelSelezioneGiornaliero = new JPanel();
 		panelSelezioneGiornaliero.setVisible(false);
 		labelInizioGiornaliero = new JLabel("Ora inizio:");
-		spinnerModelGiornaliero = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
-		spinnerGiornaliero = new JSpinner(spinnerModelGiornaliero);
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinnerGiornaliero, "HH:mm");
-		spinnerGiornaliero.setEditor(dateEditor);
+		bottoneAggiungiGiornaliero = new JButton("Aggiungi");
+		
+		spinnerGiornaliero = new JSpinner(spinnerModel);
+		JSpinner.DateEditor dateEditorGiornaliero = new JSpinner.DateEditor(spinnerGiornaliero, "HH:mm");
+		spinnerGiornaliero.setEditor(dateEditorGiornaliero);
 		
 		
 		
@@ -127,21 +181,25 @@ public class AggiungiProgrammaView extends JPanel {
 		setLayoutProgramma();
 		
 		gestioneProgramma();
+		
+		gestioneSelezioneSettimanale();
+		
+		gestioneAggiungiGiornaliero();
 	}
 	
 	public void setLayoutProgramma() {
 		GroupLayout gl_panelSelezioneGiorni = new GroupLayout(panelSelezioneGiorni);
 		gl_panelSelezioneGiorni.setHorizontalGroup(
 			gl_panelSelezioneGiorni.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelSelezioneSettimanale, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
 				.addComponent(panelSelezioneGiornaliero, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+				.addComponent(panelSelezioneSettimanale, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
 		);
 		gl_panelSelezioneGiorni.setVerticalGroup(
 			gl_panelSelezioneGiorni.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelSelezioneGiorni.createSequentialGroup()
 					.addComponent(panelSelezioneGiornaliero, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelSelezioneSettimanale, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+					.addComponent(panelSelezioneSettimanale, GroupLayout.PREFERRED_SIZE, 304, GroupLayout.PREFERRED_SIZE))
 		);
 		
 		GroupLayout gl_panelSelezioneSettimanale = new GroupLayout(panelSelezioneSettimanale);
@@ -157,26 +215,87 @@ public class AggiungiProgrammaView extends JPanel {
 						.addComponent(checkBoxVenerdi, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
 						.addComponent(checkBoxSabato, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
 						.addComponent(checkBoxDomenica, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
-					.addGap(748))
+					.addGap(90)
+					.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(labelInizioLunedi, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addGap(4)
+							.addComponent(spinnerLunedi, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(labelInizioMartedi, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinnerMartedi, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(labelInizioMercoledi, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinnerMercoledi, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+							.addGap(174)
+							.addComponent(bottoneAggiungiSettimanale, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(labelInizioGiovedi, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinnerGiovedi, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(labelInizioVenerdi, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinnerVenerdi, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(labelInizioSabato, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinnerSabato, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(labelInizioDomenica, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinnerDomenica, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))
+					.addGap(232))
 		);
 		gl_panelSelezioneSettimanale.setVerticalGroup(
 			gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
 					.addGap(18)
-					.addComponent(checkBoxLunedi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(checkBoxMartedi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(checkBoxMercoledi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(checkBoxGiovedi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(checkBoxVenerdi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(checkBoxSabato, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(checkBoxDomenica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(17))
+					.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addGap(3)
+							.addComponent(labelInizioLunedi, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(269))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(spinnerLunedi)
+							.addGap(77)
+							.addComponent(bottoneAggiungiSettimanale)
+							.addGap(166))
+						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+							.addComponent(checkBoxLunedi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+							.addGap(18)
+							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+								.addComponent(checkBoxMartedi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(labelInizioMartedi)
+								.addComponent(spinnerMartedi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+								.addComponent(checkBoxMercoledi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(labelInizioMercoledi)
+								.addComponent(spinnerMercoledi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+								.addComponent(checkBoxGiovedi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(labelInizioGiovedi)
+								.addComponent(spinnerGiovedi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+								.addComponent(checkBoxVenerdi, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(spinnerVenerdi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelInizioVenerdi))
+							.addGap(18)
+							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+								.addComponent(checkBoxSabato, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+								.addComponent(spinnerSabato, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelInizioSabato))
+							.addGap(18)
+							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+								.addComponent(checkBoxDomenica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(spinnerDomenica, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelInizioDomenica))
+							.addGap(17))))
 		);
 		panelSelezioneSettimanale.setLayout(gl_panelSelezioneSettimanale);
 		panelSelezioneGiorni.setLayout(gl_panelSelezioneGiorni);
@@ -232,7 +351,7 @@ public class AggiungiProgrammaView extends JPanel {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelSelezioneStanzaElementoTipo.setLayout(gl_panelStanzaElementoTipo);
-		
+
 		GroupLayout gl_panelSelezioneGiornaliero = new GroupLayout(panelSelezioneGiornaliero);
 		gl_panelSelezioneGiornaliero.setHorizontalGroup(
 			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.LEADING)
@@ -240,8 +359,10 @@ public class AggiungiProgrammaView extends JPanel {
 					.addGap(236)
 					.addComponent(labelInizioGiornaliero, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(spinnerGiornaliero, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-					.addGap(481))
+					.addComponent(spinnerGiornaliero, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+					.addGap(88)
+					.addComponent(bottoneAggiungiGiornaliero)
+					.addGap(304))
 		);
 		gl_panelSelezioneGiornaliero.setVerticalGroup(
 			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.LEADING)
@@ -249,8 +370,9 @@ public class AggiungiProgrammaView extends JPanel {
 					.addGap(25)
 					.addGroup(gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelInizioGiornaliero)
-						.addComponent(spinnerGiornaliero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(20, Short.MAX_VALUE))
+						.addComponent(spinnerGiornaliero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bottoneAggiungiGiornaliero))
+					.addContainerGap(14, Short.MAX_VALUE))
 		);
 		panelSelezioneGiornaliero.setLayout(gl_panelSelezioneGiornaliero);
 	}
@@ -341,5 +463,127 @@ public class AggiungiProgrammaView extends JPanel {
 		comboBoxSelezioneTipo.addItem("Giornaliero");
 		comboBoxSelezioneTipo.addItem("Settimanale");
 		
+	}
+	
+	public void gestioneSelezioneSettimanale() {
+		if(!checkBoxLunedi.isSelected()) {
+			spinnerLunedi.setEnabled(false);
+		}
+		if(!checkBoxMartedi.isSelected()) {
+			spinnerMartedi.setEnabled(false);
+		}
+		if(!checkBoxMercoledi.isSelected()) {
+			spinnerMercoledi.setEnabled(false);
+		}
+		if(!checkBoxGiovedi.isSelected()) {
+			spinnerGiovedi.setEnabled(false);
+		}
+		if(!checkBoxVenerdi.isSelected()) {
+			spinnerVenerdi.setEnabled(false);
+		}
+		if(!checkBoxSabato.isSelected()) {
+			spinnerSabato.setEnabled(false);
+		}
+		if(!checkBoxDomenica.isSelected()) {
+			spinnerDomenica.setEnabled(false);
+		}
+		
+		checkBoxLunedi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkBoxLunedi.isSelected()) {
+					spinnerLunedi.setEnabled(true);
+				}
+				else
+					spinnerLunedi.setEnabled(false);
+			}
+		});
+		checkBoxMartedi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkBoxMartedi.isSelected()) {
+					spinnerMartedi.setEnabled(true);
+				}
+				else
+					spinnerMartedi.setEnabled(false);
+			}
+		});
+		checkBoxMercoledi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkBoxMercoledi.isSelected()) {
+					spinnerMercoledi.setEnabled(true);
+				}
+				else
+					spinnerMercoledi.setEnabled(false);
+			}
+		});
+		checkBoxGiovedi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkBoxGiovedi.isSelected()) {
+					spinnerGiovedi.setEnabled(true);
+				}
+				else
+					spinnerGiovedi.setEnabled(false);
+			}
+		});
+		checkBoxVenerdi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkBoxVenerdi.isSelected()) {
+					spinnerVenerdi.setEnabled(true);
+				}
+				else
+					spinnerVenerdi.setEnabled(false);
+			}
+		});
+		checkBoxSabato.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkBoxSabato.isSelected()) {
+					spinnerSabato.setEnabled(true);
+				}
+				else
+					spinnerSabato.setEnabled(false);
+			}
+		});
+		checkBoxDomenica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkBoxDomenica.isSelected()) {
+					spinnerDomenica.setEnabled(true);
+				}
+				else
+					spinnerDomenica.setEnabled(false);
+			}
+		});
+		
+	}
+	
+	public void gestioneAggiungiGiornaliero() {
+		bottoneAggiungiGiornaliero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nomeStanza = null;
+				String nomeClasseElemento = null;
+				
+				if(comboBoxSelezioneStanza.getSelectedItem() != null) {
+                    nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
+				}
+				else
+					(new Alert()).errore("Devi selezionare una stanza", "Attenzione");
+				
+				if(comboBoxSelezioneElemento.getSelectedItem() != null) {
+					nomeClasseElemento = comboBoxSelezioneElemento.getSelectedItem().toString();
+				}
+				else
+					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
+				
+				/*
+				Date date1 = null;
+				String value =  spinnerGiornaliero.getValue().toString();
+				try {
+					date1=new SimpleDateFormat().parse(value);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}  
+				
+				System.out.println(nomeStanza+nomeClasseElemento+date1);*/
+			}
+		});
 	}
 }
