@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 import application.backend.dominio.ElementoProgrammabile;
 import application.backend.dominio.Stanza;
 import application.controllers.ControllerCasa;
+import application.controllers.ControllerProgramma;
 import application.controllers.Simulazione;
 import application.frontend.support.Alert;
 
@@ -49,6 +50,7 @@ public class AggiungiProgrammaView extends JPanel {
 	private JPanel panelSelezioneGiornaliero;
 	private JLabel labelProgramma;
 	private ControllerCasa controllerCasa;
+	private ControllerProgramma controllerProgramma;
 	
 	//PanelSelezioneStanzaElementoTipo--------------------
 	private JLabel labelSelezioneStanza;
@@ -89,10 +91,10 @@ public class AggiungiProgrammaView extends JPanel {
 	private JSpinner spinnerGiornaliero;
 	private JButton bottoneAggiungiGiornaliero;
 	
-	public AggiungiProgrammaView(JLayeredPane principale, Simulazione s, ControllerCasa casa) {
+	public AggiungiProgrammaView(JLayeredPane principale, ControllerCasa casa, ControllerProgramma controllerProgramma) {
 		this.panelPrincipale = principale;
 		this.controllerCasa = casa;
-		this.s = s;
+		this.controllerProgramma = controllerProgramma;
 		
 		inizializzazione();
 	}
@@ -450,8 +452,9 @@ public class AggiungiProgrammaView extends JPanel {
 			for(Object oggetto : elementi) {
 				if(oggetto != null)  {
 					if(oggetto instanceof ElementoProgrammabile)
-						stringa = ((ElementoProgrammabile) oggetto).getTipo();
-					comboBoxSelezioneElemento.addItem(oggetto.getClass().getSimpleName() + " " + stringa);
+						comboBoxSelezioneElemento.addItem(((ElementoProgrammabile) oggetto).getTipo());
+					else
+						comboBoxSelezioneElemento.addItem(oggetto.getClass().getSimpleName());
 				}
 			}
 		}
@@ -580,7 +583,7 @@ public class AggiungiProgrammaView extends JPanel {
 					int ore = data.getHours();
 					int minuti = data.getMinutes();
 					
-					
+					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
 					
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block

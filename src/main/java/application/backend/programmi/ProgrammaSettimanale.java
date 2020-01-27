@@ -11,8 +11,8 @@ public class ProgrammaSettimanale extends Programma {
 		super(id);
 	}
 	
-	public void aggiungiGiorno(DayOfWeek giorno, LocalTime inizio, LocalTime fine, double valoreDiSetting) {
-		settimana.put(giorno, new ProgrammaGiornaliero(super.getId(),inizio,fine,valoreDiSetting));
+	public void aggiungiGiorno(DayOfWeek giorno, LocalTime inizio, LocalTime fine, double valoreDiSetting, Object e) {
+		settimana.put(giorno, new ProgrammaGiornaliero(super.getId(),inizio,fine,valoreDiSetting,e));
 	}
 	
 	public LocalTime getInizio(DayOfWeek giorno) {

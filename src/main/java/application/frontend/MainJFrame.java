@@ -63,6 +63,7 @@ public class MainJFrame extends JFrame {
 	//DOMINIO---------------------------------
 	private Simulazione s;
 	private ControllerCasa casa;
+	private ControllerProgramma controllerProgramma;
 
 	/**
 	 * Create the frame.
@@ -97,6 +98,7 @@ public class MainJFrame extends JFrame {
 
 	public void inizializzazione() {
 		casa = new ControllerCasa(this);
+		controllerProgramma = new ControllerProgramma();
 		panelMenu = new JPanel();
 		panelPrincipale = new JLayeredPane();
 		panelPrincipale.setLayout(new BorderLayout(0, 0));
@@ -104,7 +106,7 @@ public class MainJFrame extends JFrame {
 		bottoneMenuProgrammi = new JButton("Programmi");
 		bottoneMenuStanze = new JButton("Stanze");
 		bottoneMenuRobotPulizia = new JButton("Robot Pulizia");
-		panelProgrammi = new ProgrammiView(panelPrincipale, s);
+		panelProgrammi = new ProgrammiView(panelPrincipale, s, controllerProgramma);
 		panelStanze = new StanzeView(panelPrincipale, casa);
 		panelHomepage = new HomepageView(panelPrincipale, casa);
 		panelRobot = new RobotPuliziaView(panelPrincipale, casa);

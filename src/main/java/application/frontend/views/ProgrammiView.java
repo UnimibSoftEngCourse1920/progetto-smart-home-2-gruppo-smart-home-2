@@ -50,9 +50,9 @@ public class ProgrammiView extends JPanel {
 	private JTable tabellaProgrammi;
 	private AggiungiProgrammaView panelProgramma;
 	
-	public ProgrammiView(JLayeredPane panelPrincipale, Simulazione s) {
+	public ProgrammiView(JLayeredPane panelPrincipale, Simulazione s, ControllerProgramma controllerProgramma) {
 		this.panelPrincipale = panelPrincipale;
-		controllerProgramma = new ControllerProgramma();
+		controllerProgramma = controllerProgramma;
 		this.s = s;
 		
 		inizializzazione();
@@ -63,7 +63,7 @@ public class ProgrammiView extends JPanel {
 		labelProgrammi.setFont(new Font("Arial", Font.PLAIN, 25));
 		bottoneAggiungiProgramma = new JButton("Aggiungi");
 		
-		panelProgramma = new AggiungiProgrammaView(panelPrincipale, s, this.controllerProgramma.getCasa());
+		panelProgramma = new AggiungiProgrammaView(panelPrincipale, this.controllerProgramma.getCasa(), controllerProgramma);
 		
 		labelAggiungiProgramma = new JLabel("Nuovo programma:");
 		panelAggiungiProgramma = new JPanel();

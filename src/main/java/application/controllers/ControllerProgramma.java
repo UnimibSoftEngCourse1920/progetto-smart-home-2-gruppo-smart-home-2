@@ -37,8 +37,8 @@ public class ControllerProgramma {
 		this(0);
 	}
 	
-	public void creaProgrammaGiornaliero(LocalTime inizio, LocalTime fine, double valoreDiSetting) {
-		this.programmi.add(new ProgrammaGiornaliero(counter,inizio,fine,valoreDiSetting));
+	public void creaProgrammaGiornaliero(LocalTime inizio, LocalTime fine, double valoreDiSetting, Object e) {
+		this.programmi.add(new ProgrammaGiornaliero(counter,inizio,fine,valoreDiSetting,e));
 		this.counter++;
 	}
 	
@@ -61,12 +61,12 @@ public class ControllerProgramma {
 		}
 	}
 	
-	public void aggiungiGiornoASettimana(int id, DayOfWeek giorno, LocalTime inizio, LocalTime fine, double valoreDiSetting) {
+	public void aggiungiGiornoASettimana(int id, DayOfWeek giorno, LocalTime inizio, LocalTime fine, double valoreDiSetting, Object e) {
 		ProgrammaSettimanale ps;
 		for (Programma p : programmi) {
 			if (p.getId() == id && p instanceof ProgrammaSettimanale) {
 				ps = (ProgrammaSettimanale)p;
-				ps.aggiungiGiorno(giorno, inizio, fine, valoreDiSetting);
+				ps.aggiungiGiorno(giorno, inizio, fine, valoreDiSetting, e);
 			}
 		}
 	}
@@ -143,6 +143,7 @@ public class ControllerProgramma {
 		return this.casa;
 	}
 	
+	/*
 	//@SuppressWarnings("uncheched")
 	public void scriviAllProgrammiJson() {
 		//JSONObject dettaglioProgramma = new JSONObject();
@@ -162,6 +163,26 @@ public class ControllerProgramma {
 			}
 			
 			arrayProgrammi.add(objectProgrammi);
+		}
+	}*/
+	
+	public void nuovoProgrammaGiornaliero(String nomeStanza, String nomeClasseElemento, int ore, int minuti) {
+		LocalTime inizio = LocalTime.parse(ore+": "+minuti);
+		LocalTime fine = LocalTime.parse((ore+2)+": "+minuti);
+		
+		Stanza stanza = casa.getStanza(nomeStanza);
+		
+		if(nomeClasseElemento.equals("SensoreTemperatura")) {
+			SensoreTemperatura s = stanza.getSensoreTemperatura();
+		}
+		else if(nomeClasseElemento.equals("Robot")) {
+			RobotPulizia r = casa.getRobot();
+		} 
+		else if(nomeClasseElemento.equals("Lavastoviglie")) {
+			//ElementoProgrammabile r = 
+		}
+		else {
+			
 		}
 	}
 }
