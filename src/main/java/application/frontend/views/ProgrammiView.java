@@ -18,9 +18,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 
+import application.backend.dominio.Stanza;
 import application.controllers.ControllerProgramma;
+import application.frontend.support.Alert;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -40,6 +46,7 @@ public class ProgrammiView extends JPanel {
 	private JPanel panelTabellaProgrammi;
 	private JScrollPane scrollPaneTabellaProgrammi;
 	private JTable tabellaProgrammi;
+	private ProgrammaView panelProgramma;
 	
 	public ProgrammiView(JLayeredPane panelPrincipale) {
 		this.panelPrincipale = panelPrincipale;
@@ -52,6 +59,9 @@ public class ProgrammiView extends JPanel {
 		labelProgrammi.setHorizontalAlignment(SwingConstants.CENTER);
 		labelProgrammi.setFont(new Font("Arial", Font.PLAIN, 25));
 		bottoneAggiungiProgramma = new JButton("Aggiungi");
+		
+		panelProgramma = new ProgrammaView(panelPrincipale);
+		
 		labelAggiungiProgramma = new JLabel("Nuovo programma:");
 		panelAggiungiProgramma = new JPanel();
 		
@@ -74,6 +84,8 @@ public class ProgrammiView extends JPanel {
 		
 		
 		setLayoutProgrammi();
+		
+		gestioneProgrammi();
 	}
 	
 	public void setLayoutProgrammi() {		
@@ -134,5 +146,20 @@ public class ProgrammiView extends JPanel {
 		);
 		panelTabellaProgrammi.setLayout(gl_panelTabellaProgrammi);
 		setLayout(groupLayout);
+	}
+	
+	public void gestioneProgrammi() {
+		bottoneAggiungiProgramma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrincipale.removeAll();
+				panelPrincipale.add(panelProgramma);
+				panelPrincipale.repaint();
+				panelPrincipale.revalidate();
+			}
+		});
+	}
+	
+	public void viewTabellaProgrammi() {
+		
 	}
 }

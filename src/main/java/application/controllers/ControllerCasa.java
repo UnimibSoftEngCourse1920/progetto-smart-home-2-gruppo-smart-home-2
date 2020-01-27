@@ -112,6 +112,10 @@ public class ControllerCasa {
 		return null;
 	}
 	
+	public RobotPulizia getRobot() {
+		return this.robot;
+	}
+	
 	public void cambiaTempDesiderata(String nome, double temp) {
 		Stanza stanza = getStanza(nome);
 		SensoreTemperatura s;
@@ -162,16 +166,21 @@ public class ControllerCasa {
 		
 		//CUCINA-----------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraCucina = new SensoreFinestra();
-		Lampada lampadaCucina = new Lampada(1);
-		cucina.addLampada(lampadaCucina);
 		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
+		SensoreTemperatura sensoreTemperaturaCucina = new SensoreTemperatura(cucina);
+		Lampada lampadaCucina = new Lampada(1);
+		ElementoProgrammabile lavastoviglieCucina = new ElementoProgrammabile(1, "Lavastoviglie");
+		
+		cucina.addLampada(lampadaCucina);
 		cucina.addFinestra(finestraCucina);
+		cucina.addSensoreTemperatura();
 		
 		//CAMERA MATRIMONIALE-----------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraCameraMatrimoniale = new SensoreFinestra();
 		Lampada lampadaCameraMatrimoniale = new Lampada(1);
-		cameraMatrimoniale.addLampada(lampadaCameraMatrimoniale);
 		Finestra finestraCameraMatrimoniale = new Finestra(new Tapparella(1), sensoreFinestraCameraMatrimoniale);
+		
+		cameraMatrimoniale.addLampada(lampadaCameraMatrimoniale);
 		cameraMatrimoniale.addFinestra(finestraCameraMatrimoniale);
 	}
 }

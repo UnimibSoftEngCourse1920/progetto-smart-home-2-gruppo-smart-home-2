@@ -38,10 +38,10 @@ public class StanzeView extends JPanel {
 	private ControllerCasa controllerCasa;
 	private JLayeredPane panelPrincipale;
 	private JPanel panelTabellaStanze;
-	private JPanel panelSelezioneStanze;
+	private JPanel panelSelezioneStanza;
 	private JLabel labelStanze;
-	private JComboBox comboBoxSelezioneStanze;
-	private JLabel labelSelezioneStanze;
+	private JComboBox comboBoxSelezioneStanza;
+	private JLabel labelSelezioneStanza;
 	private JTable tabellaStanze;
 	private JScrollPane scrollPaneTabellaStanze;
 	private DefaultTableModel modelTabellaStanze;
@@ -60,9 +60,9 @@ public class StanzeView extends JPanel {
 		labelStanze.setHorizontalAlignment(SwingConstants.CENTER);
 		labelStanze.setFont(new Font("Arial", Font.PLAIN, 25));
 		panelTabellaStanze = new JPanel();
-		panelSelezioneStanze = new JPanel();
-		labelSelezioneStanze = new JLabel("Seleziona la stanza:");
-		comboBoxSelezioneStanze = new JComboBox();
+		panelSelezioneStanza = new JPanel();
+		labelSelezioneStanza = new JLabel("Seleziona la stanza:");
+		comboBoxSelezioneStanza = new JComboBox();
 		
 		
 		//TABELLA-----------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ public class StanzeView extends JPanel {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(labelStanze, GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
-				.addComponent(panelSelezioneStanze, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
+				.addComponent(panelSelezioneStanza, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
 				.addComponent(panelTabellaStanze, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
@@ -103,7 +103,7 @@ public class StanzeView extends JPanel {
 					.addContainerGap()
 					.addComponent(labelStanze, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelSelezioneStanze, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelSelezioneStanza, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelTabellaStanze, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
 		);
@@ -126,14 +126,14 @@ public class StanzeView extends JPanel {
 		);
 		panelTabellaStanze.setLayout(glpanelTabellaStanze);
 		
-		GroupLayout glpanelSelezioneStanze = new GroupLayout(panelSelezioneStanze);
+		GroupLayout glpanelSelezioneStanze = new GroupLayout(panelSelezioneStanza);
 		glpanelSelezioneStanze.setHorizontalGroup(
 				glpanelSelezioneStanze.createParallelGroup(Alignment.LEADING)
 				.addGroup(glpanelSelezioneStanze.createSequentialGroup()
 					.addGap(322)
-					.addComponent(labelSelezioneStanze, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+					.addComponent(labelSelezioneStanza, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(comboBoxSelezioneStanze, 0, 185, Short.MAX_VALUE)
+					.addComponent(comboBoxSelezioneStanza, 0, 185, Short.MAX_VALUE)
 					.addGap(248))
 		);
 		glpanelSelezioneStanze.setVerticalGroup(
@@ -143,20 +143,20 @@ public class StanzeView extends JPanel {
 					.addGroup(glpanelSelezioneStanze.createParallelGroup(Alignment.BASELINE)
 						.addGroup(glpanelSelezioneStanze.createSequentialGroup()
 							.addGap(4)
-							.addComponent(comboBoxSelezioneStanze))
-						.addComponent(labelSelezioneStanze, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+							.addComponent(comboBoxSelezioneStanza))
+						.addComponent(labelSelezioneStanza, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 					.addGap(57))
 		);
-		panelSelezioneStanze.setLayout(glpanelSelezioneStanze);
+		panelSelezioneStanza.setLayout(glpanelSelezioneStanze);
 	}
 	
 	public void gestioneStanze() {
-		comboBoxSelezioneStanze.addActionListener(new ActionListener() {
+		comboBoxSelezioneStanza.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
             	rimuoviRigheTabellaStanze();
             	String nomeStanza;
-            	if (comboBoxSelezioneStanze.getSelectedItem() != null) {
-                    nomeStanza = comboBoxSelezioneStanze.getSelectedItem().toString();
+            	if (comboBoxSelezioneStanza.getSelectedItem() != null) {
+                    nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
                     Stanza stanza = controllerCasa.getStanza(nomeStanza);
                    
                     if(stanza != null) {
@@ -284,7 +284,7 @@ public class StanzeView extends JPanel {
 		String[] stanze = controllerCasa.getNomiStanze();
 		for(String nome : stanze) {
 			if(nome != null)  {
-				comboBoxSelezioneStanze.addItem(nome);
+				comboBoxSelezioneStanza.addItem(nome);
 			}
 		}
 	}
