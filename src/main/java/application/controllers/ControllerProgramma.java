@@ -139,6 +139,10 @@ public class ControllerProgramma {
 		return this.programmi;
 	}
 	
+	public ControllerCasa getCasa() {
+		return this.casa;
+	}
+	
 	//@SuppressWarnings("uncheched")
 	public void scriviAllProgrammiJson() {
 		//JSONObject dettaglioProgramma = new JSONObject();

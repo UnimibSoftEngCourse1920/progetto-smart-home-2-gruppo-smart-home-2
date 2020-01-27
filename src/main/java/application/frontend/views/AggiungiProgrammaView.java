@@ -89,9 +89,9 @@ public class AggiungiProgrammaView extends JPanel {
 	private JSpinner spinnerGiornaliero;
 	private JButton bottoneAggiungiGiornaliero;
 	
-	public AggiungiProgrammaView(JLayeredPane principale, Simulazione s) {
+	public AggiungiProgrammaView(JLayeredPane principale, Simulazione s, ControllerCasa casa) {
 		this.panelPrincipale = principale;
-		this.controllerCasa = new ControllerCasa(panelPrincipale); 
+		this.controllerCasa = casa;
 		this.s = s;
 		
 		inizializzazione();

@@ -62,6 +62,7 @@ public class MainJFrame extends JFrame {
 	
 	//DOMINIO---------------------------------
 	private Simulazione s;
+	private ControllerCasa casa;
 
 	/**
 	 * Create the frame.
@@ -95,6 +96,7 @@ public class MainJFrame extends JFrame {
 	}
 
 	public void inizializzazione() {
+		casa = new ControllerCasa(this);
 		panelMenu = new JPanel();
 		panelPrincipale = new JLayeredPane();
 		panelPrincipale.setLayout(new BorderLayout(0, 0));
@@ -103,9 +105,9 @@ public class MainJFrame extends JFrame {
 		bottoneMenuStanze = new JButton("Stanze");
 		bottoneMenuRobotPulizia = new JButton("Robot Pulizia");
 		panelProgrammi = new ProgrammiView(panelPrincipale, s);
-		panelStanze = new StanzeView(panelPrincipale);
-		panelHomepage = new HomepageView(panelPrincipale);
-		panelRobot = new RobotPuliziaView(panelPrincipale);
+		panelStanze = new StanzeView(panelPrincipale, casa);
+		panelHomepage = new HomepageView(panelPrincipale, casa);
+		panelRobot = new RobotPuliziaView(panelPrincipale, casa);
 		
 		labelSmartHome = new JLabel("SMART HOME");
 		labelSmartHome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -228,5 +230,9 @@ public class MainJFrame extends JFrame {
 		});
 		
 		timer.start();
+	}
+	
+	public RobotPuliziaView getRobotView() {
+		return this.panelRobot;
 	}
 }

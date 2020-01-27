@@ -14,13 +14,13 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
 public class ControllerCasa {
-	private JFrame main;
+	private MainJFrame main;
 	private ArrayList<Stanza> stanze ;
 	private RobotPulizia robot ;
 	private Allarme allarme;
 	private Timer timer= new Timer();
 	
-	public ControllerCasa(JFrame main) {
+	public ControllerCasa(MainJFrame main) {
 		this.main = main;
 		this.stanze = new ArrayList<>(); 
 		this.robot = null;

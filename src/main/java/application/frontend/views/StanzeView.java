@@ -48,9 +48,9 @@ public class StanzeView extends JPanel {
 	private Stanza stanzaSelezionata;
 	private Object[] rowData;
 	
-	public StanzeView(JLayeredPane principale) {
+	public StanzeView(JLayeredPane principale, ControllerCasa casa) {
 		panelPrincipale = principale;
-		controllerCasa = new ControllerCasa(panelPrincipale);
+		controllerCasa = casa;
 		
 		inizializzazione();
 	}

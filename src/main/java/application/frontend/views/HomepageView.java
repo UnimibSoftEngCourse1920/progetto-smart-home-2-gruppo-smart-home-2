@@ -8,18 +8,23 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import application.controllers.ControllerCasa;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 public class HomepageView extends JPanel {
 	private JLayeredPane panelPrincipale;
 	private JLabel labelHomepage;
+	private ControllerCasa casa;
 	
 	/**
 	 * Create the panel.
 	 */
-	public HomepageView(JLayeredPane principale) {
+	public HomepageView(JLayeredPane principale, ControllerCasa casa) {
 		panelPrincipale = principale;
+		this.casa = casa;
 		
 		inizializzazione();
 	}

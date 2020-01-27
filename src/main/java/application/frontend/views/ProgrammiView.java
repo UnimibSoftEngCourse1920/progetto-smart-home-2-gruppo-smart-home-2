@@ -63,7 +63,7 @@ public class ProgrammiView extends JPanel {
 		labelProgrammi.setFont(new Font("Arial", Font.PLAIN, 25));
 		bottoneAggiungiProgramma = new JButton("Aggiungi");
 		
-		panelProgramma = new AggiungiProgrammaView(panelPrincipale, s);
+		panelProgramma = new AggiungiProgrammaView(panelPrincipale, s, this.controllerProgramma.getCasa());
 		
 		labelAggiungiProgramma = new JLabel("Nuovo programma:");
 		panelAggiungiProgramma = new JPanel();
