@@ -572,17 +572,20 @@ public class AggiungiProgrammaView extends JPanel {
 				else
 					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
 				
-				/*
-				Date date1 = null;
-				String value =  spinnerGiornaliero.getValue().toString();
+				SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+				String value = (formato.format(spinnerGiornaliero.getValue())).toString();
+				Date data = null;
 				try {
-					date1=new SimpleDateFormat().parse(value);
+					data = formato.parse(value);
+					int ore = data.getHours();
+					int minuti = data.getMinutes();
+					
+					
+					
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}  
-				
-				System.out.println(nomeStanza+nomeClasseElemento+date1);*/
+					(new Alert()).errore("Errore nella scelta del tempo di inizio", "Attenzione");
+				}
 			}
 		});
 	}
