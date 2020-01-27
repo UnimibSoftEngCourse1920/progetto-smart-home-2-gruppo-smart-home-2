@@ -12,6 +12,7 @@ import org.json.simple.parser.JSONParser;
 
 import application.backend.dominio.*;
 import application.backend.programmi.*;
+import application.backend.sensori.SensoreTemperatura;
 
 public class ControllerProgramma {
 
@@ -71,20 +72,53 @@ public class ControllerProgramma {
 	}
 	
 	public void accensione(LocalTime ora, DayOfWeek giorno) {
+		LocalTime inizio;
 		for (Programma p : programmi) {
-			if((p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getInizio()== ora) ||
-				p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getInizio(giorno)== ora)
-				cambiaStatoElemento(p.getElemento(),false);
+			if(p instanceof ProgrammaGiornaliero) {
+				inizio = ((ProgrammaGiornaliero) p).getInizio();
+				if(inizio.compareTo(ora)==0 || inizio.compareTo(ora)== -1) {
+					if(p.getElemento() instanceof SensoreTemperatura)
+						cambiaTemperatura(((ProgrammaGiornaliero) p).getValoreDiSetting(), (SensoreTemperatura) p.getElemento());
+					else
+						cambiaStatoElemento(p.getElemento(),false);
+					}
+				}
+			if (p instanceof ProgrammaSettimanale){
+				inizio= ((ProgrammaSettimanale) p).getInizio(giorno);
+				if(inizio.compareTo(ora)==0 || inizio.compareTo(ora)== -1) {
+					if(p.getElemento() instanceof SensoreTemperatura)
+						cambiaTemperatura(((ProgrammaSettimanale) p).getValoreDiSetting(giorno), (SensoreTemperatura) p.getElemento());
+					else
+						cambiaStatoElemento(p.getElemento(),false);
+				}
+			}
 		}
 	}
 	
+	private void cambiaTemperatura(double valore, SensoreTemperatura e) {
+		e.setTemperaturaDesiderata(valore);
+	}
+
 	public void spegnimento(LocalTime ora, DayOfWeek giorno) {
+		LocalTime fine;
 		for (Programma p : programmi) {
-			if(p instanceof ProgrammaSettimanale && ((ProgrammaSettimanale) p).getFine(giorno)== ora)
-				cambiaStatoElemento(p.getElemento(),true);
-			else if(p instanceof ProgrammaGiornaliero && ((ProgrammaGiornaliero) p).getFine()== ora) {
-				cambiaStatoElemento(p.getElemento(),true);
-				programmi.remove(p);
+			if(p instanceof ProgrammaSettimanale) {
+				fine = ((ProgrammaSettimanale) p).getFine(giorno);
+				if(fine != null && (fine.compareTo(ora)==0 || fine.compareTo(ora)== -1)) {
+					if(p.getElemento() instanceof SensoreTemperatura)
+						cambiaTemperatura(SensoreTemperatura.TEMPERATURADEFAULT, (SensoreTemperatura) p.getElemento());
+					else
+						cambiaStatoElemento(p.getElemento(),true);
+				}
+			}
+			else if(p instanceof ProgrammaGiornaliero) {
+				fine = ((ProgrammaGiornaliero) p).getFine();
+				if(fine != null && (fine.compareTo(ora)==0 || fine.compareTo(ora)== -1)) {
+					if(p.getElemento() instanceof SensoreTemperatura)
+						cambiaTemperatura(SensoreTemperatura.TEMPERATURADEFAULT, (SensoreTemperatura) p.getElemento());
+					else
+						cambiaStatoElemento(p.getElemento(),true);
+				}
 			}
 		}
 	}
