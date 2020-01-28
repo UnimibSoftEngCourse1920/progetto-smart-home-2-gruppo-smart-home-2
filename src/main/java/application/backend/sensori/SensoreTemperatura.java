@@ -13,7 +13,7 @@ public class SensoreTemperatura extends TimerTask {
 	private Stanza stanza;
 	
 	public SensoreTemperatura(Stanza stanza) {
-		this.stato = "off";
+		this.stato = "Spento";
 		this.temperaturaCorrente = SensoreTemperatura.TEMPERATURADEFAULT;
 		this.temperaturaDesiderata = SensoreTemperatura.TEMPERATURADEFAULT;
 		this.stanza = stanza;
@@ -32,7 +32,7 @@ public class SensoreTemperatura extends TimerTask {
 	}
 	
 	public void off() {
-		this.stato = "off";
+		this.stato = "Spento";
 	}
 	
 	public void on() {

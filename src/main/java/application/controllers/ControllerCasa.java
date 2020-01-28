@@ -147,15 +147,29 @@ public class ControllerCasa {
 		if(stanza != null) {
 			ArrayList<Object> allOggettiStanza = new ArrayList<>();
 
-			if(!stanza.getLampade().isEmpty())
+			if(!stanza.getLampade().isEmpty()) {
+				
 				allOggettiStanza.addAll(stanza.getLampade());
-			if(!stanza.getFinestre().isEmpty())
-				allOggettiStanza.addAll(stanza.getFinestre());
-			if(stanza.getLavatrice() != null)
+				//System.out.println(allOggettiStanza.size());
+			}
+			if(stanza.getLavatrice() != null) {
 				allOggettiStanza.add(stanza.getLavatrice());
-			if(stanza.getLavastoviglie() != null)
+				//System.out.println(allOggettiStanza.size());
+			}
+			if(stanza.getLavastoviglie() != null) {
 				allOggettiStanza.add(stanza.getLavastoviglie());
-
+				//System.out.println(allOggettiStanza.size());
+			}
+			if(stanza.getSensoreTemperatura() != null) {
+				//System.out.println("dhkjasjdhsadh");
+				allOggettiStanza.add(stanza.getSensoreTemperatura());
+				//System.out.println(allOggettiStanza.size()+"ciao");
+			}
+			if(!stanza.getFinestre().isEmpty()) {
+				allOggettiStanza.addAll(stanza.getFinestre());
+				//System.out.println(allOggettiStanza.size());
+			}
+			
 			return allOggettiStanza;
 		}
 		else return Collections.emptyList();
@@ -177,29 +191,57 @@ public class ControllerCasa {
 	
 	
 	public void creazioneCasa() {
-		Stanza cameraMatrimoniale = new Stanza("Camera Matrimoniale");
+		Stanza cameraLetto = new Stanza("Camera da Letto");
 		Stanza cucina = new Stanza("Cucina");
-		addStanza(cameraMatrimoniale);
+		Stanza bagno = new Stanza("Bagno");
+		Stanza sala = new Stanza("Sala");
 		addStanza(cucina);
+		addStanza(cameraLetto);
+		addStanza(bagno);
+		addStanza(sala);
 		
 		//CUCINA-----------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraCucina = new SensoreFinestra();
 		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
-		SensoreTemperatura sensoreTemperaturaCucina = new SensoreTemperatura(cucina);
 		Lampada lampadaCucina = new Lampada(1);
 		Lavastoviglie lavastoviglieCucina = new Lavastoviglie(1);
 		
-		
 		cucina.addLampada(lampadaCucina);
 		cucina.addFinestra(finestraCucina);
+		cucina.addLavastoviglie(lavastoviglieCucina);
 		cucina.addSensoreTemperatura();
+		//System.out.println(cucina.getSensoreTemperatura());
 		
-		//CAMERA MATRIMONIALE-----------------------------------------------------------------------------
+		
+		//CAMERA DA LETTO-----------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraCameraMatrimoniale = new SensoreFinestra();
-		Lampada lampadaCameraMatrimoniale = new Lampada(1);
-		Finestra finestraCameraMatrimoniale = new Finestra(new Tapparella(1), sensoreFinestraCameraMatrimoniale);
+		Lampada lampadaCameraMatrimoniale = new Lampada(2);
+		Finestra finestraCameraMatrimoniale = new Finestra(new Tapparella(2), sensoreFinestraCameraMatrimoniale);
 		
-		cameraMatrimoniale.addLampada(lampadaCameraMatrimoniale);
-		cameraMatrimoniale.addFinestra(finestraCameraMatrimoniale);
+		cameraLetto.addLampada(lampadaCameraMatrimoniale);
+		cameraLetto.addFinestra(finestraCameraMatrimoniale);
+		cameraLetto.addSensoreTemperatura();
+		
+		
+		//BAGNO-------------------------------------------------------------------------------------
+		SensoreFinestra sensoreFinestraBagno = new SensoreFinestra();
+		Finestra finestraBagno = new Finestra(new Tapparella(3), sensoreFinestraCucina);
+		Lampada lampadaBagno = new Lampada(3);
+		Lavatrice lavatriceBagno = new Lavatrice(1);
+		
+		bagno.addLampada(lampadaBagno);
+		bagno.addFinestra(finestraBagno);
+		bagno.addLavatrice(lavatriceBagno);
+		bagno.addSensoreTemperatura();
+		
+		//SALA-------------------------------------------------------------------------------------
+		SensoreFinestra sensoreFinestraSala = new SensoreFinestra();
+		Finestra finestraSala = new Finestra(new Tapparella(4), sensoreFinestraCucina);
+		Lampada lampadaSala = new Lampada(4);
+		
+		sala.addLampada(lampadaSala);
+		sala.addFinestra(finestraSala);
+		bagno.addSensoreTemperatura();
+		
 	}
 }

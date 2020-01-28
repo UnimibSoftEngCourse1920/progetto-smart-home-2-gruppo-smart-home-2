@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 import application.backend.dominio.*;
+import application.backend.sensori.SensoreTemperatura;
 import application.controllers.*;
 import application.frontend.support.Alert;
 import application.frontend.support.ColoreCellaTabella;
@@ -208,9 +209,11 @@ public class StanzeView extends JPanel {
 	
 	public void viewTabellaStanze(Stanza stanza) {
 		tabellaStanze.setVisible(true);
+		
 		List<Object> listaOggettiStanza = controllerCasa.getAllOggettiStanza(stanza);
 		
 		int numeroOggettiStanza = listaOggettiStanza.size();
+		//System.out.println(numeroOggettiStanza);
 		
 		Object oggettoStanza;
 		
@@ -220,6 +223,7 @@ public class StanzeView extends JPanel {
 			for(int i = 0; i < numeroOggettiStanza; i++) {
 				oggettoStanza = listaOggettiStanza.get(i);
 				if(oggettoStanza != null) {
+					
 					viewRigaTabellaStanze(oggettoStanza);
 					if(oggettoStanza instanceof Finestra) {
 						Finestra f = (Finestra) oggettoStanza;
@@ -238,6 +242,7 @@ public class StanzeView extends JPanel {
 	
 	public void viewRigaTabellaStanze(Object oggettoStanza) {
 		boolean stato = false;
+		String statoSensoreTemperatura = "";
 		ColoreCellaTabella renderer = new ColoreCellaTabella();
 		tabellaStanze.setDefaultRenderer(Object.class, renderer);
 		rowData[0] = oggettoStanza.getClass().getSimpleName();
@@ -262,11 +267,7 @@ public class StanzeView extends JPanel {
 				rowData[2] = "Aperta";
 			else
 				rowData[2] = "Chiusa";
-			
-			
-			
 		}
-		
 		else if(oggettoStanza instanceof Tapparella) {
 			Tapparella t = (Tapparella) oggettoStanza;
 			rowData[1] = t.getId();
@@ -277,6 +278,13 @@ public class StanzeView extends JPanel {
 				rowData[2] = "Chiusa";
 			
 		}
+		else if(oggettoStanza instanceof SensoreTemperatura) {
+			//System.out.println("ciao");
+			SensoreTemperatura s = (SensoreTemperatura) oggettoStanza;
+			statoSensoreTemperatura = s.getStato();
+			rowData[2] = statoSensoreTemperatura;
+		}
+		
 		modelTabellaStanze.addRow(rowData);
 	}
 	

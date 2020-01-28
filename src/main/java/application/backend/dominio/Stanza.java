@@ -52,7 +52,13 @@ public class Stanza {
 	}
 	
 	public void addLavastoviglie(Lavastoviglie l) {
-		this.lavastoviglie = l;
+		if(l instanceof Lavastoviglie)
+			this.lavastoviglie = l;
+	}
+	
+	public void addLavatrice(Lavatrice l) {
+		if(l instanceof Lavatrice)
+			this.lavatrice = l;
 	}
 
 	public List<Lampada> getLampade() {

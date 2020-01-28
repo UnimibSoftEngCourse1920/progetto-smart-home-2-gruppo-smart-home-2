@@ -30,6 +30,8 @@ public class ControllerProgramma {
 		catch (Exception e) {
 			e.printStackTrace();
 		}*/
+		
+		creazioneProgrammi();
 	}
 	
 	public ControllerProgramma() {
@@ -195,5 +197,9 @@ public class ControllerProgramma {
 		else {
 			
 		}
+	}
+	
+	public void creazioneProgrammi() {
+		//nuovoProgrammaGiornaliero("Cucina", nomeClasseElemento, ore, minuti);
 	}
 }

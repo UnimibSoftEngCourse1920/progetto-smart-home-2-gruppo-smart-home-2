@@ -20,7 +20,7 @@ public class ColoreCellaTabella implements TableCellRenderer{
 			
 			if(stato.equals("Accesa") || stato.equals("Aperta"))
 				c.setBackground(Color.GREEN);
-			else 
+			else if(stato.equals("Spenta") || stato.equals("Chiusa") || stato.equals("Spento"))
 				c.setBackground(Color.red);
 		}
 		else c.setBackground(null);
