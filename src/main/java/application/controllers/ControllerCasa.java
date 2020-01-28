@@ -142,6 +142,10 @@ public class ControllerCasa {
 		return this.allarme;
 	}
 	
+	public MainJFrame getMain() {
+		return main;
+	}
+
 	public void cambiaTempDesiderata(String nome, double temp) {
 		Stanza stanza = getStanza(nome);
 		SensoreTemperatura s;

@@ -25,13 +25,19 @@ public class Allarme {
 	
 	public void notifica(Sensore s) {
 		emergenza = true;
-		System.out.println("Chiamo il gentodigiotto");
-		if(s instanceof SensoreGas) {
-			this.notificaSensore((SensoreGas)s);
+		if(isAttivo()) {
+			if(s instanceof SensoreGas) {
+				this.notificaSensore((SensoreGas)s);
+				casa.getMain().getPanelAllarme().setLabelGas();
+				}
+			else  {
+				if(s instanceof SensoreFinestra)
+					casa.getMain().getPanelAllarme().setLabelEffrazione();
+				if(s instanceof Radar)
+					casa.getMain().getPanelAllarme().setLabelMovimenti();
+				for (Stanza stanza: casa.getStanze()) 
+					stanza.stopTimerEventi();
 			}
-		else if(isAttivo()) {
-			for (Stanza stanza: casa.getStanze()) 
-				stanza.stopTimerEventi();
 		}
 	}
 	
@@ -47,14 +53,20 @@ public class Allarme {
 	
 	public void terminaEmergenza() {
 		for (Stanza stanza: casa.getStanze()) {
-			if(stanza.getSensoreGas().getFuga())
+			if(stanza.getSensoreGas().getFuga()) {
 				stanza.getSensoreGas().cambiaStato();
-			if(stanza.getRadar().getMovimento())
+				casa.getMain().getPanelAllarme().setLabelGas();
+			}
+			if(stanza.getRadar().getMovimento()) {
 				stanza.getRadar().cambiaStato();
-			if(stanza.getFinestre() != null)
+				casa.getMain().getPanelAllarme().setLabelMovimenti();
+			}
+			if(stanza.getFinestre() != null) {
 				for (Finestra f : stanza.getFinestre())
 					if (f.getSensore().getEffrazione())
 						f.cambiaStato();
+				casa.getMain().getPanelAllarme().setLabelEffrazione();
+			}
 			stanza.startTimerEventi();
 		}
 	}
@@ -63,13 +75,16 @@ public class Allarme {
 		return this.isAttivo;
 	}
 	
+	public boolean isEmergenza() {
+		return emergenza;
+	}
+
 	public void accendi() {
 			this.isAttivo = true;
 	}
 	
 	public void spegni() {
 		if(emergenza)
-			//System.out.println("Non puoi spegnere l'allarme durante un'emergenza");
 			(new Alert()).errore("Non puoi spegnere l'allarme durante un'emergenza", "Errore");
 		else
 			this.isAttivo = false;

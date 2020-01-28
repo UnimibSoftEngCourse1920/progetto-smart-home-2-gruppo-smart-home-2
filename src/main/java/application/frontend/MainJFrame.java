@@ -125,13 +125,13 @@ public class MainJFrame extends JFrame {
 		labelSmartHome.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSmartHome.setFont(new Font("Arial", Font.PLAIN, 25));
 		
-		clock = new JLabel("CLOCK");
+		clock = new JLabel("00:00");
 		clock.setEnabled(false);
 		clock.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		s = new Simulazione(new ControllerProgramma());
 		Timer timerSim = new Timer();
-		timerSim.schedule(s, 1000, 1000);
+		timerSim.schedule(s, 10000, 10000);
 		
 		
 		setLayoutMenu();
@@ -245,7 +245,7 @@ public class MainJFrame extends JFrame {
 	}
 	
 	public void startClock() {
-		javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
+		javax.swing.Timer timer = new javax.swing.Timer(10000, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -259,4 +259,9 @@ public class MainJFrame extends JFrame {
 	public RobotPuliziaView getRobotView() {
 		return this.panelRobot;
 	}
+
+	public AllarmeView getPanelAllarme() {
+		return panelAllarme;
+	}
+	
 }

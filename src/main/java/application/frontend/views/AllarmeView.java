@@ -32,11 +32,11 @@ public class AllarmeView extends JPanel {
 	private JLabel labelGas;
 	private JLabel labelMovimenti;
 	private JButton bottoneAccendiSpegni;
+	private JButton bottoneTerminaEmergenza;
 
 	public AllarmeView(JLayeredPane principale, ControllerCasa casa) {
 		this.panelPrincipale = principale;
 		this.casa = casa;
-		
 		
 		inizializzazione();
 	}
@@ -61,6 +61,7 @@ public class AllarmeView extends JPanel {
 		labelMovimenti.setBorder(b);
 		
 		bottoneAccendiSpegni = new JButton("");
+		bottoneTerminaEmergenza = new JButton("Termina Emergenza");
 		
 		setLayoutAllarme();
 		
@@ -71,32 +72,33 @@ public class AllarmeView extends JPanel {
 		setLabelMovimenti();
 		
 		gestioneAllarme();
+		terminaEmergenza();
 	}
 	
 	public void setLayoutAllarme() {
-		
-		
-		
-		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(labelAllarme, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+				.addComponent(labelAllarme, GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(360)
-					.addComponent(bottoneAccendiSpegni, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+					.addComponent(bottoneAccendiSpegni, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(349))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(102)
-					.addComponent(labelEffrazione, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+					.addComponent(labelEffrazione, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
 					.addGap(163)
-					.addComponent(labelGas, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+					.addComponent(labelGas, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
 					.addGap(146)
-					.addComponent(labelMovimenti, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+					.addComponent(labelMovimenti, GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
 					.addGap(108))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(labelSituazioneAttuale, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+					.addComponent(labelSituazioneAttuale, GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
 					.addContainerGap())
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(362)
+					.addComponent(bottoneTerminaEmergenza, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+					.addGap(347))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -112,7 +114,9 @@ public class AllarmeView extends JPanel {
 						.addComponent(labelEffrazione, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 						.addComponent(labelGas, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 						.addComponent(labelMovimenti, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
-					.addGap(87))
+					.addGap(72)
+					.addComponent(bottoneTerminaEmergenza, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addGap(29))
 		);
 		setLayout(groupLayout);
 	}
@@ -125,8 +129,7 @@ public class AllarmeView extends JPanel {
 			}
 			else {
 				bottoneAccendiSpegni.setText("Accendi");
-				bottoneAccendiSpegni.setBackground(null);
-				//bottoneAccendiSpegni.setBackground(Color.RED);
+				bottoneAccendiSpegni.setBackground(Color.RED);
 			}
 		}
 		else {
@@ -140,36 +143,61 @@ public class AllarmeView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Allarme a = casa.getAllarme();
 				if(a != null) {
-					if(a.isAttivo()) {
+					if(a.isAttivo()) 
 						a.spegni();
-					}
-					else {
+					else 
 						a.accendi();
-					}
 					setBottoneAccendiSpegni();
 				}
 			}
 		});
 	}
 	
+	public void terminaEmergenza() {
+		bottoneTerminaEmergenza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Allarme a = casa.getAllarme();
+				if(a.isAttivo() && a.isEmergenza())
+					a.terminaEmergenza();
+				else
+					(new Alert()).errore("Non puoi terminare l'emergenza se non c'è eemergenza o se l'allarme è spento", "Errore");
+			}
+		});
+	}
+	
 	public void setLabelEffrazione() {
-		labelEffrazione.setOpaque(true);
-		labelEffrazione.setBackground(Color.GREEN);
-		
-		//pezzo codice che imposta rosso se c'è effrazione
+		if(casa.getAllarme().isEmergenza()) {
+			(new Alert()).info("C'è un emergenza, apri la finestra dell'allarme per verificare di cosa si tratta", "Emergenza");
+			labelEffrazione.setOpaque(false);
+			labelEffrazione.setBackground(Color.RED);
+		}
+		else {
+			labelEffrazione.setOpaque(true);
+			labelEffrazione.setBackground(Color.GREEN);
+		}
 	}
 	
 	public void setLabelGas() {
-		labelGas.setOpaque(true);
-		labelGas.setBackground(Color.GREEN);
-		
-		//pezzo codice che imposta rosso se c'è fuga di gas
+		if(casa.getAllarme().isEmergenza()) {
+			(new Alert()).info("C'è un emergenza, apri la finestra dell'allarme per verificare di cosa si tratta", "Emergenza");
+			labelGas.setOpaque(false);
+			labelGas.setBackground(Color.RED);
+		}
+		else {
+			labelGas.setOpaque(true);
+			labelGas.setBackground(Color.GREEN);
+		}
 	}
 	
 	public void setLabelMovimenti() {
-		labelMovimenti.setOpaque(true);
-		labelMovimenti.setBackground(Color.GREEN);
-		
-		//pezzo codice che imposta rosso se c'è movimento
+		if(casa.getAllarme().isEmergenza()) {
+			(new Alert()).info("C'è un emergenza, apri la finestra dell'allarme per verificare di cosa si tratta", "Emergenza");
+			labelMovimenti.setOpaque(false);
+			labelMovimenti.setBackground(Color.RED);
+		}
+		else {
+			labelMovimenti.setOpaque(true);
+			labelMovimenti.setBackground(Color.GREEN);
+		}
 	}
 }
