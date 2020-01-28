@@ -15,6 +15,7 @@ import javax.swing.GroupLayout.Alignment;
 
 
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -30,11 +31,14 @@ import javax.swing.SwingConstants;
 
 import application.backend.dominio.Finestra;
 import application.backend.dominio.Lampada;
+import application.backend.dominio.Lavastoviglie;
+import application.backend.dominio.Lavatrice;
 import application.backend.dominio.Stanza;
 import application.backend.dominio.Tapparella;
 import application.backend.programmi.Programma;
 import application.backend.programmi.ProgrammaGiornaliero;
 import application.backend.programmi.ProgrammaSettimanale;
+import application.backend.sensori.SensoreTemperatura;
 import application.controllers.ControllerProgramma;
 import application.controllers.Simulazione;
 import application.frontend.support.Alert;
@@ -119,6 +123,7 @@ public class ProgrammiView extends JPanel {
 		modelTabellaProgrammiSettimanali = (DefaultTableModel) tabellaProgrammiSettimanali.getModel();
 		String[] colonneSettimanali = { "Tipo", "ID", "Elemento", "Visualizza", "Elimina"};
 		modelTabellaProgrammiSettimanali.setColumnIdentifiers(colonneSettimanali);
+		((DefaultTableCellRenderer)tabellaProgrammiSettimanali.getDefaultRenderer(Object.class)).setHorizontalAlignment(JLabel.CENTER);
 		
 		
 		//PROGRAMMI GIORNALIERI-------------------------------------------
@@ -131,7 +136,7 @@ public class ProgrammiView extends JPanel {
 		modelTabellaProgrammiGiornalieri = (DefaultTableModel) tabellaProgrammiGiornalieri.getModel();
 		String[] colonneGiornalieri = { "Tipo", "ID", "Elemento", "Inizio", "Fine", "Elimina"};
 		modelTabellaProgrammiGiornalieri.setColumnIdentifiers(colonneGiornalieri);
-		
+		((DefaultTableCellRenderer)tabellaProgrammiGiornalieri.getDefaultRenderer(Object.class)).setHorizontalAlignment(JLabel.CENTER);
 
 		
 		viewTabellaProgrammiGiornalieri();
@@ -265,13 +270,12 @@ public class ProgrammiView extends JPanel {
 				if(column == 5) {
 					if(p instanceof ProgrammaGiornaliero) {
 						if(tipoProgramma.equals(p.getClass().getSimpleName())) {
-							/*
-							panelModificaSettimanale = new ProgrammaSettimanaleView(panelPrincipale, controllerProgramma, ((ProgrammaSettimanale) p));
-							panelPrincipale.removeAll();
-							panelPrincipale.add(panelModificaSettimanale);
-							panelPrincipale.repaint();
-							panelPrincipale.revalidate();*/
-							eliminaProgrammaGiornaliero(p);
+							controllerProgramma.eliminaProgrammaGiornaliero(p);
+							(new Alert()).info("ProgrammaGiornaliero eliminato", "Information");
+							
+							//panelModificaSettimanale = new ProgrammaSettimanaleView(panelPrincipale, controllerProgramma, ((ProgrammaSettimanale) p));
+							rimuoviRigheTabellaProgrammiGiornalieri();
+							viewTabellaProgrammiGiornalieri();						
 						}	
 					}	
 					else
@@ -292,20 +296,16 @@ public class ProgrammiView extends JPanel {
 			
 			for(Programma p : listaProgrammi) {
 				if(p instanceof ProgrammaGiornaliero) {
+					Object e = p.getElemento();
 					rowDataGiornalieri[0] = p.getClass().getSimpleName();
 					rowDataGiornalieri[1] = p.getId();
 					
-					/*if(p instanceof Lavatrice) {
-						
-					}
-					else if(p instanceof Lavastoviglie){
-						
-					}
-					else{
+					rowDataGiornalieri[2] = e.getClass().getSimpleName();
 					
-					}*/
+					rowDataGiornalieri[3] = ((ProgrammaGiornaliero) p).getInizio();
+					rowDataGiornalieri[4] = ((ProgrammaGiornaliero) p).getFine();
 					
-					rowDataGiornalieri[6] = "Elimina";
+					rowDataGiornalieri[5] = "Elimina";
 					
 					modelTabellaProgrammiGiornalieri.addRow(rowDataGiornalieri);
 				}
@@ -331,15 +331,6 @@ public class ProgrammiView extends JPanel {
 					rowDataSettimanali[0] = p.getClass().getSimpleName();
 					rowDataSettimanali[1] = p.getId();
 					
-					/*if(p instanceof Lavatrice) {
-						
-					}
-					else if(p instanceof Lavastoviglie){
-						
-					}
-					else{
-					
-					}*/
 					
 					rowDataSettimanali[3] = "Visualizza";
 					rowDataSettimanali[4] = "Elimina";
@@ -354,7 +345,10 @@ public class ProgrammiView extends JPanel {
 		}
 	}
 	
-	public void eliminaProgrammaGiornaliero(Programma p) {
-		
+	public void rimuoviRigheTabellaProgrammiGiornalieri() {
+		int numeroRighe = tabellaProgrammiGiornalieri.getRowCount();
+		for (int i = numeroRighe - 1; i >= 0; i--) {
+		    modelTabellaProgrammiGiornalieri.removeRow(i);
+		}
 	}
 }

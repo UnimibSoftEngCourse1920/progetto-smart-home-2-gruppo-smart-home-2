@@ -74,6 +74,7 @@ public class StanzeView extends JPanel {
 		
 		tabellaStanze.setRowHeight(40);
 		
+		
 		scrollPaneTabellaStanze = new JScrollPane(tabellaStanze);
 		scrollPaneTabellaStanze.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		String[] colonne = {"Elemento", "ID", "Cambia Stato"};
@@ -83,11 +84,15 @@ public class StanzeView extends JPanel {
 		
 		
 		
+		
 		comboBoxStanze();
 		
 		setLayoutStanze();
 		
 		gestioneStanze();
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		tabellaStanze.setDefaultRenderer(Object.class, centerRenderer);
 	}
 	
 	public void setLayoutStanze() {

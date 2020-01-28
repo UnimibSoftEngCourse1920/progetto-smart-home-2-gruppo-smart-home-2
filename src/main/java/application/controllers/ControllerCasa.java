@@ -114,13 +114,20 @@ public class ControllerCasa {
 	
 	public Stanza getStanza(String nome) {
 		for(Stanza stanza : getStanze()) {
-			if(stanza.getNome().equals(nome))
+			if(stanza.getNome().equals(nome)) {
+				//System.out.print(stanza.getLavastoviglie().getId());
 				return stanza;
+			}
+				
 		}
 		return null;
 	}
 	
 	public List<Stanza> getStanze() {
+		return this.stanze;
+	}
+	
+	public List<Stanza> getStanzeClone() {
 		@SuppressWarnings("unchecked")
 		List<Stanza> clone = (List<Stanza>)this.stanze.clone();
 		return clone;

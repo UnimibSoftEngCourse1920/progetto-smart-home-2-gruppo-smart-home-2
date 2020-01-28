@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -30,12 +31,10 @@ public class ControllerProgramma {
 		catch (Exception e) {
 			e.printStackTrace();
 		}*/
-		
-		creazioneProgrammi();
 	}
 	
 	public ControllerProgramma() {
-		this(0);
+		this(1);
 	}
 	
 	public void creaProgrammaGiornaliero(LocalTime inizio, LocalTime fine, double valoreDiSetting, Object e) {
@@ -49,10 +48,20 @@ public class ControllerProgramma {
 	}
 	
 	public void eliminaProgramma(int id) {
-		for (Programma p : programmi) {
-			if (p.getId() == id) 
-				programmi.remove(p);
+		System.out.println(programmi.size());
+		for(int i = 0; i < programmi.size(); i++) {
+			if(programmi.get(i).getId() == id)
+				programmi.remove(i);
 		}
+		
+		//System.out.println(programmi.size());
+		/*
+		for (Programma p : programmi) {
+			if (p.getId() == id) {
+				//System.out.print("ciao");
+				programmi.remove(p);
+			}
+		}*/
 	}
 	
 	public void aggiungiElemento(int id,Object e) {
@@ -180,26 +189,43 @@ public class ControllerProgramma {
 	}*/
 	
 	public void nuovoProgrammaGiornaliero(String nomeStanza, String nomeClasseElemento, int ore, int minuti) {
-		LocalTime inizio = LocalTime.parse(ore+": "+minuti);
-		LocalTime fine = LocalTime.parse((ore+2)+": "+minuti);
+		CharSequence orarioInizio = ore+": "+minuti;
+		CharSequence orarioFine = (ore+2)+": "+minuti;
+		
+		/*LocalTime inizio = LocalTime.parse(orarioInizio);
+		LocalTime fine = LocalTime.parse(orarioFine);*/
+		LocalTime inizio = LocalTime.of(ore, minuti);
+		LocalTime fine = LocalTime.of((ore+2), minuti);
+		
 		
 		Stanza stanza = casa.getStanza(nomeStanza);
 		
 		if(nomeClasseElemento.equals("SensoreTemperatura")) {
 			SensoreTemperatura s = stanza.getSensoreTemperatura();
+			creaProgrammaGiornaliero(inizio, fine, 15, s);
 		}
 		else if(nomeClasseElemento.equals("Robot")) {
 			RobotPulizia r = casa.getRobot();
+			creaProgrammaGiornaliero(inizio, fine, 0, r);
 		} 
 		else if(nomeClasseElemento.equals("Lavastoviglie")) {
-			//ElementoProgrammabile r = 
+			Lavastoviglie l = stanza.getLavastoviglie();
+			creaProgrammaGiornaliero(inizio, fine, 0, l);
 		}
 		else {
-			
+			Lavatrice l = stanza.getLavatrice();
+			creaProgrammaGiornaliero(inizio, fine, 0, l);
 		}
 	}
 	
-	public void creazioneProgrammi() {
-		//nuovoProgrammaGiornaliero("Cucina", nomeClasseElemento, ore, minuti);
+	public void eliminaProgrammaGiornaliero(Programma p) {
+		//System.out.println(p.getId());
+		eliminaProgramma(p.getId());
 	}
+	
+	public void creazioneProgrammi() {
+		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45);
+	}
+	
+	
 }

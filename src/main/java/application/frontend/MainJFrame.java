@@ -103,6 +103,10 @@ public class MainJFrame extends JFrame {
 		casa.addRobot(casa.getStanza("Cucina"));
 		controllerProgramma = new ControllerProgramma();
 		controllerProgramma.setCasa(casa);
+		
+		//creazioneProgrammi
+		controllerProgramma.creazioneProgrammi();
+		
 		panelMenu = new JPanel();
 		panelPrincipale = new JLayeredPane();
 		panelPrincipale.setLayout(new BorderLayout(0, 0));
