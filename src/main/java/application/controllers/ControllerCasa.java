@@ -219,11 +219,14 @@ public class ControllerCasa {
 		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
 		Lampada lampadaCucina = new Lampada(1);
 		Lavastoviglie lavastoviglieCucina = new Lavastoviglie(1);
+		SensoreGas sensoreGasCucina =new SensoreGas();
 		
 		cucina.addLampada(lampadaCucina);
 		cucina.addFinestra(finestraCucina);
 		cucina.addLavastoviglie(lavastoviglieCucina);
 		cucina.addSensoreTemperatura();
+		cucina.addSensoreGas(sensoreGasCucina);
+		cucina.startTimerEventi();
 		//System.out.println(cucina.getSensoreTemperatura());
 		
 		
@@ -235,11 +238,12 @@ public class ControllerCasa {
 		cameraLetto.addLampada(lampadaCameraMatrimoniale);
 		cameraLetto.addFinestra(finestraCameraMatrimoniale);
 		cameraLetto.addSensoreTemperatura();
+		cameraLetto.startTimerEventi();
 		
 		
 		//BAGNO-------------------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraBagno = new SensoreFinestra();
-		Finestra finestraBagno = new Finestra(new Tapparella(3), sensoreFinestraCucina);
+		Finestra finestraBagno = new Finestra(new Tapparella(3), sensoreFinestraBagno);
 		Lampada lampadaBagno = new Lampada(3);
 		Lavatrice lavatriceBagno = new Lavatrice(1);
 		
@@ -247,15 +251,16 @@ public class ControllerCasa {
 		bagno.addFinestra(finestraBagno);
 		bagno.addLavatrice(lavatriceBagno);
 		bagno.addSensoreTemperatura();
+		bagno.startTimerEventi();
 		
 		//SALA-------------------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraSala = new SensoreFinestra();
-		Finestra finestraSala = new Finestra(new Tapparella(4), sensoreFinestraCucina);
+		Finestra finestraSala = new Finestra(new Tapparella(4), sensoreFinestraSala);
 		Lampada lampadaSala = new Lampada(4);
 		
 		sala.addLampada(lampadaSala);
 		sala.addFinestra(finestraSala);
-		bagno.addSensoreTemperatura();
+		sala.startTimerEventi();
 		
 	}
 }

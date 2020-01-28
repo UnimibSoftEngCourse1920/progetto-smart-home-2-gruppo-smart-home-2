@@ -118,10 +118,9 @@ public class Stanza {
 		if(this.sensoreGas != null)
 			timerEventi.schedule(this.sensoreGas , 10000, 10000 );
 		if(this.radar != null)
-			timerEventi.schedule(this.sensoreGas , 10000, 10000 );
-		for (Finestra f: finestre) {
+			timerEventi.schedule(this.radar , 10000, 10000 );
+		for (Finestra f: finestre)
 			timerEventi.schedule(f.getSensore() , 10000, 10000 );
-		}
 	}
 	
 	public void stopTimerEventi() {
