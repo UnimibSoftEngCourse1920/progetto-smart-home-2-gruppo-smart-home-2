@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.SwingConstants;
@@ -48,24 +49,35 @@ import java.awt.Color;
 
 public class ProgrammiView extends JPanel {
 	private Simulazione s;
-	private JLayeredPane panelPrincipale;
 	private ControllerProgramma controllerProgramma;
-	private JLabel labelProgrammi;
-	private DefaultTableModel modelTabellaProgrammiGiornalieri;
-	private JButton bottoneAggiungiProgramma;
-	private JLabel labelAggiungiProgramma;
-	private JPanel panelAggiungiProgramma;
-	private JPanel panelTabellaProgrammi;
 	private ProgrammaSettimanaleView panelModificaSettimanale;
+	private AggiungiProgrammaView panelAggiungiProgramma;
+	private JLayeredPane panelPrincipale;
+	
+	private JPanel panelAggiuntaProgramma;
+	private JLabel labelProgrammi;
+	private JLabel labelAggiungiProgramma;
+	private JButton bottoneAggiungiProgramma;
+	private JPanel panelTabellaProgrammi;
+	
+	
+	//TABELLA PROGRAMMI GIORNALIERI-------------------------------
 	private JPanel panelTabellaProgrammiGiornalieri;
+	private JLabel labelProgrammiGiornalieri;
 	private JScrollPane scrollPaneTabellaProgrammiGiornalieri;
 	private JTable tabellaProgrammiGiornalieri;
-	private JLabel labelProgrammiGiornalieri;
-	private AggiungiProgrammaView panelProgramma;
-	private Object[] rowData;
+	private DefaultTableModel modelTabellaProgrammiGiornalieri;
+	private Object[] rowDataGiornalieri;
+	
+	//TABELLA PROGRAMMI SETTIMANALI-------------------------------
 	private JPanel panelTabellaProgrammiSettimanali;
-	private JScrollPane scrollPaneTabellaProgrammiSettimanali;
 	private JLabel labelProgrammiSettimanali;
+	private JScrollPane scrollPaneTabellaProgrammiSettimanali;
+	private JTable tabellaProgrammiSettimanali;
+	private DefaultTableModel modelTabellaProgrammiSettimanali;
+	private Object[] rowDataSettimanali;
+	
+	
 	
 	public ProgrammiView(JLayeredPane panelPrincipale, Simulazione s, ControllerProgramma controllerProgramma) {
 		this.panelPrincipale = panelPrincipale;
@@ -74,42 +86,56 @@ public class ProgrammiView extends JPanel {
 		
 		inizializzazione();
 	}
+	
 	public void inizializzazione() {
+		labelAggiungiProgramma = new JLabel("Nuovo programma:");
 		labelProgrammi = new JLabel("PROGRAMMI");
 		labelProgrammi.setHorizontalAlignment(SwingConstants.CENTER);
 		labelProgrammi.setFont(new Font("Arial", Font.PLAIN, 25));
 		labelProgrammiGiornalieri = new JLabel("Tabella Programmi Giornalieri");
 		labelProgrammiGiornalieri.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		labelProgrammiGiornalieri.setHorizontalAlignment(SwingConstants.CENTER);
+		labelProgrammiSettimanali = new JLabel("Tabella Programmi Settimanali");
+		labelProgrammiSettimanali.setHorizontalAlignment(SwingConstants.CENTER);
+		labelProgrammiSettimanali.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		bottoneAggiungiProgramma = new JButton("Aggiungi");
 		
-		panelProgramma = new AggiungiProgrammaView(panelPrincipale, this.controllerProgramma.getCasa(), this.controllerProgramma);
+		panelAggiungiProgramma = new AggiungiProgrammaView(panelPrincipale, this.controllerProgramma.getCasa(), this.controllerProgramma);
 		
-		labelAggiungiProgramma = new JLabel("Nuovo programma:");
-		panelAggiungiProgramma = new JPanel();
-		
+		panelAggiuntaProgramma = new JPanel();
 		panelTabellaProgrammi = new JPanel();
 		panelTabellaProgrammiGiornalieri = new JPanel();
 		
+		
+		//PROGRAMMI SETTIMANALI------------------------------------------
+		tabellaProgrammiSettimanali = new JTable();
+		tabellaProgrammiSettimanali.setFont(new Font("Arial", Font.PLAIN, 11));
+		tabellaProgrammiSettimanali.setEnabled(false);
+		tabellaProgrammiSettimanali.setRowHeight(40);
+		panelTabellaProgrammiSettimanali = new JPanel();
+		scrollPaneTabellaProgrammiSettimanali = new JScrollPane(tabellaProgrammiSettimanali);
+		scrollPaneTabellaProgrammiSettimanali.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		modelTabellaProgrammiSettimanali = (DefaultTableModel) tabellaProgrammiSettimanali.getModel();
+		String[] colonneSettimanali = { "Tipo", "ID", "Elemento", "Visualizza", "Elimina"};
+		modelTabellaProgrammiSettimanali.setColumnIdentifiers(colonneSettimanali);
+		
+		
+		//PROGRAMMI GIORNALIERI-------------------------------------------
 		tabellaProgrammiGiornalieri = new JTable();
 		tabellaProgrammiGiornalieri.setFont(new Font("Arial", Font.PLAIN, 11));
-		
 		tabellaProgrammiGiornalieri.setEnabled(false);
-		
 		tabellaProgrammiGiornalieri.setRowHeight(40);
-		
 		scrollPaneTabellaProgrammiGiornalieri = new JScrollPane(tabellaProgrammiGiornalieri);
 		scrollPaneTabellaProgrammiGiornalieri.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		modelTabellaProgrammiGiornalieri = (DefaultTableModel) tabellaProgrammiGiornalieri.getModel();
-		
-		
-		
-		
 		String[] colonneGiornalieri = { "Tipo", "ID", "Elemento", "Inizio", "Fine", "Elimina"};
 		modelTabellaProgrammiGiornalieri.setColumnIdentifiers(colonneGiornalieri);
 		
+
+		
 		viewTabellaProgrammiGiornalieri();
+		viewTabellaProgrammiSettimanali();
 		
 		setLayoutProgrammi();
 		
@@ -117,7 +143,7 @@ public class ProgrammiView extends JPanel {
 	}
 	
 	public void setLayoutProgrammi() {		
-		GroupLayout glpanel = new GroupLayout(panelAggiungiProgramma);
+		GroupLayout glpanel = new GroupLayout(panelAggiuntaProgramma);
 		glpanel.setHorizontalGroup(
 			glpanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(glpanel.createSequentialGroup()
@@ -136,13 +162,13 @@ public class ProgrammiView extends JPanel {
 						.addComponent(labelAggiungiProgramma, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 					.addGap(57))
 		);
-		panelAggiungiProgramma.setLayout(glpanel);
+		panelAggiuntaProgramma.setLayout(glpanel);
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(labelProgrammi, GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
-				.addComponent(panelAggiungiProgramma, GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
+				.addComponent(labelProgrammi, GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+				.addComponent(panelAggiuntaProgramma, GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
 				.addComponent(panelTabellaProgrammi, GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
@@ -151,30 +177,24 @@ public class ProgrammiView extends JPanel {
 					.addGap(12)
 					.addComponent(labelProgrammi, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelAggiungiProgramma, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelTabellaProgrammi, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE))
+					.addComponent(panelAggiuntaProgramma, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(panelTabellaProgrammi, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
 		);
 		
-		panelTabellaProgrammiSettimanali = new JPanel();
-		scrollPaneTabellaProgrammiSettimanali = new JScrollPane((Component) null);
-		scrollPaneTabellaProgrammiSettimanali.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
-		labelProgrammiSettimanali = new JLabel("Tabella Programmi Settimanali");
-		labelProgrammiSettimanali.setHorizontalAlignment(SwingConstants.CENTER);
-		labelProgrammiSettimanali.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_panel = new GroupLayout(panelTabellaProgrammiSettimanali);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-					.addGap(25)
-					.addComponent(scrollPaneTabellaProgrammiSettimanali, GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
-					.addGap(38))
-				.addComponent(labelProgrammiSettimanali, GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(labelProgrammiSettimanali, GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(45)
+					.addComponent(scrollPaneTabellaProgrammiSettimanali, GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+					.addGap(56))
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
 					.addComponent(labelProgrammiSettimanali, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(scrollPaneTabellaProgrammiSettimanali, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
@@ -192,28 +212,28 @@ public class ProgrammiView extends JPanel {
 		gl_panelTabellaProgrammi.setVerticalGroup(
 			gl_panelTabellaProgrammi.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTabellaProgrammi.createSequentialGroup()
-					.addComponent(panelTabellaProgrammiGiornalieri, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelTabellaProgrammiGiornalieri, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelTabellaProgrammiSettimanali, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(30, Short.MAX_VALUE))
+					.addComponent(panelTabellaProgrammiSettimanali, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		
 		GroupLayout glpanelGiornalieri = new GroupLayout(panelTabellaProgrammiGiornalieri);
 		glpanelGiornalieri.setHorizontalGroup(
-				glpanelGiornalieri.createParallelGroup(Alignment.LEADING)
+			glpanelGiornalieri.createParallelGroup(Alignment.LEADING)
 				.addComponent(labelProgrammiGiornalieri, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
-				.addGroup(glpanelGiornalieri.createSequentialGroup()
-					.addGap(26)
-					.addComponent(scrollPaneTabellaProgrammiGiornalieri, GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
-					.addGap(37))
+				.addGroup(Alignment.TRAILING, glpanelGiornalieri.createSequentialGroup()
+					.addGap(44)
+					.addComponent(scrollPaneTabellaProgrammiGiornalieri, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+					.addGap(55))
 		);
 		glpanelGiornalieri.setVerticalGroup(
-				glpanelGiornalieri.createParallelGroup(Alignment.LEADING)
+			glpanelGiornalieri.createParallelGroup(Alignment.LEADING)
 				.addGroup(glpanelGiornalieri.createSequentialGroup()
 					.addComponent(labelProgrammiGiornalieri, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(scrollPaneTabellaProgrammiGiornalieri, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(26, Short.MAX_VALUE))
+					.addComponent(scrollPaneTabellaProgrammiGiornalieri, GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		panelTabellaProgrammiGiornalieri.setLayout(glpanelGiornalieri);
 		panelTabellaProgrammi.setLayout(gl_panelTabellaProgrammi);
@@ -224,42 +244,41 @@ public class ProgrammiView extends JPanel {
 		bottoneAggiungiProgramma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPrincipale.removeAll();
-				panelPrincipale.add(panelProgramma);
+				panelPrincipale.add(panelAggiungiProgramma);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
 			}
 		});
-		/*
-		tabellaProgrammi.addMouseListener(new MouseAdapter() {
+		tabellaProgrammiGiornalieri.addMouseListener(new MouseAdapter() {			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-			        Point point = e.getPoint();
-			        int column = tabellaProgrammi.columnAtPoint(point);
-			        int row = tabellaProgrammi.rowAtPoint(point);
-			        int idProgramma = (int) tabellaProgrammi.getModel().getValueAt(row, 1);
-			         
-			        //(new Alert()).errore("ciao", "Column header #" + column + " is clicked, riga "+ row);
-			        String tipoProgramma = (String) tabellaProgrammi.getModel().getValueAt(row, 0);
-		        	int id = (int) tabellaProgrammi.getModel().getValueAt(row, 0);
-		        	Programma p = controllerProgramma.getProgramma(idProgramma);
-		        	
-			        if(column == 3 && !((String) tabellaProgrammi.getModel().getValueAt(row, 3)).equals("")) {
-			        	if(p instanceof ProgrammaSettimanale) {
-			        		if(tipoProgramma.equals(p.getClass().getSimpleName())) {
-								panelModificaSettimanale = new ProgrammaSettimanaleView(panelPrincipale, controllerProgramma, ((ProgrammaSettimanale) p));
-								panelPrincipale.removeAll();
-								panelPrincipale.add(panelModificaSettimanale);
-								panelPrincipale.repaint();
-								panelPrincipale.revalidate();
-							}
-							else
-								(new Alert()).errore("Errore", "Errore");
-						}
-			        }
-					
-			   
+				Point point = e.getPoint();
+				int column = tabellaProgrammiGiornalieri.columnAtPoint(point);
+				int row = tabellaProgrammiGiornalieri.rowAtPoint(point);
+				int idProgramma = (int) tabellaProgrammiGiornalieri.getModel().getValueAt(row, 1);
+				 
+				//(new Alert()).errore("ciao", "Column header #" + column + " is clicked, riga "+ row);
+				String tipoProgramma = (String) tabellaProgrammiGiornalieri.getModel().getValueAt(row, 0);
+				Programma p = controllerProgramma.getProgramma(idProgramma);
+				
+				//GESTIONE CANCELLAZIONE
+				if(column == 5) {
+					if(p instanceof ProgrammaGiornaliero) {
+						if(tipoProgramma.equals(p.getClass().getSimpleName())) {
+							/*
+							panelModificaSettimanale = new ProgrammaSettimanaleView(panelPrincipale, controllerProgramma, ((ProgrammaSettimanale) p));
+							panelPrincipale.removeAll();
+							panelPrincipale.add(panelModificaSettimanale);
+							panelPrincipale.repaint();
+							panelPrincipale.revalidate();*/
+							eliminaProgrammaGiornaliero(p);
+						}	
+					}	
+					else
+						(new Alert()).errore("Errore", "Errore");
+				}
 			}
-		});*/
+		});
 	}
 	
 	public void viewTabellaProgrammiGiornalieri() {
@@ -269,12 +288,12 @@ public class ProgrammiView extends JPanel {
 		int numeroProgrammi = listaProgrammi.size();
 		
 		if(numeroProgrammi != 0) {
-			rowData = new Object[3];
+			rowDataGiornalieri = new Object[6];
 			
 			for(Programma p : listaProgrammi) {
 				if(p instanceof ProgrammaGiornaliero) {
-					rowData[0] = p.getClass().getSimpleName();
-					rowData[1] = p.getId();
+					rowDataGiornalieri[0] = p.getClass().getSimpleName();
+					rowDataGiornalieri[1] = p.getId();
 					
 					/*if(p instanceof Lavatrice) {
 						
@@ -286,9 +305,9 @@ public class ProgrammiView extends JPanel {
 					
 					}*/
 					
-					rowData[3] = "Elimina";
+					rowDataGiornalieri[6] = "Elimina";
 					
-					modelTabellaProgrammiGiornalieri.addRow(rowData);
+					modelTabellaProgrammiGiornalieri.addRow(rowDataGiornalieri);
 				}
 			}
 			
@@ -296,5 +315,46 @@ public class ProgrammiView extends JPanel {
 		else {
 			//(new Alert()).info("La stanza non contiene oggetti", "Information");
 		}
+	}
+	
+	public void viewTabellaProgrammiSettimanali() {
+		tabellaProgrammiGiornalieri.setVisible(true);
+		List<Programma> listaProgrammi = controllerProgramma.getAllProgrammi();
+		
+		int numeroProgrammi = listaProgrammi.size();
+		
+		if(numeroProgrammi != 0) {
+			rowDataSettimanali = new Object[5];
+			
+			for(Programma p : listaProgrammi) {
+				if(p instanceof ProgrammaSettimanale) {
+					rowDataSettimanali[0] = p.getClass().getSimpleName();
+					rowDataSettimanali[1] = p.getId();
+					
+					/*if(p instanceof Lavatrice) {
+						
+					}
+					else if(p instanceof Lavastoviglie){
+						
+					}
+					else{
+					
+					}*/
+					
+					rowDataSettimanali[3] = "Visualizza";
+					rowDataSettimanali[4] = "Elimina";
+					
+					modelTabellaProgrammiGiornalieri.addRow(rowDataGiornalieri);
+				}
+			}
+			
+		}
+		else {
+			//(new Alert()).info("La stanza non contiene oggetti", "Information");
+		}
+	}
+	
+	public void eliminaProgrammaGiornaliero(Programma p) {
+		
 	}
 }
