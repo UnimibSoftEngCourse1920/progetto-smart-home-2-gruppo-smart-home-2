@@ -19,18 +19,17 @@ public class ControllerProgramma {
 	private ControllerCasa casa;
 	private int counter;
 	private ArrayList<Programma> programmi;
-	private FileReader jsonProgrammi;
 
 	public ControllerProgramma(int counter) {
 		this.counter = counter;
 		this.programmi = new ArrayList<>();
 		
-		try {
+		/*try {
 			this.jsonProgrammi =  new FileReader(getClass().getClassLoader().getResource("programmi.json").getFile());
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public ControllerProgramma() {
@@ -137,6 +136,15 @@ public class ControllerProgramma {
 	
 	public ArrayList<Programma> getAllProgrammi() {
 		return this.programmi;
+	}
+	
+	public Programma getProgramma(int id) {
+		for(Programma p : getAllProgrammi()) {
+			if(p.getId() == id) 
+				return p;
+		}
+		
+		return null;
 	}
 	
 	public ControllerCasa getCasa() {
