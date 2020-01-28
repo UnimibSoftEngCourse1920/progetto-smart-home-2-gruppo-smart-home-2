@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import application.backend.dominio.ElementoProgrammabile;
+import application.backend.dominio.Lavatrice;
 import application.backend.dominio.Stanza;
 import application.controllers.ControllerCasa;
 import application.controllers.ControllerProgramma;
@@ -438,8 +438,10 @@ public class AggiungiProgrammaView extends JPanel {
 			elementi.add(controllerCasa.getStanza(nomeStanza).getSensoreTemperatura());
 		if(controllerCasa.getRobot() != null)
 			elementi.add(controllerCasa.getRobot());
-		if(controllerCasa.getStanza(nomeStanza).getElementi() != null)
-			elementi.addAll(controllerCasa.getStanza(nomeStanza).getElementi());
+		if(controllerCasa.getStanza(nomeStanza).getLavastoviglie() != null)
+			elementi.add(controllerCasa.getStanza(nomeStanza).getLavastoviglie());
+		if(controllerCasa.getStanza(nomeStanza).getLavatrice() != null)
+			elementi.add(controllerCasa.getStanza(nomeStanza).getLavatrice());
 		
 		//System.out.println(elementi.size());
 		
@@ -451,10 +453,7 @@ public class AggiungiProgrammaView extends JPanel {
 			comboBoxSelezioneElemento.setEnabled(true);
 			for(Object oggetto : elementi) {
 				if(oggetto != null)  {
-					if(oggetto instanceof ElementoProgrammabile)
-						comboBoxSelezioneElemento.addItem(((ElementoProgrammabile) oggetto).getTipo());
-					else
-						comboBoxSelezioneElemento.addItem(oggetto.getClass().getSimpleName());
+					comboBoxSelezioneElemento.addItem(oggetto.getClass().getSimpleName());
 				}
 			}
 		}

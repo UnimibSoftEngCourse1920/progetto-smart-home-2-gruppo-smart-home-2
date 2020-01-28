@@ -54,11 +54,21 @@ public class ControllerCasa {
 		}
 	}
 	
-	public void cambiaStatoElemento(String nome, int id) {
+	public void cambiaStatoLavatrice(String nome) {
 		Stanza s = getStanza(nome);
-		ElementoProgrammabile e;
+		Lavatrice e;
 		if(s!= null) {
-			 e = s.getElemento(id);
+			 e = s.getLavatrice();
+			if(e != null)
+				e.cambiaStato();
+		}
+	}
+	
+	public void cambiaStatoLavastoviglie(String nome) {
+		Stanza s = getStanza(nome);
+		Lavastoviglie e;
+		if(s!= null) {
+			 e = s.getLavastoviglie();
 			if(e != null)
 				e.cambiaStato();
 		}
@@ -141,8 +151,10 @@ public class ControllerCasa {
 				allOggettiStanza.addAll(stanza.getLampade());
 			if(!stanza.getFinestre().isEmpty())
 				allOggettiStanza.addAll(stanza.getFinestre());
-			if(!stanza.getElementi().isEmpty())
-				allOggettiStanza.add(stanza.getElementi());
+			if(stanza.getLavatrice() != null)
+				allOggettiStanza.add(stanza.getLavatrice());
+			if(stanza.getLavastoviglie() != null)
+				allOggettiStanza.add(stanza.getLavastoviglie());
 
 			return allOggettiStanza;
 		}
@@ -175,7 +187,8 @@ public class ControllerCasa {
 		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
 		SensoreTemperatura sensoreTemperaturaCucina = new SensoreTemperatura(cucina);
 		Lampada lampadaCucina = new Lampada(1);
-		ElementoProgrammabile lavastoviglieCucina = new ElementoProgrammabile(1, "Lavastoviglie");
+		Lavastoviglie lavastoviglieCucina = new Lavastoviglie(1);
+		
 		
 		cucina.addLampada(lampadaCucina);
 		cucina.addFinestra(finestraCucina);
