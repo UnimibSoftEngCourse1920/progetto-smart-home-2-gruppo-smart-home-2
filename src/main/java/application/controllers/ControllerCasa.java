@@ -30,10 +30,12 @@ public class ControllerCasa {
 	}
 
 	public void accendiRobot() {
+		robot.cambiaStato();
 		timer.schedule(robot, 30000, 30000);
 	}
 	
 	public void spegniRobot() {
+		robot.cambiaStato();
 		timer.cancel();
 	}
 	
