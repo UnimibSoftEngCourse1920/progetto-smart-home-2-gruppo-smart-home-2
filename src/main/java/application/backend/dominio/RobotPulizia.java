@@ -46,7 +46,6 @@ public class RobotPulizia extends TimerTask{
 	@Override
 	public void run() {
 		if((mappa.isEmpty()) || (mappa.size() == 1 && mappa.get(0) == base)) {
-			this.cambiaStato();
 			mappa = (ArrayList<Stanza>) casa.getStanze();
 			casa.spegniRobot();
 		}

@@ -36,6 +36,7 @@ public class ControllerCasa {
 	
 	public void spegniRobot() {
 		robot.cambiaStato();
+		main.getRobotView().setStato();
 		timer.cancel();
 	}
 	
