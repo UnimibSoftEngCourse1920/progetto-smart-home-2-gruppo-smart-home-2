@@ -1,15 +1,13 @@
 package application.backend.dominio;
 
-public class ElementoProgrammabile {
+public class Lavatrice {
 
 	private int id;
 	private boolean isInFunzione;
-	private String tipo;
 	
-	public ElementoProgrammabile(int id, String tipo) {
+	public Lavatrice(int id) {
 		this.id = id;
 		this.isInFunzione = false;
-		this.tipo = tipo;
 	}
 	
 	public boolean isInFunzione() {
@@ -25,10 +23,6 @@ public class ElementoProgrammabile {
 	
 	public int getId() {
 		return this.id;
-	}
-
-	public String getTipo() {
-		return tipo;
 	}
 	
 }
