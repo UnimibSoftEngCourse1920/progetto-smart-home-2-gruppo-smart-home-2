@@ -100,6 +100,7 @@ public class MainJFrame extends JFrame {
 
 	public void inizializzazione() {
 		casa = new ControllerCasa(this);
+		casa.addRobot(casa.getStanza("Cucina"));
 		controllerProgramma = new ControllerProgramma();
 		controllerProgramma.setCasa(casa);
 		panelMenu = new JPanel();

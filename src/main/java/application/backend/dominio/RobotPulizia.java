@@ -51,7 +51,7 @@ public class RobotPulizia extends TimerTask{
 			casa.spegniRobot();
 		}
 		else
-			if(!(mappa.get(0) == base)) 
+			if(mappa.get(0) != base) 
 					this.posizione = mappa.get(0);
 				mappa.remove(0);
 	}
