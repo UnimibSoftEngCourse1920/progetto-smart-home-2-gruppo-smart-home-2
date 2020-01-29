@@ -30,6 +30,8 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerDateModel;
 import javax.swing.JCheckBox;
@@ -40,7 +42,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 
-public class AggiuntaProgrammaView extends JPanel {
+public class AggiungiProgrammaView extends JPanel {
 	private Simulazione s;
 	private JLayeredPane panelPrincipale;
 	private JPanel panelSelezioneStanzaElementoTipo;
@@ -66,6 +68,8 @@ public class AggiuntaProgrammaView extends JPanel {
 	private JButton bottoneAggiungiSettimanale;
 	private JLabel[] labelTempSettimanale;
 	private JTextField[] textTempSettimanale;
+	private String oggettoSelezionato;
+	private SpinnerDateModel[] modelSpinnerSettimanale;
 	
 	
 	
@@ -77,7 +81,7 @@ public class AggiuntaProgrammaView extends JPanel {
 	private JLabel labelTempGiornaliero;
 	private JTextField textTempGiornaliero;
 	
-	public AggiuntaProgrammaView(JLayeredPane principale, ControllerCasa casa, ControllerProgramma controllerProgramma) {
+	public AggiungiProgrammaView(JLayeredPane principale, ControllerCasa casa, ControllerProgramma controllerProgramma) {
 		this.panelPrincipale = principale;
 		this.controllerCasa = casa;
 		this.controllerProgramma = controllerProgramma;
@@ -116,7 +120,7 @@ public class AggiuntaProgrammaView extends JPanel {
 		spinnerSettimanale = new JSpinner[7];
 		labelTempSettimanale = new JLabel[7];
 		textTempSettimanale = new JTextField[7];
-		
+		modelSpinnerSettimanale = new SpinnerDateModel[7];
 		checkBoxSettimanale[0] = new JCheckBox("Lunedi");
 		checkBoxSettimanale[1] = new JCheckBox("Martedi");
 		checkBoxSettimanale[2] = new JCheckBox("Mercoledi");
@@ -125,15 +129,25 @@ public class AggiuntaProgrammaView extends JPanel {
 		checkBoxSettimanale[5] = new JCheckBox("Sabato");
 		checkBoxSettimanale[6] = new JCheckBox("Domenica");
 		
+		
+		JSpinner.DateEditor dateEditorSettimanale;
 		for(int i = 0; i < 7; i++) {
 			labelInizioSettimanale[i] = new JLabel("Ora inizio:");
-			spinnerSettimanale[i] = new JSpinner(spinnerModel);
-			JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinnerSettimanale[i], "HH:mm");
-			spinnerSettimanale[i].setEditor(dateEditor);
 			labelTempSettimanale[i] = new JLabel("Valore Temperatura:");
 			textTempSettimanale[i] = new JTextField();
 			textTempSettimanale[i].setColumns(10);
+			//gestione 7 jspinner
+			modelSpinnerSettimanale[i] = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+			spinnerSettimanale[i] = new JSpinner(modelSpinnerSettimanale[i]);
+			dateEditorSettimanale = new JSpinner.DateEditor(spinnerSettimanale[i], "HH:mm");
+			spinnerSettimanale[i].setEditor(dateEditorSettimanale);
 		}
+		
+		/*JSpinner.DateEditor dateEditorLunedi = new JSpinner.DateEditor(spinnerSettimanale[0], "HH:mm");
+		spinnerSettimanale[0].setEditor(dateEditorLunedi);
+		JSpinner.DateEditor dateEditorMartedi = new JSpinner.DateEditor(spinnerSettimanale[1], "HH:mm");
+		spinnerSettimanale[1].setEditor(dateEditorMartedi);*/
+		oggettoSelezionato = "";
 		
 		
 		bottoneAggiungiSettimanale = new JButton("Aggiungi");
@@ -165,6 +179,7 @@ public class AggiuntaProgrammaView extends JPanel {
 	}
 	
 	public void setLayoutProgramma() {
+		
 		GroupLayout gl_panelSelezioneGiorni = new GroupLayout(panelSelezioneGiorni);
 		gl_panelSelezioneGiorni.setHorizontalGroup(
 			gl_panelSelezioneGiorni.createParallelGroup(Alignment.LEADING)
@@ -203,7 +218,7 @@ public class AggiuntaProgrammaView extends JPanel {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textTempSettimanale[2], GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
 							.addGap(34)
-							.addComponent(bottoneAggiungiSettimanale, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+							.addComponent(bottoneAggiungiSettimanale, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 							.addGap(122))
 						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
 							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
@@ -267,7 +282,7 @@ public class AggiuntaProgrammaView extends JPanel {
 							.addComponent(labelInizioSettimanale[0], GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addGap(80)
 							.addComponent(bottoneAggiungiSettimanale)
-							.addGap(166))
+							.addGap(180))
 						.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 							.addComponent(spinnerSettimanale[0], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(labelTempSettimanale[0])
@@ -339,7 +354,7 @@ public class AggiuntaProgrammaView extends JPanel {
 					.addComponent(panelSelezioneGiorni, GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
-		
+
 		GroupLayout gl_panelStanzaElementoTipo = new GroupLayout(panelSelezioneStanzaElementoTipo);
 		gl_panelStanzaElementoTipo.setHorizontalGroup(
 				gl_panelStanzaElementoTipo.createParallelGroup(Alignment.LEADING)
@@ -444,6 +459,7 @@ public class AggiuntaProgrammaView extends JPanel {
 		});
 		comboBoxSelezioneElemento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				oggettoSelezionato = comboBoxSelezioneElemento.getSelectedItem().toString();
             	panelSelezioneSettimanale.setVisible(false);
             	panelSelezioneGiornaliero.setVisible(false); 
         	}
@@ -499,6 +515,8 @@ public class AggiuntaProgrammaView extends JPanel {
 		for(int i = 0; i < 7; i++) {
 			if(!checkBoxSettimanale[i].isSelected()) {
 				spinnerSettimanale[i].setEnabled(false);
+				labelTempSettimanale[i].setVisible(false);
+				textTempSettimanale[i].setVisible(false);
 			}
 		}	
 		
@@ -506,70 +524,119 @@ public class AggiuntaProgrammaView extends JPanel {
 		checkBoxSettimanale[0].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoxSettimanale[0].isSelected()) {
+					if(oggettoSelezionato.equals("SensoreTemperatura")) {
+						labelTempSettimanale[0].setVisible(true);
+						textTempSettimanale[0].setVisible(true);
+					}
 					spinnerSettimanale[0].setEnabled(true);
 				}
-				else
+				else {
 					spinnerSettimanale[0].setEnabled(false);
+					labelTempSettimanale[0].setVisible(false);
+					textTempSettimanale[0].setVisible(false);
+				}
 			}
 		});
 		//CHECKBOX MARTEDI----------------------------------------------------
 		checkBoxSettimanale[1].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoxSettimanale[1].isSelected()) {
+					if(oggettoSelezionato.equals("SensoreTemperatura")) {
+						labelTempSettimanale[1].setVisible(true);
+						textTempSettimanale[1].setVisible(true);
+					}
 					spinnerSettimanale[1].setEnabled(true);
 				}
-				else
+				else {
 					spinnerSettimanale[1].setEnabled(false);
+					labelTempSettimanale[1].setVisible(false);
+					textTempSettimanale[1].setVisible(false);
+				}
 			}
 		});
 		//CHECKBOX MERCOLEDI----------------------------------------------------
 		checkBoxSettimanale[2].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoxSettimanale[2].isSelected()) {
+					if(oggettoSelezionato.equals("SensoreTemperatura")) {
+						labelTempSettimanale[2].setVisible(true);
+						textTempSettimanale[2].setVisible(true);
+					}
 					spinnerSettimanale[2].setEnabled(true);
 				}
-				else
+				else {
 					spinnerSettimanale[2].setEnabled(false);
+					labelTempSettimanale[2].setVisible(false);
+					textTempSettimanale[2].setVisible(false);
+				}
 			}
 		});
 		//CHECKBOX GIOVEDI----------------------------------------------------
 		checkBoxSettimanale[3].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoxSettimanale[3].isSelected()) {
+					if(oggettoSelezionato.equals("SensoreTemperatura")) {
+						labelTempSettimanale[3].setVisible(true);
+						textTempSettimanale[3].setVisible(true);
+					}
 					spinnerSettimanale[3].setEnabled(true);
 				}
-				else
+				else {
 					spinnerSettimanale[3].setEnabled(false);
+					labelTempSettimanale[3].setVisible(false);
+					textTempSettimanale[3].setVisible(false);
+				}
 			}
 		});
 		//CHECKBOX VENERDI----------------------------------------------------
 		checkBoxSettimanale[4].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoxSettimanale[4].isSelected()) {
+					if(oggettoSelezionato.equals("SensoreTemperatura")) {
+						labelTempSettimanale[4].setVisible(true);
+						textTempSettimanale[4].setVisible(true);
+					}
 					spinnerSettimanale[4].setEnabled(true);
 				}
-				else
+				else {
 					spinnerSettimanale[4].setEnabled(false);
+					labelTempSettimanale[4].setVisible(false);
+					textTempSettimanale[4].setVisible(false);
+				}
 			}
 		});
 		//CHECKBOX SABATO----------------------------------------------------
 		checkBoxSettimanale[5].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoxSettimanale[5].isSelected()) {
+					if(oggettoSelezionato.equals("SensoreTemperatura")) {
+						labelTempSettimanale[5].setVisible(true);
+						textTempSettimanale[5].setVisible(true);
+					}
 					spinnerSettimanale[5].setEnabled(true);
 				}
-				else
+				else {
 					spinnerSettimanale[5].setEnabled(false);
+					labelTempSettimanale[5].setVisible(false);
+					textTempSettimanale[5].setVisible(false);
+				}
 			}
 		});
 		//CHECKBOX DOMENICA----------------------------------------------------
 		checkBoxSettimanale[6].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoxSettimanale[6].isSelected()) {
+					if(oggettoSelezionato.equals("SensoreTemperatura")) {
+						labelTempSettimanale[6].setVisible(true);
+						textTempSettimanale[6].setVisible(true);
+					}
 					spinnerSettimanale[6].setEnabled(true);
 				}
-				else
+				else {
 					spinnerSettimanale[6].setEnabled(false);
+					labelTempSettimanale[6].setVisible(false);
+					textTempSettimanale[6].setVisible(false);
+				}
 			}
 		});
 	}
@@ -579,13 +646,11 @@ public class AggiuntaProgrammaView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				boolean errore = false;
 				String nomeStanza = null;
-				String nomeClasseElemento = null;
 				
 				if(comboBoxSelezioneStanza.getSelectedItem() != null) {
                     nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
                     
                     if(comboBoxSelezioneElemento.getSelectedItem() != null) {
-    					nomeClasseElemento = comboBoxSelezioneElemento.getSelectedItem().toString();
     					//System.out.print(nomeClasseElemento);
     					double tempDefault = 0;
     					int ore = 0;
@@ -604,7 +669,7 @@ public class AggiuntaProgrammaView extends JPanel {
         					
         					if(ore >= oreCorrente) {
         						if((ore == oreCorrente && minuti > minutiCorrenti) || ore > oreCorrente) {
-	        						if(nomeClasseElemento.equals("SensoreTemperatura")) {
+	        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
 	            						try {
 	            							tempDefault = Double.parseDouble(textTempGiornaliero.getText());
 	            							
@@ -642,7 +707,7 @@ public class AggiuntaProgrammaView extends JPanel {
         				}
         				
         				if(!errore) {
-        					controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
+        					controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, oggettoSelezionato, ore, minuti, tempDefault);
             				(new Alert()).info("Il ProgrammaGiornaliero è stato aggiunto", "Operazione effettuata con successo");
             				caricaProgrammiView();
             				//controllerCasa.getMain().viewHomepage();
@@ -667,12 +732,17 @@ public class AggiuntaProgrammaView extends JPanel {
 				boolean errore = false;
 				String nomeStanza = null;
 				String nomeClasseElemento = null;
-				String value;
+				String valueInizio = "";
 				double tempDefault = 0;
 				int ore = 0;
 				int minuti = 0;
+				int i = 0;
+				boolean creatoSettimanale = false;
+				int idSettimanale = 0;
 				SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 				Date data = null;
+				int oreCorrente = controllerCasa.getMain().getSimulazione().getOre();
+				int minutiCorrenti = controllerCasa.getMain().getSimulazione().getMinuti();
 				
 				if(comboBoxSelezioneStanza.getSelectedItem() != null) {
                     nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
@@ -680,131 +750,71 @@ public class AggiuntaProgrammaView extends JPanel {
                     if(comboBoxSelezioneElemento.getSelectedItem() != null) {
     					nomeClasseElemento = comboBoxSelezioneElemento.getSelectedItem().toString();
     					
-    					for(int i = 0; i < 7; i++) {
+    					for(i = 0; i < 7; i++) {
     						if(checkBoxSettimanale[i].isSelected()) {
+    							valueInizio = (formato.format(spinnerSettimanale[i].getValue())).toString();
     							
+    							try {
+    								data = formato.parse(valueInizio);
+    								ore = data.getHours();
+    	        					minuti = data.getMinutes();
+    	        					
+    	        					if(ore >= oreCorrente) {
+    	        						if((ore == oreCorrente && minuti > minutiCorrenti) || ore > oreCorrente) {
+    		        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
+    		            						try {
+    		            							tempDefault = Double.parseDouble(textTempSettimanale[i].getText());
+    		            							
+    		            							if(tempDefault <= 8 || tempDefault >= 28) {
+    		            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28. Errore riga: "+(i+1), "Attenzione");
+    		            								errore = true;
+    		            							}
+    		            							
+    		            							if(tempDefault == 0.0)
+    		            								tempDefault = 17;
+    		            						}catch (NumberFormatException error) {
+    		            							(new Alert()).errore("Il valore deve essere un numero. Errore riga: "+(i+1), "Attenzione");
+    		            							errore = true;
+    		            						}
+    		            					}
+    	        						}
+    	        						else {
+    	        							//System.out.println("ciao");
+    	        							(new Alert()).errore("L'orario deve essere maggiore di quello dell'orologio. Errore riga: "+ (i+1), "Attenzione");
+    	            						errore = true;
+    	        						}
+    	        					}
+    	        					else {
+    	        						(new Alert()).errore("L'orario deve essere maggiore di quello dell'orologio", "Attenzione");
+    	        						errore = true;
+    	        					}
+    	        					
+    	        					
+    	        					
+    	        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
+    	        					
+    	        				} catch (ParseException e1) {
+    	        					// TODO Auto-generated catch block
+    	        					(new Alert()).errore("Errore nella scelta del tempo di inizio", "Attenzione");
+    	        					errore = true;
+    	        				}
+    							//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
+    	    					//System.out.println(nomeClasseElemento+nomeStanza+""+valueInizio+""+tempDefault);
+    							if(!errore) {
+    	        					if(!creatoSettimanale) {
+    	        						creatoSettimanale = true;
+    	        						idSettimanale = controllerProgramma.creaProgrammaSettimanale();
+    	        						//controllerProgramma.aggiungiElemento(id, o);
+    	        					}
+    	        					controllerProgramma.aggiornaProgrammaSettimanale(idSettimanale, (i+1), nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
+    	        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
+    	            				(new Alert()).info("Il ProgrammaSettimanale è stato aggiunto", "Operazione effettuata con successo");
+    	            				caricaProgrammiView();
+    	            				//controllerCasa.getMain().viewHomepage();
+    	        				}
     						}
     					}
-                    /*
-	                    //LUNEDI
-	                    if(checkBoxLunedi.isSelected()) {
-	                    	String valueLunedi = (formato.format(spinnerLunedi.getValue())).toString();
-	                    	try {
-								data = formato.parse(valueLunedi);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-        					ore = data.getHours();
-        					minuti = data.getMinutes();
-	                    }
-	                    //MARTEDI
-	                    if(checkBoxMartedi.isSelected()) {
-	                    	String valueMartedi = (formato.format(spinnerMartedi.getValue())).toString();
-	                    	try {
-								data = formato.parse(valueMartedi);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-        					ore = data.getHours();
-        					minuti = data.getMinutes();
-	                    }
-	                    //MERCOLEDI
-	                    if(checkBoxMercoledi.isSelected()) {
-	                    	String valueMercoledi = (formato.format(spinnerMercoledi.getValue())).toString();
-	                    	try {
-								data = formato.parse(valueMercoledi);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-        					ore = data.getHours();
-        					minuti = data.getMinutes();
-	                    }
-	                    //GIOVEDI
-	                    if(checkBoxGiovedi.isSelected()) {
-	                    	String valueGiovedi = (formato.format(spinnerGiovedi.getValue())).toString();
-	                    	try {
-								data = formato.parse(valueGiovedi);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-        					ore = data.getHours();
-        					minuti = data.getMinutes();
-	                    }
-	                    //VENERDI
-	                    if(checkBoxVenerdi.isSelected()) {
-	                    	String valueVenerdi = (formato.format(spinnerVenerdi.getValue())).toString();
-	                    	try {
-								data = formato.parse(valueVenerdi);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-        					ore = data.getHours();
-        					minuti = data.getMinutes();
-	                    }
-	                    //SABATO
-	                    if(checkBoxSabato.isSelected()) {
-	                    	String valueSabato = (formato.format(spinnerSabato.getValue())).toString();
-	                    	try {
-								data = formato.parse(valueSabato);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-        					ore = data.getHours();
-        					minuti = data.getMinutes();
-	                    }
-	                    //DOMENICA
-	                    if(checkBoxDomenica.isSelected()) {
-	                    	String valueDomenica = (formato.format(spinnerDomenica.getValue())).toString();
-	                    	try {
-								data = formato.parse(valueDomenica);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-        					ore = data.getHours();
-        					minuti = data.getMinutes();
-	                    }*/
-                    
-	                    /*
-	                    if(nomeClasseElemento.equals("SensoreTemperatura")) {
-    						try {
-    							tempDefault = Double.parseDouble(textTempGiornaliero.getText());
-    							
-    							if(tempDefault <= 8 || tempDefault >= 28) {
-    								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28", "Attenzione");
-    								errore = true;
-    							}
-    							
-    							if(tempDefault == 0.0)
-    								tempDefault = 17;
-    						}catch (NumberFormatException error) {
-    							(new Alert()).errore("Il valore deve essere un numero", "Attenzione");
-    							errore = true;
-    						}
-    					}*/
-    					
-    					
-        				
-        					
-        					
-        					
-        					
-        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
-        				
-        				
-        				if(!errore) {
-        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
-            				//(new Alert()).info("Il ProgrammaGiornaliero è stato aggiunto", "Operazione effettuata con successo");
-            				//caricaProgrammiView();
-            				//controllerCasa.getMain().viewHomepage();
-        				}
-        				
+        						
         				
                     }
     				else

@@ -55,7 +55,7 @@ public class ProgrammiView extends JPanel {
 	private Simulazione s;
 	private ControllerProgramma controllerProgramma;
 	private ProgrammaSettimanaleView panelModificaSettimanale;
-	private AggiuntaProgrammaView panelAggiungiProgramma;
+	private AggiungiProgrammaView panelAggiungiProgramma;
 	private JLayeredPane panelPrincipale;
 	
 	private JPanel panelAggiuntaProgramma;
@@ -105,7 +105,7 @@ public class ProgrammiView extends JPanel {
 		
 		bottoneAggiungiProgramma = new JButton("Aggiungi");
 		
-		panelAggiungiProgramma = new AggiuntaProgrammaView(panelPrincipale, this.controllerProgramma.getCasa(), this.controllerProgramma);
+		panelAggiungiProgramma = new AggiungiProgrammaView(panelPrincipale, this.controllerProgramma.getCasa(), this.controllerProgramma);
 		
 		panelAggiuntaProgramma = new JPanel();
 		panelTabellaProgrammi = new JPanel();
@@ -297,24 +297,24 @@ public class ProgrammiView extends JPanel {
 			
 			for(Programma p : listaProgrammi) {
 				if(p instanceof ProgrammaGiornaliero) {
-					Object e = p.getElemento();
+					Object e = controllerProgramma.getElementoProgramma(p);
 					rowDataGiornalieri[0] = p.getClass().getSimpleName();
-					rowDataGiornalieri[1] = p.getId();
+					rowDataGiornalieri[1] = controllerProgramma.getIdProgramma(p);
 					rowDataGiornalieri[3] = e.getClass().getSimpleName();
 					
 					Stanza s = controllerProgramma.getCasa().getStanzaElemento(e);
 					
 					if(s != null) {
-						rowDataGiornalieri[2] = s.getNome();
+						rowDataGiornalieri[2] = controllerProgramma.getCasa().getNomeStanza(s);
 					}
 					
-					rowDataGiornalieri[4] = ((ProgrammaGiornaliero) p).getInizio();
-					rowDataGiornalieri[5] = ((ProgrammaGiornaliero) p).getFine();
+					rowDataGiornalieri[4] = controllerProgramma.getInizioProgrammaGiornaliero((ProgrammaGiornaliero)p);
+					rowDataGiornalieri[5] = controllerProgramma.getFineProgrammaGiornaliero((ProgrammaGiornaliero)p);
 					
-					if(((ProgrammaGiornaliero) p).getValoreDiSetting() == 0.0)
+					if(controllerProgramma.getSettingProgrammaGiornaliero((ProgrammaGiornaliero)p) == 0.0)
 						rowDataGiornalieri[6] = "";
 					else
-						rowDataGiornalieri[6] = ((ProgrammaGiornaliero) p).getValoreDiSetting();
+						rowDataGiornalieri[6] = controllerProgramma.getSettingProgrammaGiornaliero((ProgrammaGiornaliero)p);
 					
 					rowDataGiornalieri[7] = "Elimina";
 					
@@ -329,7 +329,8 @@ public class ProgrammiView extends JPanel {
 	}
 	
 	public void viewTabellaProgrammiSettimanali() {
-		tabellaProgrammiGiornalieri.setVisible(true);
+		rimuoviRigheTabellaProgrammiSettimanali();
+		tabellaProgrammiSettimanali.setVisible(true);
 		List<Programma> listaProgrammi = controllerProgramma.getAllProgrammi();
 		
 		int numeroProgrammi = listaProgrammi.size();
@@ -337,16 +338,19 @@ public class ProgrammiView extends JPanel {
 		if(numeroProgrammi != 0) {
 			rowDataSettimanali = new Object[5];
 			
+			
 			for(Programma p : listaProgrammi) {
 				if(p instanceof ProgrammaSettimanale) {
-					rowDataSettimanali[0] = p.getClass().getSimpleName();
-					rowDataSettimanali[1] = p.getId();
+					//System.out.println(p.getClass().getSimpleName());
 					
+					rowDataSettimanali[0] = p.getClass().getSimpleName();
+					rowDataSettimanali[1] = controllerProgramma.getIdProgramma(p);
+					rowDataSettimanali[2] = controllerProgramma.getElementoProgramma(p).getClass().getSimpleName();
 					
 					rowDataSettimanali[3] = "Visualizza";
 					rowDataSettimanali[4] = "Elimina";
 					
-					modelTabellaProgrammiGiornalieri.addRow(rowDataGiornalieri);
+					modelTabellaProgrammiSettimanali.addRow(rowDataSettimanali);
 				}
 			}
 			

@@ -36,13 +36,14 @@ public class ControllerProgramma {
 		this.counter++;
 	}
 	
-	public void creaProgrammaSettimanale() {
+	public int creaProgrammaSettimanale() {
 		this.programmi.add(new ProgrammaSettimanale(counter));
 		this.counter++;
+		return (this.counter-1);
 	}
 	
 	public void eliminaProgramma(int id) {
-		System.out.println(programmi.size());
+		//System.out.println(programmi.size());
 		for(int i = 0; i < programmi.size(); i++) {
 			if(programmi.get(i).getId() == id)
 				programmi.remove(i);
@@ -50,7 +51,7 @@ public class ControllerProgramma {
 		
 	}
 	
-	public void aggiungiElemento(int id,Object e) {
+	public void aggiungiElemento(int id, Object e) {
 		for (Programma p : programmi) {
 			if (p.getId() == id) 
 				p.aggiungiElemento(e);
@@ -152,28 +153,25 @@ public class ControllerProgramma {
 		this.casa = casa;
 	}
 	
-	/*
-	//@SuppressWarnings("uncheched")
-	public void scriviAllProgrammiJson() {
-		//JSONObject dettaglioProgramma = new JSONObject();
-		
-		JSONArray arrayProgrammi = new JSONArray();
-		
-		for(Programma p : getAllProgrammi()) { 
-			JSONObject objectProgrammi = new JSONObject();
-			JSONObject dettaglioProgramma = new JSONObject();
-			if(p instanceof ProgrammaGiornaliero) {
-				ProgrammaGiornaliero programmaGiornaliero = (ProgrammaGiornaliero) p;
-				dettaglioProgramma.put("ID", programmaGiornaliero.getId());
-				dettaglioProgramma.put("Inizio", programmaGiornaliero.getInizio());
-				dettaglioProgramma.put("Fine", programmaGiornaliero.getFine());
-				dettaglioProgramma.put("Valore Setting", programmaGiornaliero.getValoreDiSetting());
-				objectProgrammi.put(programmaGiornaliero.getClass().getSimpleName(), dettaglioProgramma);
-			}
-			
-			arrayProgrammi.add(objectProgrammi);
-		}
-	}*/
+	public Object getElementoProgramma(Programma p) {
+		return p.getElemento();
+	}
+	
+	public int getIdProgramma(Programma p) {
+		return p.getId();
+	}
+	
+	public LocalTime getInizioProgrammaGiornaliero(ProgrammaGiornaliero p) {
+		return p.getInizio();
+	}
+	
+	public LocalTime getFineProgrammaGiornaliero(ProgrammaGiornaliero p) {
+		return p.getFine();
+	}
+	
+	public double getSettingProgrammaGiornaliero(ProgrammaGiornaliero p) {
+		return p.getValoreDiSetting();
+	}
 	
 	public void nuovoProgrammaGiornaliero(String nomeStanza, String nomeClasseElemento, int ore, int minuti, double tempDefault) {
 		CharSequence orarioInizio = ore+": "+minuti;
@@ -217,8 +215,41 @@ public class ControllerProgramma {
 		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45, 0);
 		nuovoProgrammaGiornaliero("Cucina", "SensoreTemperatura", 0, 10, 10);
 		
-		
 	}
 	
-	
+	public void aggiornaProgrammaSettimanale(int idSettimanale, int giornoSettimana, String nomeStanza, String nomeClasseElemento, int ore, int minuti, double tempDefault) {
+		CharSequence orarioInizio = ore+": "+minuti;
+		CharSequence orarioFine = (ore+2)+": "+minuti;
+		
+		/*LocalTime inizio = LocalTime.parse(orarioInizio);
+		LocalTime fine = LocalTime.parse(orarioFine);*/
+		LocalTime inizio = LocalTime.of(ore, minuti);
+		LocalTime fine = LocalTime.of((ore+2), minuti);
+		
+		
+		Stanza stanza = casa.getStanza(nomeStanza);
+		
+		
+		if(nomeClasseElemento.equals("SensoreTemperatura")) {
+			SensoreTemperatura s = stanza.getSensoreTemperatura();
+			aggiungiElemento(idSettimanale, s);
+			aggiungiGiornoASettimana(idSettimanale, DayOfWeek.of(giornoSettimana%8), inizio, fine, tempDefault, s);
+		}
+		else if(nomeClasseElemento.equals("RobotPulizia")) {
+			RobotPulizia r = casa.getRobot();
+			aggiungiElemento(idSettimanale, r);
+			aggiungiGiornoASettimana(idSettimanale, DayOfWeek.of(giornoSettimana%8), inizio, fine, 0, r);
+		} 
+		else if(nomeClasseElemento.equals("Lavastoviglie")) {
+			Lavastoviglie l = stanza.getLavastoviglie();
+			aggiungiElemento(idSettimanale, l);
+			aggiungiGiornoASettimana(idSettimanale, DayOfWeek.of(giornoSettimana%8), inizio, fine, 0, l);
+		}
+		else {
+			Lavatrice l = stanza.getLavatrice();
+			aggiungiElemento(idSettimanale, l);
+			aggiungiGiornoASettimana(idSettimanale, DayOfWeek.of(giornoSettimana%8), inizio, fine, 0, l);
+		}
+		//System.out.println(programmi.size());
+	}
 }

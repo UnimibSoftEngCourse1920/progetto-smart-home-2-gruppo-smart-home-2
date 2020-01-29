@@ -168,6 +168,10 @@ public class ControllerCasa {
 		return null;
 	}
 	
+	public String getNomeStanza(Stanza s) {
+		return s.getNome();
+	}
+	
 	public List<Stanza> getStanze() {
 		return this.stanze;
 	}
