@@ -24,7 +24,7 @@ public class Simulazione extends TimerTask {
 			this.giorno = this.giorno.plus(1);
 		}
 		else
-			this.ora = this.ora.plusMinutes(10);
+			this.ora = this.ora.plusMinutes(1);
 		
 		Stanza s = cp.getCasa().getMain().getPanelStanze().getStanzaSelezionata();
 		cp.accensione(this.ora, this.giorno);

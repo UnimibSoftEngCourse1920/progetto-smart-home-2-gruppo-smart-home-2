@@ -131,7 +131,7 @@ public class MainJFrame extends JFrame {
 		
 		s = new Simulazione(controllerProgramma);
 		Timer timerSim = new Timer();
-		timerSim.schedule(s, 10000, 10000);
+		timerSim.schedule(s, 1000, 1000);
 		
 		
 		setLayoutMenu();
@@ -244,11 +244,11 @@ public class MainJFrame extends JFrame {
 	}
 	
 	public void startClock() {
-		javax.swing.Timer timer = new javax.swing.Timer(10000, new ActionListener() {
+		javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clock.setText(s.getOra().toString());
+				clock.setText(s.getGiorno() + ": "+ s.getOra().toString());
 			}
 		});
 		
