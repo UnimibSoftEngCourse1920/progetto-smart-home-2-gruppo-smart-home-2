@@ -27,6 +27,8 @@ public class ProgrammaSettimanale extends Programma {
 		return settimana.get(giorno).getValoreDiSetting();
 	}
 	
-	
+	public EnumMap<DayOfWeek, ProgrammaGiornaliero> getSettimana() {
+		return this.settimana;
+	}
 	
 }

@@ -3,9 +3,17 @@ package application.controllers;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map.Entry;
+
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 import application.backend.dominio.*;
 import application.backend.programmi.*;
 import application.backend.sensori.SensoreTemperatura;
+import application.frontend.views.ProgrammaSettimanaleView;
 
 public class ControllerProgramma {
 
@@ -231,6 +240,8 @@ public class ControllerProgramma {
 		
 		Stanza stanza = casa.getStanza(nomeStanza);
 		
+		System.out.println(nomeStanza);
+		
 		
 		if(nomeClasseElemento.equals("SensoreTemperatura")) {
 			SensoreTemperatura s = stanza.getSensoreTemperatura();
@@ -253,5 +264,35 @@ public class ControllerProgramma {
 			aggiungiGiornoASettimana(idSettimanale, DayOfWeek.of(giornoSettimana%8), inizio, fine, 0, l);
 		}
 		//System.out.println(programmi.size());
+	}
+	
+	public void getProgrammiGiornalieri(ProgrammaSettimanale p, ProgrammaSettimanaleView view) {
+		EnumMap<DayOfWeek, ProgrammaGiornaliero> settimana = p.getSettimana();
+		int i = 0;
+		Date data = null;
+		
+		for (Entry<DayOfWeek, ProgrammaGiornaliero> entry : settimana.entrySet()) {
+			DayOfWeek giorno = entry.getKey();
+			Programma giornaliero = entry.getValue();
+			SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
+			i = (giorno.getValue()-1)%7;
+			System.out.print(i);
+			
+			try {
+				data = formato.parse(p.getInizio(giorno).toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			view.modificaSpinner(i, data);
+			
+			if(p.getElemento() instanceof SensoreTemperatura)
+				view.modificaText(i, String.valueOf(p.getValoreDiSetting(giorno)));
+				
+			//System.out.print(i);
+			//i++;
+			//System.out.println("HDI:" + numeroGiorno + ", Countries:" + giornaliero);
+		}
 	}
 }

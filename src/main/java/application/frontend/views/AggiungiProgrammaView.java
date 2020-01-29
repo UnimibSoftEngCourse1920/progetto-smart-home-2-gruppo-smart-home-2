@@ -669,22 +669,28 @@ public class AggiungiProgrammaView extends JPanel {
         					
         					if(ore >= oreCorrente) {
         						if((ore == oreCorrente && minuti > minutiCorrenti) || ore > oreCorrente) {
-	        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
-	            						try {
-	            							tempDefault = Double.parseDouble(textTempGiornaliero.getText());
-	            							
-	            							if(tempDefault <= 8 || tempDefault >= 28) {
-	            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28", "Attenzione");
-	            								errore = true;
-	            							}
-	            							
-	            							if(tempDefault == 0.0)
-	            								tempDefault = 17;
-	            						}catch (NumberFormatException error) {
-	            							(new Alert()).errore("Il valore deve essere un numero", "Attenzione");
-	            							errore = true;
-	            						}
-	            					}
+        							if(ore < 22) {
+		        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
+		            						try {
+		            							tempDefault = Double.parseDouble(textTempGiornaliero.getText());
+		            							
+		            							if(tempDefault <= 8 || tempDefault >= 28) {
+		            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28", "Attenzione");
+		            								errore = true;
+		            							}
+		            							
+		            							if(tempDefault == 0.0)
+		            								tempDefault = 17;
+		            						}catch (NumberFormatException error) {
+		            							(new Alert()).errore("Il valore deve essere un numero", "Attenzione");
+		            							errore = true;
+		            						}
+		            					}
+        							}
+        							else {
+            							(new Alert()).errore("Il programma deve iniziare prima delle 22", "Attenzione");
+                						errore = true;
+            						}
         						}
         						else {
         							(new Alert()).errore("L'orario deve essere maggiore di quello dell'orologio", "Attenzione");
@@ -761,22 +767,28 @@ public class AggiungiProgrammaView extends JPanel {
     	        					
     	        					if(ore >= oreCorrente) {
     	        						if((ore == oreCorrente && minuti > minutiCorrenti) || ore > oreCorrente) {
-    		        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
-    		            						try {
-    		            							tempDefault = Double.parseDouble(textTempSettimanale[i].getText());
-    		            							
-    		            							if(tempDefault <= 8 || tempDefault >= 28) {
-    		            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28. Errore riga: "+(i+1), "Attenzione");
-    		            								errore = true;
-    		            							}
-    		            							
-    		            							if(tempDefault == 0.0)
-    		            								tempDefault = 17;
-    		            						}catch (NumberFormatException error) {
-    		            							(new Alert()).errore("Il valore deve essere un numero. Errore riga: "+(i+1), "Attenzione");
-    		            							errore = true;
-    		            						}
-    		            					}
+    	        							if(ore < 22) {
+	    		        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
+	    		            						try {
+	    		            							tempDefault = Double.parseDouble(textTempSettimanale[i].getText());
+	    		            							
+	    		            							if(tempDefault <= 8 || tempDefault >= 28) {
+	    		            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28. Errore riga: "+(i+1), "Attenzione");
+	    		            								errore = true;
+	    		            							}
+	    		            							
+	    		            							if(tempDefault == 0.0)
+	    		            								tempDefault = 17;
+	    		            						}catch (NumberFormatException error) {
+	    		            							(new Alert()).errore("Il valore deve essere un numero. Errore riga: "+(i+1), "Attenzione");
+	    		            							errore = true;
+	    		            						}
+	    		            					}
+    	        							}
+    	        							else {
+    	            							(new Alert()).errore("Il programma deve iniziare prima delle 22. Errore riga: "+ (i+1), "Attenzione");
+    	                						errore = true;
+    	            						}
     	        						}
     	        						else {
     	        							//System.out.println("ciao");
@@ -808,8 +820,7 @@ public class AggiungiProgrammaView extends JPanel {
     	        					}
     	        					controllerProgramma.aggiornaProgrammaSettimanale(idSettimanale, (i+1), nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
     	        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
-    	            				(new Alert()).info("Il ProgrammaSettimanale è stato aggiunto", "Operazione effettuata con successo");
-    	            				caricaProgrammiView();
+    	            				
     	            				//controllerCasa.getMain().viewHomepage();
     	        				}
     						}
@@ -822,6 +833,11 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 				else
 					(new Alert()).errore("Devi selezionare una stanza", "Attenzione");
+				
+				if(!errore) {
+				(new Alert()).info("Il ProgrammaSettimanale è stato aggiunto", "Operazione effettuata con successo");
+				caricaProgrammiView();
+				}
 			}
 				
 		});
