@@ -3,6 +3,7 @@ package application.backend.sensori;
 import java.util.*;
 
 import application.backend.dominio.*;
+import application.frontend.support.Alert;
 
 public class SensoreTemperatura extends TimerTask {
 
@@ -50,7 +51,7 @@ public class SensoreTemperatura extends TimerTask {
 		if(temperaturaDesiderata < 28 && temperaturaDesiderata > 8)
 			this.temperaturaDesiderata = temperaturaDesiderata;
 		else
-			System.out.println("Cazzo fai, non va bene la temperatura");
+			(new Alert()).errore("La temperatura impostata deve essere tra gli 8 e i 28 gradi, estremi esclusi", "Errore");
 	}
 	
 	public void aumentaTemperatura() {
