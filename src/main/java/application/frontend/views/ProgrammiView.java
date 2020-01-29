@@ -134,7 +134,7 @@ public class ProgrammiView extends JPanel {
 		scrollPaneTabellaProgrammiGiornalieri = new JScrollPane(tabellaProgrammiGiornalieri);
 		scrollPaneTabellaProgrammiGiornalieri.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		modelTabellaProgrammiGiornalieri = (DefaultTableModel) tabellaProgrammiGiornalieri.getModel();
-		String[] colonneGiornalieri = { "Tipo", "ID", "Elemento", "Inizio", "Fine", "Valore Settato", "Elimina"};
+		String[] colonneGiornalieri = { "Tipo", "Stanza", "ID", "Elemento", "Inizio", "Fine", "Valore Settato", "Elimina"};
 		modelTabellaProgrammiGiornalieri.setColumnIdentifiers(colonneGiornalieri);
 		((DefaultTableCellRenderer)tabellaProgrammiGiornalieri.getDefaultRenderer(Object.class)).setHorizontalAlignment(JLabel.CENTER);
 
@@ -293,25 +293,30 @@ public class ProgrammiView extends JPanel {
 		int numeroProgrammi = listaProgrammi.size();
 		
 		if(numeroProgrammi != 0) {
-			rowDataGiornalieri = new Object[7];
+			rowDataGiornalieri = new Object[8];
 			
 			for(Programma p : listaProgrammi) {
 				if(p instanceof ProgrammaGiornaliero) {
 					Object e = p.getElemento();
 					rowDataGiornalieri[0] = p.getClass().getSimpleName();
 					rowDataGiornalieri[1] = p.getId();
+					rowDataGiornalieri[3] = e.getClass().getSimpleName();
 					
-					rowDataGiornalieri[2] = e.getClass().getSimpleName();
+					Stanza s = controllerProgramma.getCasa().getStanzaElemento(e);
 					
-					rowDataGiornalieri[3] = ((ProgrammaGiornaliero) p).getInizio();
-					rowDataGiornalieri[4] = ((ProgrammaGiornaliero) p).getFine();
+					if(s != null) {
+						rowDataGiornalieri[2] = s.getNome();
+					}
+					
+					rowDataGiornalieri[4] = ((ProgrammaGiornaliero) p).getInizio();
+					rowDataGiornalieri[5] = ((ProgrammaGiornaliero) p).getFine();
 					
 					if(((ProgrammaGiornaliero) p).getValoreDiSetting() == 0.0)
-						rowDataGiornalieri[5] = "";
+						rowDataGiornalieri[6] = "";
 					else
-						rowDataGiornalieri[5] = ((ProgrammaGiornaliero) p).getValoreDiSetting();
+						rowDataGiornalieri[6] = ((ProgrammaGiornaliero) p).getValoreDiSetting();
 					
-					rowDataGiornalieri[6] = "Elimina";
+					rowDataGiornalieri[7] = "Elimina";
 					
 					modelTabellaProgrammiGiornalieri.addRow(rowDataGiornalieri);
 				}

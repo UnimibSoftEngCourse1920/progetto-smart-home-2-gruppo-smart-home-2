@@ -203,6 +203,30 @@ public class ControllerCasa {
 		return nomiStanze;
 	}
 	
+	public Stanza getStanzaElemento(Object e) {
+		if(e instanceof SensoreTemperatura) {
+			return ((SensoreTemperatura) e).getStanza();
+		}
+		else if(e instanceof Lavatrice) {
+			for(int i = 0; i < getStanze().size(); i++) {
+				if(getStanze().get(i).getLavatrice().getId() == ((Lavatrice) e).getId())
+					return getStanze().get(i);
+			}
+			return null;
+		}
+		else if(e instanceof Lavastoviglie) {
+			for(int i = 0; i < getStanze().size(); i++) {
+				if(getStanze().get(i).getLavastoviglie().getId() == ((Lavastoviglie) e).getId())
+					return getStanze().get(i);
+			}
+			return null;
+		}
+		else {
+			((RobotPulizia) e).getBase();
+		}
+		return null;
+	}
+	
 	
 	public void creazioneCasa() {
 		Stanza cameraLetto = new Stanza("Camera da Letto");

@@ -77,7 +77,7 @@ public class StanzeView extends JPanel {
 		
 		scrollPaneTabellaStanze = new JScrollPane(tabellaStanze);
 		scrollPaneTabellaStanze.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		String[] colonne = {"Elemento", "ID", "Cambia Stato"};
+		String[] colonne = {"Elemento", "ID", "Temperatura Attuale", "Temperatura Desiderata", "Cambia Stato"};
 		modelTabellaStanze = (DefaultTableModel) tabellaStanze.getModel();
 		modelTabellaStanze.setColumnIdentifiers(colonne);
 		
@@ -186,7 +186,8 @@ public class StanzeView extends JPanel {
 			         
 			        //(new Alert()).errore("ciao", "Column header #" + column + " is clicked, riga "+ row);
 			         
-			        if(column == 2) {
+			        //GESTIONE CAMBIA STATO----------------------------------------------------------------
+			        if(column == 4) {
 			        	String tipoOggetto = (String) tabellaStanze.getModel().getValueAt(row, 0);
 			        	int id = (int) tabellaStanze.getModel().getValueAt(row, 1);
 						
@@ -201,6 +202,13 @@ public class StanzeView extends JPanel {
 						else if(tipoOggetto.equals("Tapparella")) {
 							Tapparella t = stanzaSelezionata.getFinestra(id).getTapparella();
 							t.cambiaStato();
+						}
+						else if(tipoOggetto.equals("SensoreTemperatura")) {
+							SensoreTemperatura s = stanzaSelezionata.getSensoreTemperatura();
+							if(s.getStato() == "Spento")
+								stanzaSelezionata.accendiTermostato();
+							else
+								stanzaSelezionata.spegniTermostato();
 						}
 						rimuoviRigheTabellaStanze();
 						viewTabellaStanze(stanzaSelezionata);
@@ -223,7 +231,7 @@ public class StanzeView extends JPanel {
 		Object oggettoStanza;
 		
 		if(numeroOggettiStanza != 0) {
-			rowData = new Object[3];
+			rowData = new Object[5];
 			
 			for(int i = 0; i < numeroOggettiStanza; i++) {
 				oggettoStanza = listaOggettiStanza.get(i);
@@ -258,10 +266,12 @@ public class StanzeView extends JPanel {
 			stato= l.isAccesa();
 			
 			if(stato)
-				rowData[2] = "Accesa";
+				rowData[4] = "Accesa";
 			else
-				rowData[2] = "Spenta";
+				rowData[4] = "Spenta";
 			
+			rowData[2] = "";
+			rowData[3] = "";
 		}
 		else if(oggettoStanza instanceof Finestra) {
 			Finestra f = (Finestra) oggettoStanza;
@@ -269,25 +279,33 @@ public class StanzeView extends JPanel {
 			stato = f.isAperta();
 			
 			if(stato)
-				rowData[2] = "Aperta";
+				rowData[4] = "Aperta";
 			else
-				rowData[2] = "Chiusa";
+				rowData[4] = "Chiusa";
+			
+			rowData[2] = "";
+			rowData[3] = "";
 		}
 		else if(oggettoStanza instanceof Tapparella) {
 			Tapparella t = (Tapparella) oggettoStanza;
 			rowData[1] = t.getId();
 			stato = t.isAperta();
 			if(stato)
-				rowData[2] = "Aperta";
+				rowData[4] = "Aperta";
 			else
-				rowData[2] = "Chiusa";
+				rowData[4] = "Chiusa";
+			
+			rowData[2] = "";
+			rowData[3] = "";
 			
 		}
 		else if(oggettoStanza instanceof SensoreTemperatura) {
 			//System.out.println("ciao");
 			SensoreTemperatura s = (SensoreTemperatura) oggettoStanza;
 			statoSensoreTemperatura = s.getStato();
-			rowData[2] = statoSensoreTemperatura;
+			rowData[2] = s.getTemperaturaCorrente();
+			rowData[3] = s.getTemperaturaDesiderata();
+			rowData[4] = statoSensoreTemperatura;
 		}
 		
 		modelTabellaStanze.addRow(rowData);

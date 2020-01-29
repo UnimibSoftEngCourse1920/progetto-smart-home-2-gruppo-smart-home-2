@@ -14,14 +14,16 @@ public class ColoreCellaTabella implements TableCellRenderer{
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
 		Component c = RENDERER.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		if(column == 2) {
+		if(column == 4) {
 			Object result = table.getModel().getValueAt(row, column);
 			String stato = result.toString();
 			
-			if(stato.equals("Accesa") || stato.equals("Aperta"))
+			if(stato.equals("Accesa") || stato.equals("Aperta")  || stato.equals("Ottimo"))
 				c.setBackground(Color.GREEN);
 			else if(stato.equals("Spenta") || stato.equals("Chiusa") || stato.equals("Spento"))
-				c.setBackground(Color.red);
+				c.setBackground(Color.RED);
+			else if(stato.equals("Misurazione"))
+				c.setBackground(Color.ORANGE);
 		}
 		else c.setBackground(null);
 			

@@ -39,6 +39,13 @@ public class SensoreTemperatura extends TimerTask {
 		this.stato = "Misurazione";
 	}
 	
+	public void cambiaStato() {
+		if(stato.equals("Misurazione"))
+			off();
+		else
+			on();
+	}
+	
 	public void setTemperaturaDesiderata(double temperaturaDesiderata) {
 		if(temperaturaDesiderata < 28 && temperaturaDesiderata > 8)
 			this.temperaturaDesiderata = temperaturaDesiderata;
@@ -61,8 +68,9 @@ public class SensoreTemperatura extends TimerTask {
 		for(Finestra f: stanza.getFinestre())
 			if(f.isAperta())
 				this.diminuisciTemperatura();
-		if(this.temperaturaCorrente == this.temperaturaDesiderata)
+		if(this.temperaturaCorrente == this.temperaturaDesiderata) {
 			this.stato = "Ottimo";
+		}
 		else {
 			if (this.temperaturaCorrente > this.temperaturaDesiderata) {
 				this.stato ="Raffredda";
@@ -73,5 +81,11 @@ public class SensoreTemperatura extends TimerTask {
 				this.aumentaTemperatura();
 			}
 		}
+		
+		//System.out.println("caiop");
+	}
+	
+	public Stanza getStanza() {
+		return this.stanza;
 	}
 }

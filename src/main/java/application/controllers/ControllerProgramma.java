@@ -229,6 +229,9 @@ public class ControllerProgramma {
 	
 	public void creazioneProgrammi() {
 		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45, 0);
+		nuovoProgrammaGiornaliero("Cucina", "SensoreTemperatura", 0, 10, 20);
+		
+		
 	}
 	
 	
