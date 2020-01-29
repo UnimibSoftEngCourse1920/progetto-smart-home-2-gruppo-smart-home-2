@@ -15,6 +15,10 @@ public class Finestra {
 		this.sensore = sensore;
 	}
 	
+	public void riallocaSensore() {
+		this.sensore = new SensoreFinestra(this.sensore.getAllarme());
+	}
+	
 	public boolean isAperta() {
 		return this.isAperta;
 	}

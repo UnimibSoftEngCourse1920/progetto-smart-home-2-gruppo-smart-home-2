@@ -125,7 +125,13 @@ public class Stanza {
 	
 	public void stopTimerEventi() {
 		timerEventi.cancel();
-		timerEventi = null;
+		timerEventi.purge();
+		if(this.sensoreGas != null)
+			this.sensoreGas =new SensoreGas(this.sensoreGas.getAllarme());
+		if(this.radar != null)
+			this.radar = new Radar(this.radar.getAllarme());
+		for (Finestra f: finestre)
+			f.riallocaSensore();
 	}
 	
 	public void accendiTermostato() {
@@ -137,5 +143,6 @@ public class Stanza {
 	public void spegniTermostato() {
 		this.sensoreTemperatura.off();
 		this.timerTemperatura.cancel();
+		this.sensoreTemperatura = new SensoreTemperatura(this);
 	}
 }
