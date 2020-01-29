@@ -534,7 +534,7 @@ public class AggiuntaProgrammaView extends JPanel {
 		ArrayList<Object> elementi = new ArrayList<>();
 		if(controllerCasa.getStanza(nomeStanza).getSensoreTemperatura() != null)
 			elementi.add(controllerCasa.getStanza(nomeStanza).getSensoreTemperatura());
-		if(controllerCasa.getRobot() != null)
+		if(controllerCasa.getRobot() != null && (controllerCasa.getRobot()).getBase().equals(nomeStanza))
 			elementi.add(controllerCasa.getRobot());
 		if(controllerCasa.getStanza(nomeStanza).getLavastoviglie() != null)
 			elementi.add(controllerCasa.getStanza(nomeStanza).getLavastoviglie());

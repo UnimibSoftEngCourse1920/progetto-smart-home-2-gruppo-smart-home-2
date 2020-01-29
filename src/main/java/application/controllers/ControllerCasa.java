@@ -65,60 +65,96 @@ public class ControllerCasa {
 		}
 	}
 	
-	public void cambiaStatoLavatrice(String nome) {
-		Stanza s = getStanza(nome);
-		Lavatrice e;
-		if(s!= null) {
-			 e = s.getLavatrice();
-			if(e != null)
-				e.cambiaStato();
-		}
-	}
-	
-	public void cambiaStatoLavastoviglie(String nome) {
-		Stanza s = getStanza(nome);
-		Lavastoviglie e;
-		if(s!= null) {
-			 e = s.getLavastoviglie();
-			if(e != null)
-				e.cambiaStato();
-		}
-	}
-	
-	public void cambiaStatoLampada(String nome, int id) {
-		Stanza s = getStanza(nome);
-		Lampada l;
-		
+	public void cambiaStatoSensoreTemperatura(Stanza s) {
 		if(s != null) {
-			l = s.getLampada(id);
-			if(l != null)
-				l.cambiaStato();
+			if(s.getSensoreTemperatura().getStato() == "Spento")
+				s.accendiTermostato();
+			else
+				s.spegniTermostato();
 		}
 	}
 	
-	public void cambiaStatoFinestra(String nome, int id) {
-		Stanza s = getStanza(nome);
-		Finestra f;
+	public void cambiaStatoLavatrice(Stanza s) {
+		if(s!= null) {
+			if(s.getLavatrice() != null)
+				s.getLavatrice().cambiaStato();
+		}
+	}
+	
+	public void cambiaStatoLavastoviglie(Stanza s) {
+		if(s!= null) {
+			if(s.getLavastoviglie() != null)
+				s.getLavastoviglie().cambiaStato();
+		}
+	}
+	
+	public void cambiaStatoLampada(int id, Stanza s) {
 		if(s != null) {
-			f = s.getFinestra(id);
-			if(f != null && !s.getSensoreGas().getFuga())
-				f.cambiaStato();
+			if(s.getLampada(id) != null)
+				s.getLampada(id).cambiaStato();
+		}
+	}
+	
+	public void cambiaStatoFinestra(int id, Stanza s) {
+		if(s != null) {
+			if(s.getFinestra(id) != null && !s.getSensoreGas().getFuga())
+				s.getFinestra(id).cambiaStato();
 			if(s.getSensoreGas().getFuga())
 				System.out.println("c'è una fuga, cazzo fai?");
 		}
 	}
 	
-	public void cambiaStatoTapparella(String nome, int id) {
-		Stanza s = getStanza(nome);
-		Tapparella t;
-		
+	public void cambiaStatoTapparella(int id, Stanza s) {		
 		if(s != null) {
-			t = s.getTapparella(id);
-			if(t != null && !s.getSensoreGas().getFuga())
-				t.cambiaStato();
+			if(s.getFinestra(id).getTapparella() != null && !s.getSensoreGas().getFuga())
+				s.getFinestra(id).getTapparella().cambiaStato();
 			if(s.getSensoreGas().getFuga())
 				System.out.println("c'è una fuga, cazzo fai?");
 		}
+	}
+	
+	public boolean lampadaIsAccesa(Lampada l) {
+		return l.isAccesa();
+	}
+	
+	public boolean finestraIsAperta(Finestra f) {
+		return f.isAperta();
+	}
+	
+	public boolean tapparellaIsAperta(Tapparella t) {
+		return t.isAperta();
+	}
+	
+	public boolean lavatriceIsInFunzione(Lavatrice l) {
+		return l.isInFunzione();
+	}
+	
+	public boolean lavastoviglieIsInFunzione(Lavastoviglie l) {
+		return l.isInFunzione();
+	}
+	
+	public String getStatoSensoreTemperatura(SensoreTemperatura s) {
+		return s.getStato();
+	}
+	
+	public int getIdLampada(Lampada l) {
+		return l.getId();
+	}
+	
+	public int getIdFinestra(Finestra f) {
+		return f.getId();
+	}
+	
+	public int getIdTapparella(Tapparella t) {
+		return t.getId();
+	}
+	
+	public double getTemperaturaCorrenteSensoreTemperatura(SensoreTemperatura s) {
+		return s.getTemperaturaCorrente();
+	}
+	
+	public double getTemperaturaDesiderataSensoreTemperatura(SensoreTemperatura s) {
+		return s.getTemperaturaDesiderata();
 	}
 	
 	public Stanza getStanza(String nome) {

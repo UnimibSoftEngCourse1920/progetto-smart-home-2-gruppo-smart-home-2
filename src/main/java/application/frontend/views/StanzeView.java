@@ -191,27 +191,29 @@ public class StanzeView extends JPanel {
 			        //GESTIONE CAMBIA STATO----------------------------------------------------------------
 			        if(column == 4) {
 			        	String tipoOggetto = (String) tabellaStanze.getModel().getValueAt(row, 0);
-			        	int id = (int) tabellaStanze.getModel().getValueAt(row, 1);
+			        	int id = 0;
+			        	if(tabellaStanze.getModel().getValueAt(row, 1) != "")
+			        		id = (int) tabellaStanze.getModel().getValueAt(row, 1);
 						
 						if(tipoOggetto.equals("Lampada")) {
-							Lampada l = stanzaSelezionata.getLampada(id);
-							l.cambiaStato();
+							controllerCasa.cambiaStatoLampada(id, stanzaSelezionata);
 						}
 						else if(tipoOggetto.equals("Finestra")) {
-							Finestra f = stanzaSelezionata.getFinestra(id);
-							f.cambiaStato();
+							controllerCasa.cambiaStatoFinestra(id, stanzaSelezionata);
 						}
 						else if(tipoOggetto.equals("Tapparella")) {
-							Tapparella t = stanzaSelezionata.getFinestra(id).getTapparella();
-							t.cambiaStato();
+							controllerCasa.cambiaStatoTapparella(id, stanzaSelezionata);;
 						}
 						else if(tipoOggetto.equals("SensoreTemperatura")) {
-							SensoreTemperatura s = stanzaSelezionata.getSensoreTemperatura();
-							if(s.getStato() == "Spento")
-								stanzaSelezionata.accendiTermostato();
-							else
-								stanzaSelezionata.spegniTermostato();
+							controllerCasa.cambiaStatoSensoreTemperatura(stanzaSelezionata);
 						}
+						else if(tipoOggetto.equals("Lavatrice")) {
+							controllerCasa.cambiaStatoLavatrice(stanzaSelezionata);
+						}
+						else if(tipoOggetto.equals("Lavastoviglie")) {
+							controllerCasa.cambiaStatoLavastoviglie(stanzaSelezionata);
+						}
+						
 						rimuoviRigheTabellaStanze();
 						viewTabellaStanze(stanzaSelezionata);
 			        }
@@ -263,9 +265,8 @@ public class StanzeView extends JPanel {
 		rowData[0] = oggettoStanza.getClass().getSimpleName();
 		
 		if(oggettoStanza instanceof Lampada) {
-			Lampada l = (Lampada) oggettoStanza;
-			rowData[1] = l.getId();
-			stato= l.isAccesa();
+			stato = controllerCasa.lampadaIsAccesa((Lampada) oggettoStanza);
+			rowData[1] = controllerCasa.getIdLampada((Lampada) oggettoStanza);
 			
 			if(stato)
 				rowData[4] = "Accesa";
@@ -276,9 +277,8 @@ public class StanzeView extends JPanel {
 			rowData[3] = "";
 		}
 		else if(oggettoStanza instanceof Finestra) {
-			Finestra f = (Finestra) oggettoStanza;
-			rowData[1] = f.getId();
-			stato = f.isAperta();
+			stato = controllerCasa.finestraIsAperta((Finestra) oggettoStanza);
+			rowData[1] = controllerCasa.getIdFinestra((Finestra) oggettoStanza);
 			
 			if(stato)
 				rowData[4] = "Aperta";
@@ -289,9 +289,9 @@ public class StanzeView extends JPanel {
 			rowData[3] = "";
 		}
 		else if(oggettoStanza instanceof Tapparella) {
-			Tapparella t = (Tapparella) oggettoStanza;
-			rowData[1] = t.getId();
-			stato = t.isAperta();
+			stato = controllerCasa.tapparellaIsAperta((Tapparella) oggettoStanza);
+			rowData[1] = controllerCasa.getIdTapparella((Tapparella) oggettoStanza);
+			
 			if(stato)
 				rowData[4] = "Aperta";
 			else
@@ -303,12 +303,37 @@ public class StanzeView extends JPanel {
 		}
 		else if(oggettoStanza instanceof SensoreTemperatura) {
 			//System.out.println("ciao");
+			rowData[1] = "";
 			NumberFormat nf = new DecimalFormat("0.00");
-			SensoreTemperatura s = (SensoreTemperatura) oggettoStanza;
-			statoSensoreTemperatura = s.getStato();
-			rowData[2] = nf.format(s.getTemperaturaCorrente());
-			rowData[3] = nf.format(s.getTemperaturaDesiderata());
+			statoSensoreTemperatura = controllerCasa.getStatoSensoreTemperatura((SensoreTemperatura) oggettoStanza);
+			//statoSensoreTemperatura = s.getStato();
+			rowData[2] = nf.format(controllerCasa.getTemperaturaCorrenteSensoreTemperatura((SensoreTemperatura) oggettoStanza));
+			rowData[3] = nf.format(controllerCasa.getTemperaturaDesiderataSensoreTemperatura((SensoreTemperatura) oggettoStanza));
 			rowData[4] = statoSensoreTemperatura;
+		}
+		else if(oggettoStanza instanceof Lavatrice) {
+			stato = controllerCasa.lavatriceIsInFunzione((Lavatrice) oggettoStanza);
+			rowData[1] = "";
+			
+			if(stato)
+				rowData[4] = "In Funzione";
+			else
+				rowData[4] = "Spenta";
+			
+			rowData[2] = "";
+			rowData[3] = "";
+		}
+		else if(oggettoStanza instanceof Lavastoviglie) {
+			stato = controllerCasa.lavastoviglieIsInFunzione((Lavastoviglie) oggettoStanza);
+			rowData[1] = "";
+			
+			if(stato)
+				rowData[4] = "In Funzione";
+			else
+				rowData[4] = "Spenta";
+			
+			rowData[2] = "";
+			rowData[3] = "";
 		}
 		
 		modelTabellaStanze.addRow(rowData);
