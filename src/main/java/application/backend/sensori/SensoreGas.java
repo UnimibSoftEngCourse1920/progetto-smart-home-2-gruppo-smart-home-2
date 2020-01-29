@@ -3,7 +3,8 @@ package application.backend.sensori;
 public class SensoreGas extends Sensore {
 	private boolean rilevataFuga;
 	
-	public SensoreGas() {
+	public SensoreGas(Allarme a) {
+		super(a);
 		this.rilevataFuga =false;
 	}
 
@@ -22,8 +23,7 @@ public class SensoreGas extends Sensore {
 	@Override
 	public void run() {
 		double casuale = Math.random();
-		//System.out.println(casuale);
-		if(casuale == 1) {
+		if(casuale >= 0.9) {
 			this.rilevataFuga= true;
 			super.getAllarme().notifica(this);
 		}

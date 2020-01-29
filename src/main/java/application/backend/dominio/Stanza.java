@@ -116,15 +116,16 @@ public class Stanza {
 	public void startTimerEventi() {
 		timerEventi = new Timer();
 		if(this.sensoreGas != null)
-			timerEventi.schedule(this.sensoreGas , 10000, 10000 );
+			timerEventi.schedule(this.sensoreGas , 10000, 10000);
 		if(this.radar != null)
-			timerEventi.schedule(this.radar , 10000, 10000 );
+			timerEventi.schedule(this.radar , 10000, 10000);
 		for (Finestra f: finestre)
-			timerEventi.schedule(f.getSensore() , 10000, 10000 );
+			timerEventi.schedule(f.getSensore() , 10000, 10000);
 	}
 	
 	public void stopTimerEventi() {
 		timerEventi.cancel();
+		timerEventi = null;
 	}
 	
 	public void accendiTermostato() {

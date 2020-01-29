@@ -4,6 +4,7 @@ import application.backend.dominio.*;
 import application.backend.sensori.*;
 
 import application.frontend.*;
+import application.frontend.support.Alert;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,7 @@ public class ControllerCasa {
 		this.stanze = new ArrayList<>(); 
 		this.robot = null;
 		this.allarme = Allarme.getInstance();
+		this.allarme.aggiungiCasa(this);
 		
 		creazioneCasa();
 	}
@@ -50,10 +52,16 @@ public class ControllerCasa {
 	
 	public void cambiaStatoAllarme() {
 		if(this.allarme != null) {
-			if(this.allarme.isAttivo())
+			if(this.allarme.isAttivo()) {
 				this.allarme.spegni();
-			else 
+				for (Stanza s:this.getStanze())
+					s.stopTimerEventi();
+			}
+			else {
 				this.allarme.accendi();
+				for (Stanza s:this.getStanze())
+					s.startTimerEventi();
+			}
 		}
 	}
 	
@@ -215,34 +223,32 @@ public class ControllerCasa {
 		addStanza(sala);
 		
 		//CUCINA-----------------------------------------------------------------------------
-		SensoreFinestra sensoreFinestraCucina = new SensoreFinestra();
+		SensoreFinestra sensoreFinestraCucina = new SensoreFinestra(allarme);
 		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
 		Lampada lampadaCucina = new Lampada(1);
 		Lavastoviglie lavastoviglieCucina = new Lavastoviglie(1);
-		SensoreGas sensoreGasCucina =new SensoreGas();
+		SensoreGas sensoreGasCucina =new SensoreGas(allarme);
 		
 		cucina.addLampada(lampadaCucina);
 		cucina.addFinestra(finestraCucina);
 		cucina.addLavastoviglie(lavastoviglieCucina);
 		cucina.addSensoreTemperatura();
 		cucina.addSensoreGas(sensoreGasCucina);
-		cucina.startTimerEventi();
 		//System.out.println(cucina.getSensoreTemperatura());
 		
 		
 		//CAMERA DA LETTO-----------------------------------------------------------------------------
-		SensoreFinestra sensoreFinestraCameraMatrimoniale = new SensoreFinestra();
+		SensoreFinestra sensoreFinestraCameraMatrimoniale = new SensoreFinestra(allarme);
 		Lampada lampadaCameraMatrimoniale = new Lampada(2);
 		Finestra finestraCameraMatrimoniale = new Finestra(new Tapparella(2), sensoreFinestraCameraMatrimoniale);
 		
 		cameraLetto.addLampada(lampadaCameraMatrimoniale);
 		cameraLetto.addFinestra(finestraCameraMatrimoniale);
 		cameraLetto.addSensoreTemperatura();
-		cameraLetto.startTimerEventi();
 		
 		
 		//BAGNO-------------------------------------------------------------------------------------
-		SensoreFinestra sensoreFinestraBagno = new SensoreFinestra();
+		SensoreFinestra sensoreFinestraBagno = new SensoreFinestra(allarme);
 		Finestra finestraBagno = new Finestra(new Tapparella(3), sensoreFinestraBagno);
 		Lampada lampadaBagno = new Lampada(3);
 		Lavatrice lavatriceBagno = new Lavatrice(1);
@@ -251,16 +257,14 @@ public class ControllerCasa {
 		bagno.addFinestra(finestraBagno);
 		bagno.addLavatrice(lavatriceBagno);
 		bagno.addSensoreTemperatura();
-		bagno.startTimerEventi();
 		
 		//SALA-------------------------------------------------------------------------------------
-		SensoreFinestra sensoreFinestraSala = new SensoreFinestra();
+		SensoreFinestra sensoreFinestraSala = new SensoreFinestra(allarme);
 		Finestra finestraSala = new Finestra(new Tapparella(4), sensoreFinestraSala);
 		Lampada lampadaSala = new Lampada(4);
 		
 		sala.addLampada(lampadaSala);
 		sala.addFinestra(finestraSala);
-		sala.startTimerEventi();
 		
 	}
 }

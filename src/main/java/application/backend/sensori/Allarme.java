@@ -31,7 +31,7 @@ public class Allarme {
 				casa.getMain().getPanelAllarme().setLabelGas();
 				}
 			else  {
-				if(s instanceof SensoreFinestra)
+				if(s instanceof SensoreFinestra) 
 					casa.getMain().getPanelAllarme().setLabelEffrazione();
 				if(s instanceof Radar)
 					casa.getMain().getPanelAllarme().setLabelMovimenti();
@@ -52,12 +52,13 @@ public class Allarme {
 	}
 	
 	public void terminaEmergenza() {
+		this.emergenza = false;
 		for (Stanza stanza: casa.getStanze()) {
-			if(stanza.getSensoreGas().getFuga()) {
+			if(stanza.getSensoreGas()!= null && stanza.getSensoreGas().getFuga()) {
 				stanza.getSensoreGas().cambiaStato();
 				casa.getMain().getPanelAllarme().setLabelGas();
 			}
-			if(stanza.getRadar().getMovimento()) {
+			if(stanza.getRadar() != null && stanza.getRadar().getMovimento()) {
 				stanza.getRadar().cambiaStato();
 				casa.getMain().getPanelAllarme().setLabelMovimenti();
 			}
@@ -84,9 +85,6 @@ public class Allarme {
 	}
 	
 	public void spegni() {
-		if(emergenza)
-			(new Alert()).errore("Non puoi spegnere l'allarme durante un'emergenza", "Errore");
-		else
 			this.isAttivo = false;
 	}
 }
