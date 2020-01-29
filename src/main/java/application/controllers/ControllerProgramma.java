@@ -101,7 +101,7 @@ public class ControllerProgramma {
 		for (Programma p : programmi) {
 			if(p instanceof ProgrammaSettimanale) {
 				fine = ((ProgrammaSettimanale) p).getFine(giorno);
-				if(fine != null && (fine.compareTo(ora)==0 || fine.compareTo(ora)<0)) {
+				if(fine != null && (fine.compareTo(ora)==0)) {
 					if(p.getElemento() instanceof SensoreTemperatura)
 						cambiaTemperatura(SensoreTemperatura.TEMPERATURADEFAULT, (SensoreTemperatura) p.getElemento());
 					else
@@ -110,7 +110,7 @@ public class ControllerProgramma {
 			}
 			else if(p instanceof ProgrammaGiornaliero) {
 				fine = ((ProgrammaGiornaliero) p).getFine();
-				if(fine != null && (fine.compareTo(ora)==0 || fine.compareTo(ora) <0)) {
+				if(fine != null && (fine.compareTo(ora)==0)) {
 					if(p.getElemento() instanceof SensoreTemperatura)
 						cambiaTemperatura(SensoreTemperatura.TEMPERATURADEFAULT, (SensoreTemperatura) p.getElemento());
 					else

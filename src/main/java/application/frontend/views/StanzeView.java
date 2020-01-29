@@ -353,8 +353,14 @@ public class StanzeView extends JPanel {
 			NumberFormat nf = new DecimalFormat("0.00");
 			statoSensoreTemperatura = controllerCasa.getStatoSensoreTemperatura((SensoreTemperatura) oggettoStanza);
 			//statoSensoreTemperatura = s.getStato();
-			rowData[2] = nf.format(controllerCasa.getTemperaturaCorrenteSensoreTemperatura((SensoreTemperatura) oggettoStanza));
-			rowData[3] = nf.format(controllerCasa.getTemperaturaDesiderataSensoreTemperatura((SensoreTemperatura) oggettoStanza));
+			if(statoSensoreTemperatura == "Spento") {
+				rowData[2] = "";
+				rowData[3] = "";
+			}
+			else {
+				rowData[2] = nf.format(controllerCasa.getTemperaturaCorrenteSensoreTemperatura((SensoreTemperatura) oggettoStanza));
+				rowData[3] = nf.format(controllerCasa.getTemperaturaDesiderataSensoreTemperatura((SensoreTemperatura) oggettoStanza));
+			}
 			rowData[4] = statoSensoreTemperatura;
 		}
 		else if(oggettoStanza instanceof Lavatrice) {
