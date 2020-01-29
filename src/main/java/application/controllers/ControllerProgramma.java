@@ -24,13 +24,6 @@ public class ControllerProgramma {
 	public ControllerProgramma(int counter) {
 		this.counter = counter;
 		this.programmi = new ArrayList<>();
-		
-		/*try {
-			this.jsonProgrammi =  new FileReader(getClass().getClassLoader().getResource("programmi.json").getFile());
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}*/
 	}
 	
 	public ControllerProgramma() {
@@ -39,6 +32,7 @@ public class ControllerProgramma {
 	
 	public void creaProgrammaGiornaliero(LocalTime inizio, LocalTime fine, double valoreDiSetting, Object e) {
 		this.programmi.add(new ProgrammaGiornaliero(counter,inizio,fine,valoreDiSetting,e));
+		System.out.println(programmi.get(0));
 		this.counter++;
 	}
 	
@@ -54,14 +48,6 @@ public class ControllerProgramma {
 				programmi.remove(i);
 		}
 		
-		//System.out.println(programmi.size());
-		/*
-		for (Programma p : programmi) {
-			if (p.getId() == id) {
-				//System.out.print("ciao");
-				programmi.remove(p);
-			}
-		}*/
 	}
 	
 	public void aggiungiElemento(int id,Object e) {
@@ -87,8 +73,9 @@ public class ControllerProgramma {
 			if(p instanceof ProgrammaGiornaliero) {
 				inizio = ((ProgrammaGiornaliero) p).getInizio();
 				if(inizio.compareTo(ora)==0 || inizio.compareTo(ora) <0) {
-					if(p.getElemento() instanceof SensoreTemperatura)
+					if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento") {
 						cambiaTemperatura(((ProgrammaGiornaliero) p).getValoreDiSetting(), (SensoreTemperatura) p.getElemento());
+					}
 					else
 						cambiaStatoElemento(p.getElemento(),false);
 					}
@@ -96,7 +83,7 @@ public class ControllerProgramma {
 			if (p instanceof ProgrammaSettimanale){
 				inizio= ((ProgrammaSettimanale) p).getInizio(giorno);
 				if(inizio.compareTo(ora)==0 || inizio.compareTo(ora) <0) {
-					if(p.getElemento() instanceof SensoreTemperatura)
+					if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento")
 						cambiaTemperatura(((ProgrammaSettimanale) p).getValoreDiSetting(giorno), (SensoreTemperatura) p.getElemento());
 					else
 						cambiaStatoElemento(p.getElemento(),false);

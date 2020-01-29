@@ -129,7 +129,7 @@ public class MainJFrame extends JFrame {
 		clock.setEnabled(false);
 		clock.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		s = new Simulazione(new ControllerProgramma());
+		s = new Simulazione(controllerProgramma);
 		Timer timerSim = new Timer();
 		timerSim.schedule(s, 10000, 10000);
 		

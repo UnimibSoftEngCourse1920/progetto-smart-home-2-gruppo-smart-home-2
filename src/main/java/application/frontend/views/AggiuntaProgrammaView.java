@@ -1,6 +1,5 @@
 package application.frontend.views;
 
-
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -197,10 +196,6 @@ public class AggiuntaProgrammaView extends JPanel {
 		spinnerGiornaliero = new JSpinner(spinnerModel);
 		JSpinner.DateEditor dateEditorGiornaliero = new JSpinner.DateEditor(spinnerGiornaliero, "HH:mm");
 		spinnerGiornaliero.setEditor(dateEditorGiornaliero);
-		
-		
-		
-		
 		
 		comboBoxStanze();
 		comboBoxTipo();
