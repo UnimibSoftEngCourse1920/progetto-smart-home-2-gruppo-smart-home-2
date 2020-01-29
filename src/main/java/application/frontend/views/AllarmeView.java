@@ -3,6 +3,7 @@ package application.frontend.views;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import application.backend.dominio.Stanza;
 import application.backend.sensori.Allarme;
 import application.controllers.ControllerCasa;
 import application.frontend.support.Alert;
@@ -143,11 +144,12 @@ public class AllarmeView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Allarme a = casa.getAllarme();
 				if(a != null) {
-					if(a.isAttivo()) 
-						a.spegni();
-					else 
-						a.accendi();
-					setBottoneAccendiSpegni();
+					if(a.isEmergenza() && a.isAttivo())
+						(new Alert()).errore("Non puoi spegnere l'allarme durante un'emergenza", "Errore");
+					else {
+						casa.cambiaStatoAllarme();
+						setBottoneAccendiSpegni();
+					}
 				}
 			}
 		});
@@ -160,7 +162,7 @@ public class AllarmeView extends JPanel {
 				if(a.isAttivo() && a.isEmergenza())
 					a.terminaEmergenza();
 				else
-					(new Alert()).errore("Non puoi terminare l'emergenza se non c'è eemergenza o se l'allarme è spento", "Errore");
+					(new Alert()).errore("Non puoi terminare l'emergenza se non c'è emergenza o se l'allarme è spento", "Errore");
 			}
 		});
 	}

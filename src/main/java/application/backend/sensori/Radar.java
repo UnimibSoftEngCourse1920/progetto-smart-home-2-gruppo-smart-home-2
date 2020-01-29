@@ -3,7 +3,8 @@ package application.backend.sensori;
 public class Radar extends Sensore {
 	private boolean rilevatoMovimento;
 	
-	public Radar() {
+	public Radar(Allarme a) {
+		super(a);
 		this.rilevatoMovimento = false;
 	}
 
@@ -22,8 +23,7 @@ public class Radar extends Sensore {
 	@Override
 	public void run() {
 		double casuale = Math.random();
-		//System.out.println(casuale);
-		if(casuale == 1) {
+		if(casuale >= 0.9) {
 			this.rilevatoMovimento= true;
 			super.getAllarme().notifica(this);
 		}
