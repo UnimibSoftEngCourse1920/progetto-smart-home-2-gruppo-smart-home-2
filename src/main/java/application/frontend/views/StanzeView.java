@@ -36,6 +36,8 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class StanzeView extends JPanel {
 	private ControllerCasa controllerCasa;
@@ -50,6 +52,10 @@ public class StanzeView extends JPanel {
 	private DefaultTableModel modelTabellaStanze;
 	private Stanza stanzaSelezionata;
 	private Object[] rowData;
+	
+	private JTextField textValore;
+	private JButton btnInvia;
+	private JLabel labelInserimento;
 	
 	public StanzeView(JLayeredPane principale, ControllerCasa casa) {
 		panelPrincipale = principale;
@@ -66,16 +72,18 @@ public class StanzeView extends JPanel {
 		panelSelezioneStanza = new JPanel();
 		labelSelezioneStanza = new JLabel("Seleziona la stanza:");
 		comboBoxSelezioneStanza = new JComboBox();
-		
+		btnInvia = new JButton("Invia");
+		btnInvia.setVisible(false);
+		labelInserimento = new JLabel("Inserisci qui la temperatura da impostare:");
+		labelInserimento.setVisible(false);
+		textValore = new JTextField();
+		textValore.setVisible(false);
 		
 		//TABELLA-----------------------------------------------------------------------------------------
 		tabellaStanze = new JTable();
 		tabellaStanze.setFont(new Font("Arial", Font.PLAIN, 11));
-		
 		tabellaStanze.setEnabled(false);
-		
 		tabellaStanze.setRowHeight(40);
-		
 		
 		scrollPaneTabellaStanze = new JScrollPane(tabellaStanze);
 		scrollPaneTabellaStanze.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -83,12 +91,7 @@ public class StanzeView extends JPanel {
 		modelTabellaStanze = (DefaultTableModel) tabellaStanze.getModel();
 		modelTabellaStanze.setColumnIdentifiers(colonne);
 		
-		
-		
-		
-		
 		comboBoxStanze();
-		
 		setLayoutStanze();
 		
 		gestioneStanze();
@@ -117,20 +120,38 @@ public class StanzeView extends JPanel {
 		);
 		setLayout(groupLayout);
 		
+		labelInserimento.setHorizontalAlignment(SwingConstants.CENTER);
+		labelInserimento.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		
+		textValore.setColumns(10);
+		
 		GroupLayout glpanelTabellaStanze = new GroupLayout(panelTabellaStanze);
 		glpanelTabellaStanze.setHorizontalGroup(
-				glpanelTabellaStanze.createParallelGroup(Alignment.TRAILING)
-				.addGroup(glpanelTabellaStanze.createSequentialGroup()
+			glpanelTabellaStanze.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, glpanelTabellaStanze.createSequentialGroup()
 					.addGap(67)
-					.addComponent(scrollPaneTabellaStanze, GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
+					.addComponent(scrollPaneTabellaStanze, GroupLayout.DEFAULT_SIZE, 841, Short.MAX_VALUE)
 					.addGap(41))
+				.addGroup(Alignment.LEADING, glpanelTabellaStanze.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(labelInserimento, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textValore, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnInvia, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(396, Short.MAX_VALUE))
 		);
 		glpanelTabellaStanze.setVerticalGroup(
-				glpanelTabellaStanze.createParallelGroup(Alignment.LEADING)
+			glpanelTabellaStanze.createParallelGroup(Alignment.LEADING)
 				.addGroup(glpanelTabellaStanze.createSequentialGroup()
 					.addGap(34)
-					.addComponent(scrollPaneTabellaStanze, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-					.addGap(69))
+					.addComponent(scrollPaneTabellaStanze, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+					.addGap(31)
+					.addGroup(glpanelTabellaStanze.createParallelGroup(Alignment.BASELINE)
+						.addComponent(labelInserimento, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textValore, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnInvia, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addGap(43))
 		);
 		panelTabellaStanze.setLayout(glpanelTabellaStanze);
 		
@@ -170,6 +191,8 @@ public class StanzeView extends JPanel {
                     if(stanza != null) {
                     	stanzaSelezionata = stanza;
         				viewTabellaStanze(stanza);
+        				if(stanza.getSensoreTemperatura() != null) {
+        				}
                     }
                     	
                     else {
@@ -206,6 +229,19 @@ public class StanzeView extends JPanel {
 						}
 						else if(tipoOggetto.equals("SensoreTemperatura")) {
 							controllerCasa.cambiaStatoSensoreTemperatura(stanzaSelezionata);
+							SensoreTemperatura s = stanzaSelezionata.getSensoreTemperatura();
+							if(s.getStato() == "Spento") {
+								stanzaSelezionata.accendiTermostato();
+								btnInvia.setVisible(true);
+	        					labelInserimento.setVisible(true);
+	        					textValore.setVisible(true);
+							}
+							else {
+								stanzaSelezionata.spegniTermostato();
+								btnInvia.setVisible(false);
+	        					labelInserimento.setVisible(false);
+	        					textValore.setVisible(false);
+							}
 						}
 						else if(tipoOggetto.equals("Lavatrice")) {
 							controllerCasa.cambiaStatoLavatrice(stanzaSelezionata);
@@ -218,8 +254,20 @@ public class StanzeView extends JPanel {
 						viewTabellaStanze(stanzaSelezionata);
 			        }
 			       
-					
-			   
+			}
+		});
+		btnInvia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					try {
+						double temperaturaInserita = Double.parseDouble(textValore.getText());
+						controllerCasa.cambiaTempDesiderata(getStanzaSelezionata().getNome(), temperaturaInserita);
+						rimuoviRigheTabellaStanze();
+						getStanzaSelezionata().getSensoreTemperatura().run();
+						viewTabellaStanze(getStanzaSelezionata());
+					}
+					catch(Exception ex) {
+						(new Alert()).errore("Il valore è vuoto oppure non contiene un numero", "Errore");
+					}
 			}
 		});
 	}

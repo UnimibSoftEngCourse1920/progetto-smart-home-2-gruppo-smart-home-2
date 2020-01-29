@@ -72,7 +72,7 @@ public class ControllerProgramma {
 		for (Programma p : programmi) {
 			if(p instanceof ProgrammaGiornaliero) {
 				inizio = ((ProgrammaGiornaliero) p).getInizio();
-				if(inizio.compareTo(ora)==0 || inizio.compareTo(ora) <0) {
+				if(inizio.compareTo(ora)==0) {
 					if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento") {
 						cambiaTemperatura(((ProgrammaGiornaliero) p).getValoreDiSetting(), (SensoreTemperatura) p.getElemento());
 					}
@@ -82,7 +82,7 @@ public class ControllerProgramma {
 				}
 			if (p instanceof ProgrammaSettimanale){
 				inizio= ((ProgrammaSettimanale) p).getInizio(giorno);
-				if(inizio.compareTo(ora)==0 || inizio.compareTo(ora) <0) {
+				if(inizio.compareTo(ora)==0) {
 					if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento")
 						cambiaTemperatura(((ProgrammaSettimanale) p).getValoreDiSetting(giorno), (SensoreTemperatura) p.getElemento());
 					else
