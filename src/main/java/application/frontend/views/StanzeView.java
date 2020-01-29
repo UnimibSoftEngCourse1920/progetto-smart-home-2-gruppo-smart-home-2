@@ -230,14 +230,12 @@ public class StanzeView extends JPanel {
 						else if(tipoOggetto.equals("SensoreTemperatura")) {
 							controllerCasa.cambiaStatoSensoreTemperatura(stanzaSelezionata);
 							SensoreTemperatura s = stanzaSelezionata.getSensoreTemperatura();
-							if(s.getStato() == "Spento") {
-								stanzaSelezionata.accendiTermostato();
+							if(s.getStato() != "Spento") {
 								btnInvia.setVisible(true);
 	        					labelInserimento.setVisible(true);
 	        					textValore.setVisible(true);
 							}
 							else {
-								stanzaSelezionata.spegniTermostato();
 								btnInvia.setVisible(false);
 	        					labelInserimento.setVisible(false);
 	        					textValore.setVisible(false);
