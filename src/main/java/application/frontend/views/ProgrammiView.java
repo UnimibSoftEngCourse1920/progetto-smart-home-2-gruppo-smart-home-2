@@ -267,7 +267,7 @@ public class ProgrammiView extends JPanel {
 				Programma p = controllerProgramma.getProgramma(idProgramma);
 				
 				//GESTIONE CANCELLAZIONE
-				if(column == 6) {
+				if(column == 7) {
 					if(p instanceof ProgrammaGiornaliero) {
 						if(tipoProgramma.equals(p.getClass().getSimpleName())) {
 							controllerProgramma.eliminaProgrammaGiornaliero(p);

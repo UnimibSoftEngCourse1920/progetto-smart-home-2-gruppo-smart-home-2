@@ -187,12 +187,11 @@ public class ControllerProgramma {
 		
 		Stanza stanza = casa.getStanza(nomeStanza);
 		
-		
 		if(nomeClasseElemento.equals("SensoreTemperatura")) {
 			SensoreTemperatura s = stanza.getSensoreTemperatura();
 			creaProgrammaGiornaliero(inizio, fine, tempDefault, s);
 		}
-		else if(nomeClasseElemento.equals("Robot")) {
+		else if(nomeClasseElemento.equals("RobotPulizia")) {
 			RobotPulizia r = casa.getRobot();
 			creaProgrammaGiornaliero(inizio, fine, 0, r);
 		} 
