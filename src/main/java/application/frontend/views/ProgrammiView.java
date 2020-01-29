@@ -283,6 +283,36 @@ public class ProgrammiView extends JPanel {
 				}
 			}
 		});
+		tabellaProgrammiSettimanali.addMouseListener(new MouseAdapter() {			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Point point = e.getPoint();
+				int column = tabellaProgrammiSettimanali.columnAtPoint(point);
+				int row = tabellaProgrammiSettimanali.rowAtPoint(point);
+				int idProgramma = (int) tabellaProgrammiSettimanali.getModel().getValueAt(row, 1);
+				 
+				//(new Alert()).errore("ciao", "Column header #" + column + " is clicked, riga "+ row);
+				String tipoProgramma = (String) tabellaProgrammiSettimanali.getModel().getValueAt(row, 0);
+				Programma p = controllerProgramma.getProgramma(idProgramma);
+				
+				//GESTIONE CANCELLAZIONE
+				if(column == 4) {
+					if(p instanceof ProgrammaSettimanale) {
+						if(tipoProgramma.equals(p.getClass().getSimpleName())) {
+							controllerProgramma.eliminaProgrammaGiornaliero(p);
+							(new Alert()).info("Il ProgrammaSettimanale è stato eliminato", "Operazione effettuata con successo");
+							
+							//panelModificaSettimanale = new ProgrammaSettimanaleView(panelPrincipale, controllerProgramma, ((ProgrammaSettimanale) p));
+							rimuoviRigheTabellaProgrammiSettimanali();
+							viewTabellaProgrammiSettimanali();						
+						}	
+					}	
+					else
+						(new Alert()).errore("Errore", "Errore");
+				}
+				System.out.println(controllerProgramma.getAllProgrammi().size());
+			}
+		});
 	}
 	
 	public void viewTabellaProgrammiGiornalieri() {
@@ -358,6 +388,8 @@ public class ProgrammiView extends JPanel {
 		else {
 			//(new Alert()).info("La stanza non contiene oggetti", "Information");
 		}
+		
+		System.out.println(controllerProgramma.getAllProgrammi().size());
 	}
 	
 	public void rimuoviRigheTabellaProgrammiGiornalieri() {

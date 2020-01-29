@@ -211,6 +211,8 @@ public class ControllerProgramma {
 		eliminaProgramma(p.getId());
 	}
 	
+	
+	
 	public void creazioneProgrammi() {
 		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45, 0);
 		nuovoProgrammaGiornaliero("Cucina", "SensoreTemperatura", 0, 10, 10);
