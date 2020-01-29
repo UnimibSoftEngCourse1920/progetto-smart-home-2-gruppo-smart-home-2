@@ -22,7 +22,7 @@ public class ColoreCellaTabella implements TableCellRenderer{
 				c.setBackground(Color.GREEN);
 			else if(stato.equals("Spenta") || stato.equals("Chiusa") || stato.equals("Spento"))
 				c.setBackground(Color.RED);
-			else if(stato.equals("Misurazione"))
+			else if(stato.equals("Misurazione") || stato.equals("Riscalda") || stato.equals("Raffredda"))
 				c.setBackground(Color.ORANGE);
 		}
 		else c.setBackground(null);

@@ -33,6 +33,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.awt.Color;
 
 public class StanzeView extends JPanel {
@@ -301,10 +303,11 @@ public class StanzeView extends JPanel {
 		}
 		else if(oggettoStanza instanceof SensoreTemperatura) {
 			//System.out.println("ciao");
+			NumberFormat nf = new DecimalFormat("0.00");
 			SensoreTemperatura s = (SensoreTemperatura) oggettoStanza;
 			statoSensoreTemperatura = s.getStato();
-			rowData[2] = s.getTemperaturaCorrente();
-			rowData[3] = s.getTemperaturaDesiderata();
+			rowData[2] = nf.format(s.getTemperaturaCorrente());
+			rowData[3] = nf.format(s.getTemperaturaDesiderata());
 			rowData[4] = statoSensoreTemperatura;
 		}
 		
@@ -325,5 +328,9 @@ public class StanzeView extends JPanel {
 		for (int i = numeroRighe - 1; i >= 0; i--) {
 		    modelTabellaStanze.removeRow(i);
 		}
+	}
+	
+	public Stanza getStanzaSelezionata() {
+		return this.stanzaSelezionata;
 	}
 }

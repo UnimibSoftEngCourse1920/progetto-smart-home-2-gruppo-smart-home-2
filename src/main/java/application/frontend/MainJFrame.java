@@ -271,4 +271,7 @@ public class MainJFrame extends JFrame {
 		return this.s;
 	}
 	
+	public StanzeView getPanelStanze() {
+		return this.panelStanze;
+	}
 }

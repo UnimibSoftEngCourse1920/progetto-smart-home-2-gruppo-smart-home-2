@@ -32,7 +32,7 @@ public class ControllerProgramma {
 	
 	public void creaProgrammaGiornaliero(LocalTime inizio, LocalTime fine, double valoreDiSetting, Object e) {
 		this.programmi.add(new ProgrammaGiornaliero(counter,inizio,fine,valoreDiSetting,e));
-		System.out.println(programmi.get(0));
+		//System.out.println(programmi.get(0));
 		this.counter++;
 	}
 	
@@ -216,7 +216,7 @@ public class ControllerProgramma {
 	
 	public void creazioneProgrammi() {
 		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45, 0);
-		nuovoProgrammaGiornaliero("Cucina", "SensoreTemperatura", 0, 10, 20);
+		nuovoProgrammaGiornaliero("Cucina", "SensoreTemperatura", 0, 10, 10);
 		
 		
 	}

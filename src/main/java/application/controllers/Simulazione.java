@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
+import application.backend.dominio.Stanza;
+
 public class Simulazione extends TimerTask {
 	private LocalTime ora;
 	private DayOfWeek giorno;
@@ -23,8 +25,15 @@ public class Simulazione extends TimerTask {
 		}
 		else
 			this.ora = this.ora.plusMinutes(10);
+		
+		Stanza s = cp.getCasa().getMain().getPanelStanze().getStanzaSelezionata();
 		cp.accensione(this.ora, this.giorno);
 		cp.spegnimento(this.ora, this.giorno);
+		
+		if(s != null) {
+			cp.getCasa().getMain().getPanelStanze().rimuoviRigheTabellaStanze();
+			cp.getCasa().getMain().getPanelStanze().viewTabellaStanze(s);
+		}
 	}
 
 	public LocalTime getOra() {
