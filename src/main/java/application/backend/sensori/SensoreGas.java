@@ -22,7 +22,7 @@ public class SensoreGas extends Sensore {
 	@Override
 	public void run() {
 		double casuale = Math.random();
-		System.out.println(casuale);
+		//System.out.println(casuale);
 		if(casuale == 1) {
 			this.rilevataFuga= true;
 			super.getAllarme().notifica(this);

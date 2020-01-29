@@ -188,7 +188,7 @@ public class ControllerProgramma {
 		}
 	}*/
 	
-	public void nuovoProgrammaGiornaliero(String nomeStanza, String nomeClasseElemento, int ore, int minuti) {
+	public void nuovoProgrammaGiornaliero(String nomeStanza, String nomeClasseElemento, int ore, int minuti, double tempDefault) {
 		CharSequence orarioInizio = ore+": "+minuti;
 		CharSequence orarioFine = (ore+2)+": "+minuti;
 		
@@ -200,9 +200,10 @@ public class ControllerProgramma {
 		
 		Stanza stanza = casa.getStanza(nomeStanza);
 		
+		
 		if(nomeClasseElemento.equals("SensoreTemperatura")) {
 			SensoreTemperatura s = stanza.getSensoreTemperatura();
-			creaProgrammaGiornaliero(inizio, fine, 15, s);
+			creaProgrammaGiornaliero(inizio, fine, tempDefault, s);
 		}
 		else if(nomeClasseElemento.equals("Robot")) {
 			RobotPulizia r = casa.getRobot();
@@ -216,6 +217,9 @@ public class ControllerProgramma {
 			Lavatrice l = stanza.getLavatrice();
 			creaProgrammaGiornaliero(inizio, fine, 0, l);
 		}
+		
+		
+		//System.out.println(nomeStanza+nomeClasseElemento+ore+""+minuti+""+tempDefault);
 	}
 	
 	public void eliminaProgrammaGiornaliero(Programma p) {
@@ -224,7 +228,7 @@ public class ControllerProgramma {
 	}
 	
 	public void creazioneProgrammi() {
-		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45);
+		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45, 0);
 	}
 	
 	

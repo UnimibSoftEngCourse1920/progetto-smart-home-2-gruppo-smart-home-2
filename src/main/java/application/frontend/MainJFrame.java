@@ -237,7 +237,6 @@ public class MainJFrame extends JFrame {
 	}
 	
 	public void viewHomepage() {
-		
 		panelPrincipale.removeAll();
 		panelPrincipale.add(panelHomepage);
 		panelPrincipale.repaint();
@@ -262,6 +261,14 @@ public class MainJFrame extends JFrame {
 
 	public AllarmeView getPanelAllarme() {
 		return panelAllarme;
+	}
+	
+	public ProgrammiView getPanelProgrammi() {
+		return this.panelProgrammi;
+	}
+	
+	public Simulazione getSimulazione() {
+		return this.s;
 	}
 	
 }

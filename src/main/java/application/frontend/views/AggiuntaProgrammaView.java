@@ -41,7 +41,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 
-public class AggiungiProgrammaView extends JPanel {
+public class AggiuntaProgrammaView extends JPanel {
 	private Simulazione s;
 	private JLayeredPane panelPrincipale;
 	private JPanel panelSelezioneStanzaElementoTipo;
@@ -86,12 +86,14 @@ public class AggiungiProgrammaView extends JPanel {
 	
 	
 	
-	//PanelSelezioneGiornaliero
+	//PanelSelezioneGiornaliero-----------------------
 	private JLabel labelInizioGiornaliero;
 	private JSpinner spinnerGiornaliero;
 	private JButton bottoneAggiungiGiornaliero;
+	private JLabel labelTempGiornaliero;
+	private JTextField textTempGiornaliero;
 	
-	public AggiungiProgrammaView(JLayeredPane principale, ControllerCasa casa, ControllerProgramma controllerProgramma) {
+	public AggiuntaProgrammaView(JLayeredPane principale, ControllerCasa casa, ControllerProgramma controllerProgramma) {
 		this.panelPrincipale = principale;
 		this.controllerCasa = casa;
 		this.controllerProgramma = controllerProgramma;
@@ -168,7 +170,9 @@ public class AggiungiProgrammaView extends JPanel {
 		panelSelezioneGiornaliero.setVisible(false);
 		labelInizioGiornaliero = new JLabel("Ora inizio:");
 		bottoneAggiungiGiornaliero = new JButton("Aggiungi");
-		
+		textTempGiornaliero = new JTextField();
+		textTempGiornaliero.setColumns(10);
+		labelTempGiornaliero = new JLabel("Valore Temperatura");
 		spinnerGiornaliero = new JSpinner(spinnerModel);
 		JSpinner.DateEditor dateEditorGiornaliero = new JSpinner.DateEditor(spinnerGiornaliero, "HH:mm");
 		spinnerGiornaliero.setEditor(dateEditorGiornaliero);
@@ -353,28 +357,36 @@ public class AggiungiProgrammaView extends JPanel {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelSelezioneStanzaElementoTipo.setLayout(gl_panelStanzaElementoTipo);
+		
+		
 
 		GroupLayout gl_panelSelezioneGiornaliero = new GroupLayout(panelSelezioneGiornaliero);
 		gl_panelSelezioneGiornaliero.setHorizontalGroup(
-			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.LEADING)
+			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelSelezioneGiornaliero.createSequentialGroup()
-					.addGap(236)
+					.addGap(151)
 					.addComponent(labelInizioGiornaliero, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(spinnerGiornaliero, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-					.addGap(88)
+					.addComponent(spinnerGiornaliero, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(labelTempGiornaliero, GroupLayout.PREFERRED_SIZE, 117, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textTempGiornaliero, 111, 111, 111)
+					.addGap(75)
 					.addComponent(bottoneAggiungiGiornaliero)
-					.addGap(304))
+					.addGap(146))
 		);
 		gl_panelSelezioneGiornaliero.setVerticalGroup(
-			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.LEADING)
+			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panelSelezioneGiornaliero.createSequentialGroup()
-					.addGap(25)
+					.addContainerGap(25, Short.MAX_VALUE)
 					.addGroup(gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelInizioGiornaliero)
 						.addComponent(spinnerGiornaliero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bottoneAggiungiGiornaliero))
-					.addContainerGap(14, Short.MAX_VALUE))
+						.addComponent(bottoneAggiungiGiornaliero)
+						.addComponent(labelTempGiornaliero)
+						.addComponent(textTempGiornaliero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		panelSelezioneGiornaliero.setLayout(gl_panelSelezioneGiornaliero);
 	}
@@ -398,11 +410,12 @@ public class AggiungiProgrammaView extends JPanel {
 		comboBoxSelezioneTipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxSelezioneElemento.isEnabled()) {
+					String elemento = comboBoxSelezioneElemento.getSelectedItem().toString();
 					if (comboBoxSelezioneTipo.getSelectedItem() != null) {
 			            String tipo = comboBoxSelezioneTipo.getSelectedItem().toString();
 			            if(tipo.equals("Giornaliero")) {
-			            	panelSelezioneGiornaliero.setVisible(true);
-			            	panelSelezioneSettimanale.setVisible(false);
+			            	viewPanelGiornaliero(elemento);
+			            	
 			            }
 			            else {
 			            	panelSelezioneSettimanale.setVisible(true);
@@ -559,36 +572,112 @@ public class AggiungiProgrammaView extends JPanel {
 	public void gestioneAggiungiGiornaliero() {
 		bottoneAggiungiGiornaliero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean errore = false;
 				String nomeStanza = null;
 				String nomeClasseElemento = null;
 				
 				if(comboBoxSelezioneStanza.getSelectedItem() != null) {
                     nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
+                    
+                    if(comboBoxSelezioneElemento.getSelectedItem() != null) {
+    					nomeClasseElemento = comboBoxSelezioneElemento.getSelectedItem().toString();
+    					double tempDefault = 0;
+    					int ore = 0;
+    					int minuti = 0;
+    					
+    					SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        				String value = (formato.format(spinnerGiornaliero.getValue())).toString();
+        				Date data = null;
+        				try {
+        					data = formato.parse(value);
+        					ore = data.getHours();
+        					minuti = data.getMinutes();
+        					
+        					int oreCorrente = controllerCasa.getMain().getSimulazione().getOre();
+        					int minutiCorrenti = controllerCasa.getMain().getSimulazione().getMinuti();
+        					
+        					if(ore >= oreCorrente) {
+        						if((ore == oreCorrente && minuti > minutiCorrenti) || ore > oreCorrente) {
+	        						if(nomeClasseElemento.equals("SensoreTemperatura")) {
+	            						try {
+	            							tempDefault = Double.parseDouble(textTempGiornaliero.getText());
+	            							
+	            							if(tempDefault <= 8 || tempDefault >= 28) {
+	            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28", "Attenzione");
+	            								errore = true;
+	            							}
+	            							
+	            							if(tempDefault == 0.0)
+	            								tempDefault = 17;
+	            						}catch (NumberFormatException error) {
+	            							(new Alert()).errore("Il valore deve essere un numero", "Attenzione");
+	            							errore = true;
+	            						}
+	            					}
+        						}
+        						else {
+        							(new Alert()).errore("L'orario deve essere maggiore di quello dell'orologio", "Attenzione");
+            						errore = true;
+        						}
+        					}
+        					else {
+        						(new Alert()).errore("L'orario deve essere maggiore di quello dell'orologio", "Attenzione");
+        						errore = true;
+        					}
+        					
+        					
+        					
+        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
+        					
+        				} catch (ParseException e1) {
+        					// TODO Auto-generated catch block
+        					(new Alert()).errore("Errore nella scelta del tempo di inizio", "Attenzione");
+        					errore = true;
+        				}
+        				
+        				if(!errore) {
+        					controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
+            				(new Alert()).info("Il ProgrammaGiornaliero è stato aggiunto", "Operazione effettuata con successo");
+            				caricaProgrammiView();
+            				//controllerCasa.getMain().viewHomepage();
+        				}
+        				
+        				
+                    }
+    				else
+    					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
 				}
 				else
 					(new Alert()).errore("Devi selezionare una stanza", "Attenzione");
 				
-				if(comboBoxSelezioneElemento.getSelectedItem() != null) {
-					nomeClasseElemento = comboBoxSelezioneElemento.getSelectedItem().toString();
-				}
-				else
-					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
 				
-				SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-				String value = (formato.format(spinnerGiornaliero.getValue())).toString();
-				Date data = null;
-				try {
-					data = formato.parse(value);
-					int ore = data.getHours();
-					int minuti = data.getMinutes();
-					
-					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
-					
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					(new Alert()).errore("Errore nella scelta del tempo di inizio", "Attenzione");
-				}
 			}
 		});
+	}
+	
+	public void viewPanelGiornaliero(String elemento) {
+		panelSelezioneGiornaliero.setVisible(true);
+    	panelSelezioneSettimanale.setVisible(false);
+    	
+    	if(elemento.equals("SensoreTemperatura")) {
+    		labelTempGiornaliero.setVisible(true);
+    		textTempGiornaliero.setVisible(true);
+    	}
+    	else {
+    		labelTempGiornaliero.setVisible(false);
+    		textTempGiornaliero.setVisible(false);
+    	}
+	}
+	
+	public void caricaProgrammiView() {
+		panelSelezioneSettimanale.setVisible(false);
+		panelSelezioneGiornaliero.setVisible(false);
+		panelPrincipale.removeAll();
+		panelPrincipale.add(controllerCasa.getMain().getPanelProgrammi());
+		panelPrincipale.repaint();
+		panelPrincipale.revalidate();
+		
+		controllerCasa.getMain().getPanelProgrammi().viewTabellaProgrammiGiornalieri();
+		controllerCasa.getMain().getPanelProgrammi().viewTabellaProgrammiSettimanali();
 	}
 }

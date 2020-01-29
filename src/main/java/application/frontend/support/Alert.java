@@ -13,4 +13,8 @@ public class Alert extends JPanel {
 	public void info(String infoMessaggio, String titolo){
         JOptionPane.showMessageDialog(null, infoMessaggio, titolo, JOptionPane.INFORMATION_MESSAGE);
     }
+	
+	public void successo(String infoMessaggio, String titolo){
+        JOptionPane.showMessageDialog(null, infoMessaggio, titolo, JOptionPane.OK_OPTION);
+	}
 }

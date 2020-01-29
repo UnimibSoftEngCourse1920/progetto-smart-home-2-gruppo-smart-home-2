@@ -43,5 +43,11 @@ public class Simulazione extends TimerTask {
 		this.giorno = giorno;
 	}
 	
-
+	public int getMinuti() {
+		return this.ora.getMinute();
+	}
+	
+	public int getOre() {
+		return this.ora.getHour();
+	}
 }
