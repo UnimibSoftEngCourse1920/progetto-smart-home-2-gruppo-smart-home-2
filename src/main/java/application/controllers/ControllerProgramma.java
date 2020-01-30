@@ -222,7 +222,6 @@ public class ControllerProgramma {
 	
 	public void creazioneProgrammi() {
 		nuovoProgrammaGiornaliero("Cucina", LAVASTOVIGLIE, 1, 45, 0);
-		nuovoProgrammaGiornaliero("Cucina", SENSORETEMPERATURA, 2, 10, 10);
 	}
 	
 	public void aggiornaProgrammaSettimanale(int idSettimanale, int giornoSettimana, String nomeStanza, String nomeClasseElemento, int ore, int minuti, double tempDefault) {
