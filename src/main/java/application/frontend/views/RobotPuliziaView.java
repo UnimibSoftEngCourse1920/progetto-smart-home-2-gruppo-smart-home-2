@@ -9,6 +9,7 @@ import application.backend.sensori.Allarme;
 import application.controllers.ControllerCasa;
 import application.frontend.support.Alert;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,10 +48,14 @@ public class RobotPuliziaView extends JPanel {
 
 	public void setStato() {
 		if(this.casa.getRobot() != null) {
-			if(this.casa.getRobot().isInFunzione())
-				cambiaStato.setText("Spegni Robot");
-			else
-				cambiaStato.setText("Accendi Robot");
+			if(this.casa.getRobot().isInFunzione()) {
+				cambiaStato.setText("Acceso");
+				cambiaStato.setBackground(Color.GREEN);
+			}
+			else {
+				cambiaStato.setText("Spento");
+				cambiaStato.setBackground(Color.RED);
+			}
 		}
 		else
 			(new Alert()).errore("La casa non ha un robot della pulizia", "Attenzione");

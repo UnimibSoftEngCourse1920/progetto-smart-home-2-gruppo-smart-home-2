@@ -19,7 +19,7 @@ public class ControllerCasa {
 	private ArrayList<Stanza> stanze ;
 	private RobotPulizia robot ;
 	private Allarme allarme;
-	private Timer timer= new Timer();
+	private Timer timer;
 	
 	public ControllerCasa(MainJFrame main) {
 		this.main = main;
@@ -32,6 +32,8 @@ public class ControllerCasa {
 	}
 
 	public void accendiRobot() {
+		//System.out.println("salve");
+		timer= new Timer();
 		robot.cambiaStato();
 		timer.schedule(robot, 30000, 30000);
 	}
@@ -40,6 +42,7 @@ public class ControllerCasa {
 		robot.cambiaStato();
 		main.getRobotView().setStato();
 		timer.cancel();
+		this.robot = new RobotPulizia(this.robot.getBase(),this);
 	}
 	
 	public void addRobot(Stanza s) {
@@ -176,10 +179,19 @@ public class ControllerCasa {
 		return this.stanze;
 	}
 	
-	public List<Stanza> getStanzeClone() {
-		@SuppressWarnings("unchecked")
+	public List<Stanza> getStanzeClone(Stanza base) {
+		List<Stanza> listaStanze = new ArrayList<Stanza>();
+		
+		for(Stanza s : getStanze()) {
+			if(!s.getNome().equals(base.getNome()))
+				listaStanze.add(s);
+		}
+		
+		/*@SuppressWarnings("unchecked")
 		List<Stanza> clone = (List<Stanza>)this.stanze.clone();
-		return clone;
+		return clone;*/
+		
+		return listaStanze;
 	}
 	
 	public RobotPulizia getRobot() {

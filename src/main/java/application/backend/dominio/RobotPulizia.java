@@ -19,7 +19,11 @@ public class RobotPulizia extends TimerTask{
 		this.base = base;
 		this.posizione = base;
 		this.casa = casa;
-		mappa = (ArrayList<Stanza>) casa.getStanze();
+		mappa = (ArrayList<Stanza>) casa.getStanzeClone(base);
+		
+		/*for(int i = 0; i < mappa.size(); i++) {
+			System.out.println(mappa.get(i).getNome());
+		}*/
 	}
 	
 	public Stanza getBase() {
@@ -35,6 +39,7 @@ public class RobotPulizia extends TimerTask{
 	}
 	
 	public void cambiaStato() {
+		//System.out.println(isInFunzione());
 		if(isInFunzione()) {
 			this.isInFunzione = false;
 			this.posizione = this.base;
@@ -45,13 +50,17 @@ public class RobotPulizia extends TimerTask{
 
 	@Override
 	public void run() {
-		if((mappa.isEmpty()) || (mappa.size() == 1 && mappa.get(0) == base)) {
-			mappa = (ArrayList<Stanza>) casa.getStanze();
+		if((mappa.isEmpty())) {
+			//System.out.println(isInFunzione());
+			mappa = (ArrayList<Stanza>) casa.getStanzeClone(base);
+			
+			
 			casa.spegniRobot();
 		}
-		else
-			if(mappa.get(0) != base) 
-					this.posizione = mappa.get(0);
-				mappa.remove(0);
+		else {
+			//System.out.println(this.posizione.getNome());
+			this.posizione = mappa.get(0);
+			mappa.remove(0);
+		}
 	}
 }

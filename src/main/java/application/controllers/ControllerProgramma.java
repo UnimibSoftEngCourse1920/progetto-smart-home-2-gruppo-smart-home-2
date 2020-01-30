@@ -81,15 +81,18 @@ public class ControllerProgramma {
 		LocalTime inizio;
 		for (Programma p : programmi) {
 			if(p instanceof ProgrammaGiornaliero) {
+				
 				inizio = ((ProgrammaGiornaliero) p).getInizio();
 				if(inizio.compareTo(ora)==0) {
 					if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento") {
 						cambiaTemperatura(((ProgrammaGiornaliero) p).getValoreDiSetting(), (SensoreTemperatura) p.getElemento());
 					}
-					else
+					else {
 						cambiaStatoElemento(p.getElemento(),false);
+						
 					}
 				}
+			}
 			if (p instanceof ProgrammaSettimanale){
 				inizio= ((ProgrammaSettimanale) p).getInizio(giorno);
 				if(inizio.compareTo(ora)==0) {
@@ -132,7 +135,12 @@ public class ControllerProgramma {
 	
 	public void cambiaStatoElemento(Object e, boolean stato) {
 		if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato && stato == false)
+		{
 			casa.accendiRobot();
+			System.out.println(((RobotPulizia) e).isInFunzione());
+			getCasa().getMain().getRobotView().setStato();
+		}
+			
 		if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato && stato == true)
 			casa.spegniRobot();
 		if(e instanceof Lavatrice && ((Lavatrice) e).isInFunzione()== stato)
