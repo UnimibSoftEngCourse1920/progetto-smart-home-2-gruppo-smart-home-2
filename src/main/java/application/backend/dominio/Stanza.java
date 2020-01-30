@@ -126,12 +126,17 @@ public class Stanza {
 	public void stopTimerEventi() {
 		timerEventi.cancel();
 		timerEventi.purge();
-		if(this.sensoreGas != null)
-			this.sensoreGas =new SensoreGas(this.sensoreGas.getAllarme());
+		if(this.sensoreGas != null) {
+			boolean lui =this.sensoreGas.getFuga();
+			this.sensoreGas = new SensoreGas(this.sensoreGas.getAllarme());
+			if(lui)
+				this.sensoreGas.cambiaStato();
+		}
 		if(this.radar != null) {
-			//System.out.print(getNome());
+			boolean lui =this.radar.getMovimento();
 			this.radar = new Radar(this.radar.getAllarme());
-			this.radar.cambiaStato();
+			if(lui)
+				this.radar.cambiaStato();
 		}
 		for (Finestra f: finestre)
 			f.riallocaSensore();

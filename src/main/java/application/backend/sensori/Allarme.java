@@ -35,7 +35,7 @@ public class Allarme {
 					casa.getMain().getPanelAllarme().setLabelEffrazione();
 				if(s instanceof Radar) {
 					casa.getMain().getPanelAllarme().setLabelMovimenti();
-					System.out.println(((Radar) s));
+					//System.out.println(((Radar) s));
 				}
 				for (Stanza stanza: casa.getStanze()) 
 					stanza.stopTimerEventi();
@@ -45,12 +45,15 @@ public class Allarme {
 	
 	public void notificaSensore(SensoreGas s) {
 		for (Stanza stanza: casa.getStanze()) {
+			//System.out.println("stanza");
 			stanza.stopTimerEventi();
-			if(stanza.getSensoreGas() == s)
-				for (Finestra f:stanza.getFinestre())
+			if(/*stanza.getSensoreGas() == s*/stanza.getSensoreGas()!= null && stanza.getSensoreGas().getFuga()) {
+				System.out.println(stanza.getNome());
+				for (Finestra f : stanza.getFinestre())
 					if(!f.isAperta())
 						f.cambiaStato();
 			}
+		}
 	}
 	
 	public void terminaEmergenza() {
@@ -61,12 +64,12 @@ public class Allarme {
 				casa.getMain().getPanelAllarme().setLabelGas();
 			}
 			if(stanza.getRadar() != null) {
-				System.out.println(stanza.getNome()+""+stanza.getRadar() +""+ stanza.getRadar().getMovimento());
+				//System.out.println(stanza.getNome()+""+stanza.getRadar() +""+ stanza.getRadar().getMovimento());
 			}
 			if(stanza.getRadar() != null && stanza.getRadar().getMovimento()) {
 				stanza.getRadar().cambiaStato();
 				casa.getMain().getPanelAllarme().setLabelMovimenti();
-				System.out.println(emergenza);
+				//System.out.println(emergenza);
 			}
 			if(stanza.getFinestre() != null) {
 				for (Finestra f : stanza.getFinestre())

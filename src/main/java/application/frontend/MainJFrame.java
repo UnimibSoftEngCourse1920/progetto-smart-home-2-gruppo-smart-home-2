@@ -125,13 +125,15 @@ public class MainJFrame extends JFrame {
 		labelSmartHome.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSmartHome.setFont(new Font("Arial", Font.PLAIN, 25));
 		
-		clock = new JLabel("00:00");
+		s = new Simulazione(controllerProgramma);
+		Timer timerSim = new Timer();
+		timerSim.schedule(s, 1000, 1000);
+		
+		clock = new JLabel(s.getGiorno() + ": "+"00:00");
 		clock.setEnabled(false);
 		clock.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		s = new Simulazione(controllerProgramma);
-		Timer timerSim = new Timer();
-		timerSim.schedule(s, 100, 100);
+		
 		
 		
 		setLayoutMenu();

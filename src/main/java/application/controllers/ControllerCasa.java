@@ -103,7 +103,7 @@ public class ControllerCasa {
 			if(s.getFinestra(id) != null && !s.getSensoreGas().getFuga())
 				s.getFinestra(id).cambiaStato();
 			if(s.getSensoreGas().getFuga())
-				System.out.println("c'è una fuga, cazzo fai?");
+				(new Alert()).errore("Non puoi chiudere la finestra se c'è una figa di gas", "Errore");
 		}
 	}
 	
@@ -112,7 +112,7 @@ public class ControllerCasa {
 			if(s.getFinestra(id).getTapparella() != null && !s.getSensoreGas().getFuga())
 				s.getFinestra(id).getTapparella().cambiaStato();
 			if(s.getSensoreGas().getFuga())
-				System.out.println("c'è una fuga, cazzo fai?");
+				(new Alert()).errore("Non puoi chiudere la tapparella se c'è una figa di gas", "Errore");
 		}
 	}
 	
@@ -319,10 +319,12 @@ public class ControllerCasa {
 		SensoreFinestra sensoreFinestraCameraMatrimoniale = new SensoreFinestra(allarme);
 		Lampada lampadaCameraMatrimoniale = new Lampada(2);
 		Finestra finestraCameraMatrimoniale = new Finestra(new Tapparella(2), sensoreFinestraCameraMatrimoniale);
+		SensoreGas sensoreGasCameraMatrimoniale =new SensoreGas(allarme);
 		
 		cameraLetto.addLampada(lampadaCameraMatrimoniale);
 		cameraLetto.addFinestra(finestraCameraMatrimoniale);
 		cameraLetto.addSensoreTemperatura();
+		cameraLetto.addSensoreGas(sensoreGasCameraMatrimoniale);
 		
 		
 		//BAGNO-------------------------------------------------------------------------------------

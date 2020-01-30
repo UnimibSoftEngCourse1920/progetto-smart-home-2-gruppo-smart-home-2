@@ -16,7 +16,10 @@ public class Finestra {
 	}
 	
 	public void riallocaSensore() {
+		boolean lui = this.sensore.getEffrazione();
 		this.sensore = new SensoreFinestra(this.sensore.getAllarme());
+		if(lui)
+			this.sensore.cambiaStato();
 	}
 	
 	public boolean isAperta() {

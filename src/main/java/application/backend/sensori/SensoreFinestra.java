@@ -23,7 +23,6 @@ public class SensoreFinestra extends Sensore {
 	@Override
 	public void run() {
 		double casuale = Math.random();
-		System.out.println(casuale);
 		if(casuale >= 0.9) {
 			this.rilevataEffrazione= true;
 			super.getAllarme().notifica(this);
