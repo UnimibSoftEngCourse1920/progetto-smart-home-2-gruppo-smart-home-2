@@ -1,7 +1,6 @@
 package application.frontend.views;
 
 
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 
@@ -92,9 +91,7 @@ public class StanzeView extends JPanel {
 		setLayoutStanze();
 		
 		gestioneStanze();
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tabellaStanze.setDefaultRenderer(Object.class, centerRenderer);
+		((DefaultTableCellRenderer)tabellaStanze.getDefaultRenderer(Object.class)).setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	}
 	
 	public void setLayoutStanze() {
@@ -293,6 +290,8 @@ public class StanzeView extends JPanel {
 		else {
 			(new Alert()).info("La stanza non contiene oggetti", "Information");
 		}
+		
+		
 	}
 	
 	public void viewRigaTabellaStanze(Object oggettoStanza) {

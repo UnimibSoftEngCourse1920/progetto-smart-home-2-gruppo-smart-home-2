@@ -25,7 +25,6 @@ import application.backend.programmi.Programma;
 import application.backend.programmi.ProgrammaGiornaliero;
 import application.backend.programmi.ProgrammaSettimanale;
 import application.controllers.ControllerProgramma;
-import application.controllers.Simulazione;
 import application.frontend.support.Alert;
 
 import javax.swing.JScrollPane;
@@ -103,7 +102,7 @@ public class ProgrammiView extends JPanel {
 		modelTabellaProgrammiSettimanali = (DefaultTableModel) tabellaProgrammiSettimanali.getModel();
 		String[] colonneSettimanali = { "Tipo", "ID", "Elemento", "Stanza", "Visualizza", "Elimina"};
 		modelTabellaProgrammiSettimanali.setColumnIdentifiers(colonneSettimanali);
-		((DefaultTableCellRenderer)tabellaProgrammiSettimanali.getDefaultRenderer(Object.class)).setHorizontalAlignment(JLabel.CENTER);
+		((DefaultTableCellRenderer)tabellaProgrammiSettimanali.getDefaultRenderer(Object.class)).setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		
 		
 		//PROGRAMMI GIORNALIERI-------------------------------------------
@@ -116,7 +115,7 @@ public class ProgrammiView extends JPanel {
 		modelTabellaProgrammiGiornalieri = (DefaultTableModel) tabellaProgrammiGiornalieri.getModel();
 		String[] colonneGiornalieri = { "Tipo", "Stanza", "ID", "Elemento", "Inizio", "Fine", "Valore Settato", "Elimina"};
 		modelTabellaProgrammiGiornalieri.setColumnIdentifiers(colonneGiornalieri);
-		((DefaultTableCellRenderer)tabellaProgrammiGiornalieri.getDefaultRenderer(Object.class)).setHorizontalAlignment(JLabel.CENTER);
+		((DefaultTableCellRenderer)tabellaProgrammiGiornalieri.getDefaultRenderer(Object.class)).setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
 		
 		viewTabellaProgrammiGiornalieri();

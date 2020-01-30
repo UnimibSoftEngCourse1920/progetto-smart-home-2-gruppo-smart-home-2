@@ -1,6 +1,5 @@
 package application.frontend.views;
 
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import application.backend.sensori.Allarme;

@@ -9,7 +9,6 @@ import javax.swing.SwingConstants;
 import application.backend.dominio.Stanza;
 import application.controllers.ControllerCasa;
 import application.controllers.ControllerProgramma;
-import application.controllers.Simulazione;
 import application.frontend.support.Alert;
 
 import javax.swing.GroupLayout;
