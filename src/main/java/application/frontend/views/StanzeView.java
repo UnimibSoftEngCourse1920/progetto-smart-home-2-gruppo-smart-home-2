@@ -230,7 +230,7 @@ public class StanzeView extends JPanel {
 						else if(tipoOggetto.equals("SensoreTemperatura")) {
 							controllerCasa.cambiaStatoSensoreTemperatura(stanzaSelezionata);
 							SensoreTemperatura s = stanzaSelezionata.getSensoreTemperatura();
-							if(s.getStato() != "Spento") {
+							if(!s.getStato().equals("Spento")) {
 								btnInvia.setVisible(true);
 	        					labelInserimento.setVisible(true);
 	        					textValore.setVisible(true);
@@ -353,7 +353,7 @@ public class StanzeView extends JPanel {
 			NumberFormat nf = new DecimalFormat("0.00");
 			statoSensoreTemperatura = controllerCasa.getStatoSensoreTemperatura((SensoreTemperatura) oggettoStanza);
 			//statoSensoreTemperatura = s.getStato();
-			if(statoSensoreTemperatura == "Spento") {
+			if(statoSensoreTemperatura.equals("Spento")) {
 				rowData[2] = "";
 				rowData[3] = "";
 			}

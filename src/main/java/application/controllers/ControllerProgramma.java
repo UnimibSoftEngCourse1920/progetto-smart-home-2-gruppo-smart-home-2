@@ -22,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 import application.backend.dominio.*;
 import application.backend.programmi.*;
 import application.backend.sensori.SensoreTemperatura;
+import application.frontend.support.Alert;
 import application.frontend.views.ProgrammaSettimanaleView;
 
 public class ControllerProgramma {
@@ -84,7 +85,7 @@ public class ControllerProgramma {
 				
 				inizio = ((ProgrammaGiornaliero) p).getInizio();
 				if(inizio.compareTo(ora)==0) {
-					if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento") {
+					if(p.getElemento() instanceof SensoreTemperatura && !((SensoreTemperatura)p.getElemento()).getStato().equals("Spento")) {
 						cambiaTemperatura(((ProgrammaGiornaliero) p).getValoreDiSetting(), (SensoreTemperatura) p.getElemento());
 					}
 					else {
@@ -97,7 +98,7 @@ public class ControllerProgramma {
 				if(((ProgrammaSettimanale) p).getInizio(giorno) != null) {
 					inizio= ((ProgrammaSettimanale) p).getInizio(giorno);
 					if(inizio.compareTo(ora)==0) {
-						if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento")
+						if(p.getElemento() instanceof SensoreTemperatura && !((SensoreTemperatura)p.getElemento()).getStato().equals("Spento"))
 							cambiaTemperatura(((ProgrammaSettimanale) p).getValoreDiSetting(giorno), (SensoreTemperatura) p.getElemento());
 						else
 							cambiaStatoElemento(p.getElemento(),false);
@@ -303,7 +304,7 @@ public class ControllerProgramma {
 				data = formato.parse(p.getInizio(giorno).toString());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				(new Alert()).errore("Errore nel formato data", "Errore");
 			}
 			
 			view.modificaSpinner(i, data);

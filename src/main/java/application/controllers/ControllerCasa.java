@@ -68,10 +68,12 @@ public class ControllerCasa {
 		}
 	}
 	
+	
 	public void cambiaStatoSensoreTemperatura(Stanza s) {
 		if(s != null) {
-			if(s.getSensoreTemperatura().getStato() == "Spento")
+			if(s.getSensoreTemperatura().getStato().equals("Spento")) {
 				s.accendiTermostato();
+			}
 			else
 				s.spegniTermostato();
 		}

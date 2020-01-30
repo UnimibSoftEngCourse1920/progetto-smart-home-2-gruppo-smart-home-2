@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import application.controllers.ControllerCasa;
 import application.controllers.ControllerProgramma;
 import application.controllers.Simulazione;
+import application.frontend.support.Alert;
 import application.frontend.views.*;
 
 import javax.swing.GroupLayout;
@@ -81,7 +82,7 @@ public class MainJFrame extends JFrame {
 					mainJFrame.setExtendedState(mainJFrame.getExtendedState() | java.awt.Frame.MAXIMIZED_BOTH);
 					
 				} catch (Exception e) {
-					e.printStackTrace();
+					(new Alert()).errore("Problema caricamento programma", "Errore");
 				}
 			}
 		});
