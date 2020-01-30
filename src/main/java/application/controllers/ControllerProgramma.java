@@ -94,12 +94,14 @@ public class ControllerProgramma {
 				}
 			}
 			if (p instanceof ProgrammaSettimanale){
-				inizio= ((ProgrammaSettimanale) p).getInizio(giorno);
-				if(inizio.compareTo(ora)==0) {
-					if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento")
-						cambiaTemperatura(((ProgrammaSettimanale) p).getValoreDiSetting(giorno), (SensoreTemperatura) p.getElemento());
-					else
-						cambiaStatoElemento(p.getElemento(),false);
+				if(((ProgrammaSettimanale) p).getInizio(giorno) != null) {
+					inizio= ((ProgrammaSettimanale) p).getInizio(giorno);
+					if(inizio.compareTo(ora)==0) {
+						if(p.getElemento() instanceof SensoreTemperatura && ((SensoreTemperatura)p.getElemento()).getStato() != "Spento")
+							cambiaTemperatura(((ProgrammaSettimanale) p).getValoreDiSetting(giorno), (SensoreTemperatura) p.getElemento());
+						else
+							cambiaStatoElemento(p.getElemento(),false);
+					}
 				}
 			}
 		}
@@ -111,7 +113,10 @@ public class ControllerProgramma {
 
 	public void spegnimento(LocalTime ora, DayOfWeek giorno) {
 		LocalTime fine;
-		for (Programma p : programmi) {
+		Programma p = null;
+		for(int i = 0; i < programmi.size() && programmi.get(i) != null; i++) {
+			p = programmi.get(i);
+
 			if(p instanceof ProgrammaSettimanale) {
 				fine = ((ProgrammaSettimanale) p).getFine(giorno);
 				if(fine != null && (fine.compareTo(ora)==0)) {
@@ -124,29 +129,37 @@ public class ControllerProgramma {
 			else if(p instanceof ProgrammaGiornaliero) {
 				fine = ((ProgrammaGiornaliero) p).getFine();
 				if(fine != null && (fine.compareTo(ora)==0)) {
-					if(p.getElemento() instanceof SensoreTemperatura)
+					if(p.getElemento() instanceof SensoreTemperatura) {
 						cambiaTemperatura(SensoreTemperatura.TEMPERATURADEFAULT, (SensoreTemperatura) p.getElemento());
+						//System.out.println(p.getId());
+					}
 					else
 						cambiaStatoElemento(p.getElemento(),true);
+					eliminaProgramma(p.getId());
+					getCasa().getMain().getPanelProgrammi().viewTabellaProgrammiGiornalieri();
 				}
 			}
 		}
+		
 	}
 	
 	public void cambiaStatoElemento(Object e, boolean stato) {
 		if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato && stato == false)
 		{
 			casa.accendiRobot();
-			System.out.println(((RobotPulizia) e).isInFunzione());
 			getCasa().getMain().getRobotView().setStato();
 		}
 			
-		if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato && stato == true)
+		if(e instanceof RobotPulizia && ((RobotPulizia) e).isInFunzione()==stato && stato == true) {
 			casa.spegniRobot();
-		if(e instanceof Lavatrice && ((Lavatrice) e).isInFunzione()== stato)
+			getCasa().getMain().getRobotView().setStato();
+		}
+		if(e instanceof Lavatrice && ((Lavatrice) e).isInFunzione()== stato) {
 			((Lavatrice) e).cambiaStato();
-		if(e instanceof Lavastoviglie && ((Lavastoviglie) e).isInFunzione()== stato)
+		}
+		if(e instanceof Lavastoviglie && ((Lavastoviglie) e).isInFunzione()== stato) {
 			((Lavastoviglie) e).cambiaStato();
+		}
 	}
 	
 	public ArrayList<Programma> getAllProgrammi() {
@@ -231,8 +244,8 @@ public class ControllerProgramma {
 	
 	
 	public void creazioneProgrammi() {
-		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 7, 45, 0);
-		nuovoProgrammaGiornaliero("Cucina", "SensoreTemperatura", 0, 10, 10);
+		nuovoProgrammaGiornaliero("Cucina", "Lavastoviglie", 1, 45, 0);
+		nuovoProgrammaGiornaliero("Cucina", "SensoreTemperatura", 2, 10, 10);
 		
 	}
 	

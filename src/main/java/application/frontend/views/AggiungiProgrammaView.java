@@ -20,6 +20,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -462,6 +463,8 @@ public class AggiungiProgrammaView extends JPanel {
 				oggettoSelezionato = comboBoxSelezioneElemento.getSelectedItem().toString();
             	panelSelezioneSettimanale.setVisible(false);
             	panelSelezioneGiornaliero.setVisible(false); 
+            	
+            	comboBoxTipo();
         	}
 		});
 	}
@@ -504,10 +507,20 @@ public class AggiungiProgrammaView extends JPanel {
 	}
 	
 	public void comboBoxTipo() {
+		comboBoxSelezioneTipo.removeAllItems();
 		//System.out.println("ciao");
+		
 		comboBoxSelezioneTipo.setEnabled(true);
-		comboBoxSelezioneTipo.addItem("Giornaliero");
-		comboBoxSelezioneTipo.addItem("Settimanale");
+		if(oggettoSelezionato.equals("")) {
+			comboBoxSelezioneTipo.addItem("Giornaliero");
+			comboBoxSelezioneTipo.addItem("Settimanale");
+		}
+		else if(oggettoSelezionato.equals("SensoreTemperatura") || oggettoSelezionato.equals("RobotPulizia")) {
+			comboBoxSelezioneTipo.addItem("Settimanale");
+		}
+		else {
+			comboBoxSelezioneTipo.addItem("Giornaliero");
+		}
 		
 	}
 	
@@ -659,6 +672,8 @@ public class AggiungiProgrammaView extends JPanel {
     					SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         				String value = (formato.format(spinnerGiornaliero.getValue())).toString();
         				Date data = null;
+        				
+        				
         				try {
         					data = formato.parse(value);
         					ore = data.getHours();
@@ -750,6 +765,7 @@ public class AggiungiProgrammaView extends JPanel {
 				int oreCorrente = controllerCasa.getMain().getSimulazione().getOre();
 				int minutiCorrenti = controllerCasa.getMain().getSimulazione().getMinuti();
 				
+				
 				if(comboBoxSelezioneStanza.getSelectedItem() != null) {
                     nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
                     
@@ -764,48 +780,31 @@ public class AggiungiProgrammaView extends JPanel {
     								data = formato.parse(valueInizio);
     								ore = data.getHours();
     	        					minuti = data.getMinutes();
-    	        					
-    	        					if(ore >= oreCorrente) {
-    	        						if((ore == oreCorrente && minuti > minutiCorrenti) || ore > oreCorrente) {
-    	        							if(ore < 22) {
-	    		        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
-	    		            						try {
-	    		            							tempDefault = Double.parseDouble(textTempSettimanale[i].getText());
-	    		            							
-	    		            							if(tempDefault <= 8 || tempDefault >= 28) {
-	    		            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28. Errore riga: "+(i+1), "Attenzione");
-	    		            								errore = true;
-	    		            							}
-	    		            							
-	    		            							if(tempDefault == 0.0)
-	    		            								tempDefault = 17;
-	    		            						}catch (NumberFormatException error) {
-	    		            							(new Alert()).errore("Il valore deve essere un numero. Errore riga: "+(i+1), "Attenzione");
-	    		            							errore = true;
-	    		            						}
-	    		            					}
-    	        							}
-    	        							else {
-    	            							(new Alert()).errore("Il programma deve iniziare prima delle 22. Errore riga: "+ (i+1), "Attenzione");
-    	                						errore = true;
-    	            						}
-    	        						}
-    	        						else {
-    	        							//System.out.println("ciao");
-    	        							(new Alert()).errore("L'orario deve essere maggiore di quello dell'orologio. Errore riga: "+ (i+1), "Attenzione");
-    	            						errore = true;
-    	        						}
-    	        					}
-    	        					else {
-    	        						(new Alert()).errore("L'orario deve essere maggiore di quello dell'orologio", "Attenzione");
-    	        						errore = true;
-    	        					}
-    	        					
-    	        					
-    	        					
+        							if(ore < 22) {
+		        						if(oggettoSelezionato.equals("SensoreTemperatura")) {
+		            						try {
+		            							tempDefault = Double.parseDouble(textTempSettimanale[i].getText());
+		            							
+		            							if(tempDefault <= 8 || tempDefault >= 28) {
+		            								(new Alert()).errore("Il valore deve essere maggiore di 8 e minore di 28. Errore riga: "+(i+1), "Attenzione");
+		            								errore = true;
+		            							}
+		            							
+		            							if(tempDefault == 0.0)
+		            								tempDefault = 17;
+		            						}catch (NumberFormatException error) {
+		            							(new Alert()).errore("Il valore deve essere un numero. Errore riga: "+(i+1), "Attenzione");
+		            							errore = true;
+		            						}
+		            					}
+        							}
+        							else {
+            							(new Alert()).errore("Il programma deve iniziare prima delle 22. Errore riga: "+ (i+1), "Attenzione");
+                						errore = true;
+            						}
+        						}
     	        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
-    	        					
-    	        				} catch (ParseException e1) {
+    	        			 catch (ParseException e1) {
     	        					// TODO Auto-generated catch block
     	        					(new Alert()).errore("Errore nella scelta del tempo di inizio", "Attenzione");
     	        					errore = true;

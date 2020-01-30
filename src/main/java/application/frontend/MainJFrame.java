@@ -131,7 +131,7 @@ public class MainJFrame extends JFrame {
 		
 		s = new Simulazione(controllerProgramma);
 		Timer timerSim = new Timer();
-		timerSim.schedule(s, 1000, 1000);
+		timerSim.schedule(s, 100, 100);
 		
 		
 		setLayoutMenu();
