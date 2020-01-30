@@ -39,16 +39,8 @@ public class Simulazione extends TimerTask {
 		return ora;
 	}
 
-	public void setOra(LocalTime ora) {
-		this.ora = ora;
-	}
-
 	public DayOfWeek getGiorno() {
 		return giorno;
-	}
-
-	public void setGiorno(DayOfWeek giorno) {
-		this.giorno = giorno;
 	}
 	
 	public int getMinuti() {
