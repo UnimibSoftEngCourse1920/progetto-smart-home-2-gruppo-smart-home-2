@@ -14,14 +14,6 @@ public class ProgrammaGiornaliero extends Programma {
 		this.valoreDiSetting = valoreDiSetting;
 		super.aggiungiElemento(e);
 	}
-	
-	public ProgrammaGiornaliero(int id, LocalTime inizio, LocalTime fine, double valoreDiSetting) {
-		super(id);
-		this.inizio = inizio;
-		this.fine = fine;
-		this.valoreDiSetting = valoreDiSetting;
-	}
-
 	public LocalTime getInizio() {
 		return inizio;
 	}
