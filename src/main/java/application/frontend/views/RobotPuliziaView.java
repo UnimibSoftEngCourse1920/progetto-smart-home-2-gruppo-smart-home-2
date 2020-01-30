@@ -3,9 +3,6 @@ package application.frontend.views;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import application.backend.dominio.RobotPulizia;
-import application.backend.sensori.Allarme;
 import application.controllers.ControllerCasa;
 import application.frontend.support.Alert;
 
@@ -15,16 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RobotPuliziaView extends JPanel {
-
-	private JLayeredPane panelPrincipale;
-	private ControllerCasa casa;
+	private transient ControllerCasa casa;
 	private JLabel titolo;
 	private JButton cambiaStato;
 	private JLabel posizioneRobot;
 	private JButton aggiornaPosizioneRobot;
 	
-	public RobotPuliziaView(JLayeredPane principale, ControllerCasa casa) {
-		this.panelPrincipale = principale;
+	public RobotPuliziaView(ControllerCasa casa) {
 		this.casa = casa;
 		
 		inizializzazione();

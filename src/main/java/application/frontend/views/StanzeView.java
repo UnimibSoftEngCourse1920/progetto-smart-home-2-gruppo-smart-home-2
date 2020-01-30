@@ -35,13 +35,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 public class StanzeView extends JPanel {
-	private ControllerCasa controllerCasa;
-	private JLayeredPane panelPrincipale;
+	private transient ControllerCasa controllerCasa;
 	private JPanel panelTabellaStanze;
 	private JPanel panelSelezioneStanza;
 	private JLabel labelStanze;
@@ -50,15 +48,14 @@ public class StanzeView extends JPanel {
 	private JTable tabellaStanze;
 	private JScrollPane scrollPaneTabellaStanze;
 	private DefaultTableModel modelTabellaStanze;
-	private Stanza stanzaSelezionata;
-	private Object[] rowData;
+	private transient Stanza stanzaSelezionata;
+	private transient Object[] rowData;
 	
 	private JTextField textValore;
 	private JButton btnInvia;
 	private JLabel labelInserimento;
 	
-	public StanzeView(JLayeredPane principale, ControllerCasa casa) {
-		panelPrincipale = principale;
+	public StanzeView(ControllerCasa casa) {
 		controllerCasa = casa;
 		
 		inizializzazione();
@@ -191,8 +188,6 @@ public class StanzeView extends JPanel {
                     if(stanza != null) {
                     	stanzaSelezionata = stanza;
         				viewTabellaStanze(stanza);
-        				if(stanza.getSensoreTemperatura() != null) {
-        				}
                     }
                     	
                     else {
@@ -209,8 +204,6 @@ public class StanzeView extends JPanel {
 			        int column = tabellaStanze.columnAtPoint(point);
 			        int row = tabellaStanze.rowAtPoint(point);
 			         
-			        //(new Alert()).errore("ciao", "Column header #" + column + " is clicked, riga "+ row);
-			         
 			        //GESTIONE CAMBIA STATO----------------------------------------------------------------
 			        if(column == 4) {
 			        	String tipoOggetto = (String) tabellaStanze.getModel().getValueAt(row, 0);
@@ -225,7 +218,7 @@ public class StanzeView extends JPanel {
 							controllerCasa.cambiaStatoFinestra(id, stanzaSelezionata);
 						}
 						else if(tipoOggetto.equals("Tapparella")) {
-							controllerCasa.cambiaStatoTapparella(id, stanzaSelezionata);;
+							controllerCasa.cambiaStatoTapparella(id, stanzaSelezionata);
 						}
 						else if(tipoOggetto.equals("SensoreTemperatura")) {
 							controllerCasa.cambiaStatoSensoreTemperatura(stanzaSelezionata);
@@ -276,7 +269,6 @@ public class StanzeView extends JPanel {
 		List<Object> listaOggettiStanza = controllerCasa.getAllOggettiStanza(stanza);
 		
 		int numeroOggettiStanza = listaOggettiStanza.size();
-		//System.out.println(numeroOggettiStanza);
 		
 		Object oggettoStanza;
 		
@@ -348,11 +340,9 @@ public class StanzeView extends JPanel {
 			
 		}
 		else if(oggettoStanza instanceof SensoreTemperatura) {
-			//System.out.println("ciao");
 			rowData[1] = "";
 			NumberFormat nf = new DecimalFormat("0.00");
 			statoSensoreTemperatura = controllerCasa.getStatoSensoreTemperatura((SensoreTemperatura) oggettoStanza);
-			//statoSensoreTemperatura = s.getStato();
 			if(statoSensoreTemperatura.equals("Spento")) {
 				rowData[2] = "";
 				rowData[3] = "";

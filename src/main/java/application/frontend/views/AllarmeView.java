@@ -3,7 +3,6 @@ package application.frontend.views;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import application.backend.dominio.Stanza;
 import application.backend.sensori.Allarme;
 import application.controllers.ControllerCasa;
 import application.frontend.support.Alert;
@@ -20,12 +19,9 @@ import javax.swing.border.Border;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JEditorPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AllarmeView extends JPanel {
-	private JLayeredPane panelPrincipale;
-	private ControllerCasa casa;
+	private transient ControllerCasa casa;
 	
 	private JLabel labelAllarme;
 	private JLabel labelSituazioneAttuale;
@@ -35,8 +31,7 @@ public class AllarmeView extends JPanel {
 	private JButton bottoneAccendiSpegni;
 	private JButton bottoneTerminaEmergenza;
 
-	public AllarmeView(JLayeredPane principale, ControllerCasa casa) {
-		this.panelPrincipale = principale;
+	public AllarmeView(ControllerCasa casa) {
 		this.casa = casa;
 		
 		inizializzazione();

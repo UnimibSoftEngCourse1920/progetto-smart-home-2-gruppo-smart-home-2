@@ -11,8 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 
 public class ControllerCasa {
 	private MainJFrame main;
@@ -32,7 +30,6 @@ public class ControllerCasa {
 	}
 
 	public void accendiRobot() {
-		//System.out.println("salve");
 		timer= new Timer();
 		robot.cambiaStato();
 		timer.schedule(robot, 30000, 30000);
@@ -80,22 +77,19 @@ public class ControllerCasa {
 	}
 	
 	public void cambiaStatoLavatrice(Stanza s) {
-		if(s!= null) {
-			if(s.getLavatrice() != null)
+		if(s!= null && s.getLavatrice() != null) {
 				s.getLavatrice().cambiaStato();
 		}
 	}
 	
 	public void cambiaStatoLavastoviglie(Stanza s) {
-		if(s!= null) {
-			if(s.getLavastoviglie() != null)
+		if(s!= null && s.getLavastoviglie() != null) {
 				s.getLavastoviglie().cambiaStato();
 		}
 	}
 	
 	public void cambiaStatoLampada(int id, Stanza s) {
-		if(s != null) {
-			if(s.getLampada(id) != null)
+		if(s != null && s.getLampada(id) != null) {
 				s.getLampada(id).cambiaStato();
 		}
 	}
@@ -165,7 +159,6 @@ public class ControllerCasa {
 	public Stanza getStanza(String nome) {
 		for(Stanza stanza : getStanze()) {
 			if(stanza.getNome().equals(nome)) {
-				//System.out.print(stanza.getLavastoviglie().getId());
 				return stanza;
 			}
 				
@@ -182,16 +175,12 @@ public class ControllerCasa {
 	}
 	
 	public List<Stanza> getStanzeClone(Stanza base) {
-		List<Stanza> listaStanze = new ArrayList<Stanza>();
+		List<Stanza> listaStanze = new ArrayList<>();
 		
 		for(Stanza s : getStanze()) {
 			if(!s.getNome().equals(base.getNome()))
 				listaStanze.add(s);
 		}
-		
-		/*@SuppressWarnings("unchecked")
-		List<Stanza> clone = (List<Stanza>)this.stanze.clone();
-		return clone;*/
 		
 		return listaStanze;
 	}
@@ -226,24 +215,18 @@ public class ControllerCasa {
 			if(!stanza.getLampade().isEmpty()) {
 				
 				allOggettiStanza.addAll(stanza.getLampade());
-				//System.out.println(allOggettiStanza.size());
 			}
 			if(stanza.getLavatrice() != null) {
 				allOggettiStanza.add(stanza.getLavatrice());
-				//System.out.println(allOggettiStanza.size());
 			}
 			if(stanza.getLavastoviglie() != null) {
 				allOggettiStanza.add(stanza.getLavastoviglie());
-				//System.out.println(allOggettiStanza.size());
 			}
 			if(stanza.getSensoreTemperatura() != null) {
-				//System.out.println("dhkjasjdhsadh");
 				allOggettiStanza.add(stanza.getSensoreTemperatura());
-				//System.out.println(allOggettiStanza.size()+"ciao");
 			}
 			if(!stanza.getFinestre().isEmpty()) {
 				allOggettiStanza.addAll(stanza.getFinestre());
-				//System.out.println(allOggettiStanza.size());
 			}
 			
 			return allOggettiStanza;
@@ -254,11 +237,8 @@ public class ControllerCasa {
 	public String[] getNomiStanze() {
 		String[] nomiStanze = new String[15];
 		List<Stanza> stanzeTemp = getStanze();
-		//System.out.println(stanzeTemp.size());
 		
 		for(int i = 0; i < stanzeTemp.size(); i++) {
-			//System.out.println(stanzetemp.get(i).getNome());
-			
 			nomiStanze[i] = stanzeTemp.get(i).getNome();
 		}
 		
@@ -314,7 +294,6 @@ public class ControllerCasa {
 		cucina.addLavastoviglie(lavastoviglieCucina);
 		cucina.addSensoreTemperatura();
 		cucina.addSensoreGas(sensoreGasCucina);
-		//System.out.println(cucina.getSensoreTemperatura());
 		
 		
 		//CAMERA DA LETTO-----------------------------------------------------------------------------
@@ -348,9 +327,5 @@ public class ControllerCasa {
 		sala.addLampada(lampadaSala);
 		sala.addFinestra(finestraSala);
 		sala.addRadar(r);
-		
-		System.out.println(r);
-		System.out.println(sala.getRadar());
-		
 	}
 }

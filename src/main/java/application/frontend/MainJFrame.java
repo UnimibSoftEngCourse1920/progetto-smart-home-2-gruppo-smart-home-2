@@ -64,16 +64,12 @@ public class MainJFrame extends JFrame {
 	private AllarmeView panelAllarme;
 	
 	//DOMINIO---------------------------------
-	private Simulazione s;
-	private ControllerCasa casa;
-	private ControllerProgramma controllerProgramma;
+	private transient Simulazione s;
+	private transient ControllerCasa casa;
+	private transient ControllerProgramma controllerProgramma;
 
-	/**
-	 * Create the frame.
-	 */
 	
 	public static void main(String[] args) {
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -116,11 +112,11 @@ public class MainJFrame extends JFrame {
 		bottoneMenuStanze = new JButton("Stanze");
 		bottoneMenuRobotPulizia = new JButton("Robot Pulizia");
 		bottoneMenuAllarme = new JButton("Allarme");
-		panelProgrammi = new ProgrammiView(panelPrincipale, s, controllerProgramma);
-		panelStanze = new StanzeView(panelPrincipale, casa);
-		panelHomepage = new HomepageView(panelPrincipale, casa);
-		panelRobot = new RobotPuliziaView(panelPrincipale, casa);
-		panelAllarme = new AllarmeView(panelPrincipale, casa);
+		panelProgrammi = new ProgrammiView(panelPrincipale, controllerProgramma);
+		panelStanze = new StanzeView(casa);
+		panelHomepage = new HomepageView();
+		panelRobot = new RobotPuliziaView(casa);
+		panelAllarme = new AllarmeView(casa);
 		
 		labelSmartHome = new JLabel("SMART HOME");
 		labelSmartHome.setHorizontalAlignment(SwingConstants.CENTER);

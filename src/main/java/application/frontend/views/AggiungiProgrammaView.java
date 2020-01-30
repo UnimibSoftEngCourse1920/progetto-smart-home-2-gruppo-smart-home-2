@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import application.backend.dominio.Lavatrice;
 import application.backend.dominio.Stanza;
 import application.controllers.ControllerCasa;
 import application.controllers.ControllerProgramma;
@@ -20,39 +19,26 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import java.awt.Component;
-import java.awt.Dimension;
-
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerDateModel;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import java.awt.Color;
 import javax.swing.JButton;
 
 
 public class AggiungiProgrammaView extends JPanel {
-	private Simulazione s;
 	private JLayeredPane panelPrincipale;
 	private JPanel panelSelezioneStanzaElementoTipo;
 	private JPanel panelSelezioneGiorni;
 	private JPanel panelSelezioneSettimanale;
 	private JPanel panelSelezioneGiornaliero;
 	private JLabel labelProgramma;
-	private ControllerCasa controllerCasa;
-	private ControllerProgramma controllerProgramma;
+	private transient ControllerCasa controllerCasa;
+	private transient ControllerProgramma controllerProgramma;
 	
 	//PanelSelezioneStanzaElementoTipo--------------------
 	private JLabel labelSelezioneStanza;
@@ -70,11 +56,7 @@ public class AggiungiProgrammaView extends JPanel {
 	private JLabel[] labelTempSettimanale;
 	private JTextField[] textTempSettimanale;
 	private String oggettoSelezionato;
-	private SpinnerDateModel[] modelSpinnerSettimanale;
-	
-	
-	
-	
+
 	//PanelSelezioneGiornaliero-----------------------
 	private JLabel labelInizioGiornaliero;
 	private JSpinner spinnerGiornaliero;
@@ -121,7 +103,7 @@ public class AggiungiProgrammaView extends JPanel {
 		spinnerSettimanale = new JSpinner[7];
 		labelTempSettimanale = new JLabel[7];
 		textTempSettimanale = new JTextField[7];
-		modelSpinnerSettimanale = new SpinnerDateModel[7];
+		SpinnerDateModel[] modelSpinnerSettimanale = new SpinnerDateModel[7];
 		checkBoxSettimanale[0] = new JCheckBox("Lunedi");
 		checkBoxSettimanale[1] = new JCheckBox("Martedi");
 		checkBoxSettimanale[2] = new JCheckBox("Mercoledi");
@@ -144,10 +126,6 @@ public class AggiungiProgrammaView extends JPanel {
 			spinnerSettimanale[i].setEditor(dateEditorSettimanale);
 		}
 		
-		/*JSpinner.DateEditor dateEditorLunedi = new JSpinner.DateEditor(spinnerSettimanale[0], "HH:mm");
-		spinnerSettimanale[0].setEditor(dateEditorLunedi);
-		JSpinner.DateEditor dateEditorMartedi = new JSpinner.DateEditor(spinnerSettimanale[1], "HH:mm");
-		spinnerSettimanale[1].setEditor(dateEditorMartedi);*/
 		oggettoSelezionato = "";
 		
 		
@@ -181,26 +159,26 @@ public class AggiungiProgrammaView extends JPanel {
 	
 	public void setLayoutProgramma() {
 		
-		GroupLayout gl_panelSelezioneGiorni = new GroupLayout(panelSelezioneGiorni);
-		gl_panelSelezioneGiorni.setHorizontalGroup(
-			gl_panelSelezioneGiorni.createParallelGroup(Alignment.LEADING)
+		GroupLayout glpanelSelezioneGiorni = new GroupLayout(panelSelezioneGiorni);
+		glpanelSelezioneGiorni.setHorizontalGroup(
+				glpanelSelezioneGiorni.createParallelGroup(Alignment.LEADING)
 				.addComponent(panelSelezioneGiornaliero, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
 				.addComponent(panelSelezioneSettimanale, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
 		);
-		gl_panelSelezioneGiorni.setVerticalGroup(
-			gl_panelSelezioneGiorni.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelSelezioneGiorni.createSequentialGroup()
+		glpanelSelezioneGiorni.setVerticalGroup(
+				glpanelSelezioneGiorni.createParallelGroup(Alignment.LEADING)
+				.addGroup(glpanelSelezioneGiorni.createSequentialGroup()
 					.addComponent(panelSelezioneGiornaliero, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelSelezioneSettimanale, GroupLayout.PREFERRED_SIZE, 304, GroupLayout.PREFERRED_SIZE))
 		);
 		
-		GroupLayout gl_panelSelezioneSettimanale = new GroupLayout(panelSelezioneSettimanale);
-		gl_panelSelezioneSettimanale.setHorizontalGroup(
-			gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+		GroupLayout glpanelSelezioneSettimanale = new GroupLayout(panelSelezioneSettimanale);
+		glpanelSelezioneSettimanale.setHorizontalGroup(
+				glpanelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+				.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 					.addGap(71)
-					.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+					.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
 						.addComponent(checkBoxSettimanale[0], GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
 						.addComponent(checkBoxSettimanale[1], GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
 						.addComponent(checkBoxSettimanale[2], GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
@@ -209,8 +187,8 @@ public class AggiungiProgrammaView extends JPanel {
 						.addComponent(checkBoxSettimanale[5], GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
 						.addComponent(checkBoxSettimanale[6], GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
 					.addGap(90)
-					.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+					.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+						.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 							.addComponent(labelInizioSettimanale[2], GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(spinnerSettimanale[2], GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -221,9 +199,9 @@ public class AggiungiProgrammaView extends JPanel {
 							.addGap(34)
 							.addComponent(bottoneAggiungiSettimanale, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 							.addGap(122))
-						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
-							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+						.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
+							.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+								.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 									.addComponent(labelInizioSettimanale[0], GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 									.addGap(4)
 									.addComponent(spinnerSettimanale[0], GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -231,7 +209,7 @@ public class AggiungiProgrammaView extends JPanel {
 									.addComponent(labelTempSettimanale[0], GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textTempSettimanale[0], GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+								.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 									.addComponent(labelInizioSettimanale[1], GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(spinnerSettimanale[1], GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -239,7 +217,7 @@ public class AggiungiProgrammaView extends JPanel {
 									.addComponent(labelTempSettimanale[1], GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textTempSettimanale[1], GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+								.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 									.addComponent(labelInizioSettimanale[3], GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(spinnerSettimanale[3], GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -247,7 +225,7 @@ public class AggiungiProgrammaView extends JPanel {
 									.addComponent(labelTempSettimanale[3], GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textTempSettimanale[3], GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+								.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 									.addComponent(labelInizioSettimanale[4], GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(spinnerSettimanale[4], GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -255,7 +233,7 @@ public class AggiungiProgrammaView extends JPanel {
 									.addComponent(labelTempSettimanale[4], GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textTempSettimanale[4], GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+								.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 									.addComponent(labelInizioSettimanale[5], GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(spinnerSettimanale[5], GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -263,7 +241,7 @@ public class AggiungiProgrammaView extends JPanel {
 									.addComponent(labelTempSettimanale[5], GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textTempSettimanale[5], GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+								.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 									.addComponent(labelInizioSettimanale[6], GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(spinnerSettimanale[6], GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -273,60 +251,60 @@ public class AggiungiProgrammaView extends JPanel {
 									.addComponent(textTempSettimanale[6], GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
 							.addContainerGap(242, Short.MAX_VALUE))))
 		);
-		gl_panelSelezioneSettimanale.setVerticalGroup(
-			gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+		glpanelSelezioneSettimanale.setVerticalGroup(
+				glpanelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+				.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 					.addGap(18)
-					.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+					.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.LEADING)
+						.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 							.addGap(3)
 							.addComponent(labelInizioSettimanale[0], GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addGap(80)
 							.addComponent(bottoneAggiungiSettimanale)
 							.addGap(180))
-						.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+						.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 							.addComponent(spinnerSettimanale[0], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(labelTempSettimanale[0])
 							.addComponent(textTempSettimanale[0], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelSelezioneSettimanale.createSequentialGroup()
+						.addGroup(glpanelSelezioneSettimanale.createSequentialGroup()
 							.addComponent(checkBoxSettimanale[0], GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
 							.addGap(18)
-							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+							.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 								.addComponent(checkBoxSettimanale[1], GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
 								.addComponent(labelInizioSettimanale[1])
 								.addComponent(spinnerSettimanale[1], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(labelTempSettimanale[1])
 								.addComponent(textTempSettimanale[1], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+							.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 								.addComponent(checkBoxSettimanale[2], GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
 								.addComponent(labelInizioSettimanale[2])
 								.addComponent(spinnerSettimanale[2], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(labelTempSettimanale[2])
 								.addComponent(textTempSettimanale[2], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+							.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 								.addComponent(checkBoxSettimanale[3], GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
 								.addComponent(labelInizioSettimanale[3])
 								.addComponent(spinnerSettimanale[3], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(labelTempSettimanale[3])
 								.addComponent(textTempSettimanale[3], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+							.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 								.addComponent(checkBoxSettimanale[4], GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
 								.addComponent(spinnerSettimanale[4], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(labelInizioSettimanale[4])
 								.addComponent(labelTempSettimanale[4])
 								.addComponent(textTempSettimanale[4], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+							.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 								.addComponent(checkBoxSettimanale[5], GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
 								.addComponent(spinnerSettimanale[5], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(labelInizioSettimanale[5])
 								.addComponent(labelTempSettimanale[5])
 								.addComponent(textTempSettimanale[5], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addGroup(gl_panelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
+							.addGroup(glpanelSelezioneSettimanale.createParallelGroup(Alignment.BASELINE)
 								.addComponent(checkBoxSettimanale[6], GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(spinnerSettimanale[6], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(labelInizioSettimanale[6])
@@ -334,8 +312,8 @@ public class AggiungiProgrammaView extends JPanel {
 								.addComponent(textTempSettimanale[6], GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(17))))
 		);
-		panelSelezioneSettimanale.setLayout(gl_panelSelezioneSettimanale);
-		panelSelezioneGiorni.setLayout(gl_panelSelezioneGiorni);
+		panelSelezioneSettimanale.setLayout(glpanelSelezioneSettimanale);
+		panelSelezioneGiorni.setLayout(glpanelSelezioneGiorni);
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -356,10 +334,10 @@ public class AggiungiProgrammaView extends JPanel {
 		);
 		setLayout(groupLayout);
 
-		GroupLayout gl_panelStanzaElementoTipo = new GroupLayout(panelSelezioneStanzaElementoTipo);
-		gl_panelStanzaElementoTipo.setHorizontalGroup(
-				gl_panelStanzaElementoTipo.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelStanzaElementoTipo.createSequentialGroup()
+		GroupLayout glpanelStanzaElementoTipo = new GroupLayout(panelSelezioneStanzaElementoTipo);
+		glpanelStanzaElementoTipo.setHorizontalGroup(
+				glpanelStanzaElementoTipo.createParallelGroup(Alignment.LEADING)
+				.addGroup(glpanelStanzaElementoTipo.createSequentialGroup()
 					.addGap(20)
 					.addComponent(labelSelezioneStanza, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -374,11 +352,11 @@ public class AggiungiProgrammaView extends JPanel {
 					.addComponent(comboBoxSelezioneTipo, 0, 169, Short.MAX_VALUE)
 					.addGap(43))
 		);
-		gl_panelStanzaElementoTipo.setVerticalGroup(
-				gl_panelStanzaElementoTipo.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelStanzaElementoTipo.createSequentialGroup()
+		glpanelStanzaElementoTipo.setVerticalGroup(
+				glpanelStanzaElementoTipo.createParallelGroup(Alignment.LEADING)
+				.addGroup(glpanelStanzaElementoTipo.createSequentialGroup()
 					.addGap(13)
-					.addGroup(gl_panelStanzaElementoTipo.createParallelGroup(Alignment.BASELINE)
+					.addGroup(glpanelStanzaElementoTipo.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelSelezioneStanza, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBoxSelezioneStanza, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(labelSelezioneElemento, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
@@ -387,14 +365,14 @@ public class AggiungiProgrammaView extends JPanel {
 						.addComponent(comboBoxSelezioneTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		panelSelezioneStanzaElementoTipo.setLayout(gl_panelStanzaElementoTipo);
+		panelSelezioneStanzaElementoTipo.setLayout(glpanelStanzaElementoTipo);
 		
 		
 
-		GroupLayout gl_panelSelezioneGiornaliero = new GroupLayout(panelSelezioneGiornaliero);
-		gl_panelSelezioneGiornaliero.setHorizontalGroup(
-			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelSelezioneGiornaliero.createSequentialGroup()
+		GroupLayout glpanelSelezioneGiornaliero = new GroupLayout(panelSelezioneGiornaliero);
+		glpanelSelezioneGiornaliero.setHorizontalGroup(
+				glpanelSelezioneGiornaliero.createParallelGroup(Alignment.TRAILING)
+				.addGroup(glpanelSelezioneGiornaliero.createSequentialGroup()
 					.addGap(151)
 					.addComponent(labelInizioGiornaliero, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -407,11 +385,11 @@ public class AggiungiProgrammaView extends JPanel {
 					.addComponent(bottoneAggiungiGiornaliero)
 					.addGap(146))
 		);
-		gl_panelSelezioneGiornaliero.setVerticalGroup(
-			gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelSelezioneGiornaliero.createSequentialGroup()
+		glpanelSelezioneGiornaliero.setVerticalGroup(
+				glpanelSelezioneGiornaliero.createParallelGroup(Alignment.TRAILING)
+				.addGroup(glpanelSelezioneGiornaliero.createSequentialGroup()
 					.addContainerGap(25, Short.MAX_VALUE)
-					.addGroup(gl_panelSelezioneGiornaliero.createParallelGroup(Alignment.BASELINE)
+					.addGroup(glpanelSelezioneGiornaliero.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelInizioGiornaliero)
 						.addComponent(spinnerGiornaliero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(bottoneAggiungiGiornaliero)
@@ -419,7 +397,7 @@ public class AggiungiProgrammaView extends JPanel {
 						.addComponent(textTempGiornaliero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
-		panelSelezioneGiornaliero.setLayout(gl_panelSelezioneGiornaliero);
+		panelSelezioneGiornaliero.setLayout(glpanelSelezioneGiornaliero);
 	}
 	
 	public void gestioneProgramma() {
@@ -479,7 +457,6 @@ public class AggiungiProgrammaView extends JPanel {
 	}
 	
 	public void comboBoxElementi(String nomeStanza) {
-		String stringa = "";
 		ArrayList<Object> elementi = new ArrayList<>();
 		if(controllerCasa.getStanza(nomeStanza).getSensoreTemperatura() != null)
 			elementi.add(controllerCasa.getStanza(nomeStanza).getSensoreTemperatura());
@@ -489,8 +466,6 @@ public class AggiungiProgrammaView extends JPanel {
 			elementi.add(controllerCasa.getStanza(nomeStanza).getLavastoviglie());
 		if(controllerCasa.getStanza(nomeStanza).getLavatrice() != null)
 			elementi.add(controllerCasa.getStanza(nomeStanza).getLavatrice());
-		
-		//System.out.println(elementi.size());
 		
 		if(elementi.isEmpty()) {
 			(new Alert()).info("La stanza non contiene oggetti programmabili", "Information");
@@ -508,7 +483,6 @@ public class AggiungiProgrammaView extends JPanel {
 	
 	public void comboBoxTipo() {
 		comboBoxSelezioneTipo.removeAllItems();
-		//System.out.println("ciao");
 		
 		comboBoxSelezioneTipo.setEnabled(true);
 		if(oggettoSelezionato.equals("")) {
@@ -664,13 +638,12 @@ public class AggiungiProgrammaView extends JPanel {
                     nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
                     
                     if(comboBoxSelezioneElemento.getSelectedItem() != null) {
-    					//System.out.print(nomeClasseElemento);
     					double tempDefault = 0;
     					int ore = 0;
     					int minuti = 0;
     					
     					SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        				String value = (formato.format(spinnerGiornaliero.getValue())).toString();
+        				String value = (formato.format(spinnerGiornaliero.getValue()));
         				Date data = null;
         				
         				
@@ -717,12 +690,7 @@ public class AggiungiProgrammaView extends JPanel {
         						errore = true;
         					}
         					
-        					
-        					
-        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
-        					
         				} catch (ParseException e1) {
-        					// TODO Auto-generated catch block
         					(new Alert()).errore("Errore nella scelta del tempo di inizio", "Attenzione");
         					errore = true;
         				}
@@ -731,18 +699,13 @@ public class AggiungiProgrammaView extends JPanel {
         					controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, oggettoSelezionato, ore, minuti, tempDefault);
             				(new Alert()).info("Il ProgrammaGiornaliero è stato aggiunto", "Operazione effettuata con successo");
             				caricaProgrammiView();
-            				//controllerCasa.getMain().viewHomepage();
         				}
-        				
-        				
                     }
     				else
     					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
 				}
 				else
 					(new Alert()).errore("Devi selezionare una stanza", "Attenzione");
-				
-				
 			}
 		});
 	}
@@ -762,8 +725,6 @@ public class AggiungiProgrammaView extends JPanel {
 				int idSettimanale = 0;
 				SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 				Date data = null;
-				int oreCorrente = controllerCasa.getMain().getSimulazione().getOre();
-				int minutiCorrenti = controllerCasa.getMain().getSimulazione().getMinuti();
 				
 				
 				if(comboBoxSelezioneStanza.getSelectedItem() != null) {
@@ -774,7 +735,7 @@ public class AggiungiProgrammaView extends JPanel {
     					
     					for(i = 0; i < 7; i++) {
     						if(checkBoxSettimanale[i].isSelected()) {
-    							valueInizio = (formato.format(spinnerSettimanale[i].getValue())).toString();
+    							valueInizio = (formato.format(spinnerSettimanale[i].getValue()));
     							
     							try {
     								data = formato.parse(valueInizio);
@@ -803,24 +764,16 @@ public class AggiungiProgrammaView extends JPanel {
                 						errore = true;
             						}
         						}
-    	        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
     	        			 catch (ParseException e1) {
-    	        					// TODO Auto-generated catch block
     	        					(new Alert()).errore("Errore nella scelta del tempo di inizio", "Attenzione");
     	        					errore = true;
     	        				}
-    							//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti);
-    	    					//System.out.println(nomeClasseElemento+nomeStanza+""+valueInizio+""+tempDefault);
     							if(!errore) {
     	        					if(!creatoSettimanale) {
     	        						creatoSettimanale = true;
     	        						idSettimanale = controllerProgramma.creaProgrammaSettimanale();
-    	        						//controllerProgramma.aggiungiElemento(id, o);
     	        					}
     	        					controllerProgramma.aggiornaProgrammaSettimanale(idSettimanale, (i+1), nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
-    	        					//controllerProgramma.nuovoProgrammaGiornaliero(nomeStanza, nomeClasseElemento, ore, minuti, tempDefault);
-    	            				
-    	            				//controllerCasa.getMain().viewHomepage();
     	        				}
     						}
     					}

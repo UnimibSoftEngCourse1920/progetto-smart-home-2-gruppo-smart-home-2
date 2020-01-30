@@ -2,6 +2,7 @@ package application.backend.programmi;
 
 import java.time.*;
 import java.util.EnumMap;
+import java.util.Map;
 
 public class ProgrammaSettimanale extends Programma {
 
@@ -27,7 +28,7 @@ public class ProgrammaSettimanale extends Programma {
 		return settimana.get(giorno).getValoreDiSetting();
 	}
 	
-	public EnumMap<DayOfWeek, ProgrammaGiornaliero> getSettimana() {
+	public Map<DayOfWeek, ProgrammaGiornaliero> getSettimana() {
 		return this.settimana;
 	}
 	

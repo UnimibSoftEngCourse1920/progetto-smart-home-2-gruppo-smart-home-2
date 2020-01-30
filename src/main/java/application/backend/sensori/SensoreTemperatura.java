@@ -11,6 +11,7 @@ public class SensoreTemperatura extends TimerTask {
 	private double temperaturaCorrente;
 	private double temperaturaDesiderata;
 	public static final double TEMPERATURADEFAULT= 17;
+	private static final String MISURAZIONE = "Misurazione";
 	private Stanza stanza;
 	
 	public SensoreTemperatura(Stanza stanza) {
@@ -37,11 +38,11 @@ public class SensoreTemperatura extends TimerTask {
 	}
 	
 	public void on() {
-		this.stato = "Misurazione";
+		this.stato = MISURAZIONE;
 	}
 	
 	public void cambiaStato() {
-		if(stato.equals("Misurazione"))
+		if(stato.equals(MISURAZIONE))
 			off();
 		else
 			on();
@@ -65,7 +66,7 @@ public class SensoreTemperatura extends TimerTask {
 
 	@Override
 	public void run() {
-		this.stato = "Misurazione";
+		this.stato = MISURAZIONE;
 		for(Finestra f: stanza.getFinestre())
 			if(f.isAperta())
 				this.diminuisciTemperatura();
@@ -82,8 +83,6 @@ public class SensoreTemperatura extends TimerTask {
 				this.aumentaTemperatura();
 			}
 		}
-		
-		//System.out.println("caiop");
 	}
 	
 	public Stanza getStanza() {
