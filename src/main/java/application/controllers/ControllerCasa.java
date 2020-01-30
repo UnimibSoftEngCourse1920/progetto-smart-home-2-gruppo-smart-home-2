@@ -298,6 +298,8 @@ public class ControllerCasa {
 		addStanza(bagno);
 		addStanza(sala);
 		
+		Radar r = new Radar(allarme);
+		
 		//CUCINA-----------------------------------------------------------------------------
 		SensoreFinestra sensoreFinestraCucina = new SensoreFinestra(allarme);
 		Finestra finestraCucina = new Finestra(new Tapparella(1), sensoreFinestraCucina);
@@ -341,6 +343,10 @@ public class ControllerCasa {
 		
 		sala.addLampada(lampadaSala);
 		sala.addFinestra(finestraSala);
+		sala.addRadar(r);
+		
+		System.out.println(r);
+		System.out.println(sala.getRadar());
 		
 	}
 }

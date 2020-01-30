@@ -159,8 +159,9 @@ public class AllarmeView extends JPanel {
 		bottoneTerminaEmergenza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Allarme a = casa.getAllarme();
-				if(a.isAttivo() && a.isEmergenza())
+				if(a.isAttivo() && a.isEmergenza()) {
 					a.terminaEmergenza();
+				}
 				else
 					(new Alert()).errore("Non puoi terminare l'emergenza se non c'è emergenza o se l'allarme è spento", "Errore");
 			}
@@ -170,7 +171,7 @@ public class AllarmeView extends JPanel {
 	public void setLabelEffrazione() {
 		if(casa.getAllarme().isEmergenza()) {
 			(new Alert()).info("C'è un emergenza, apri la finestra dell'allarme per verificare di cosa si tratta", "Emergenza");
-			labelEffrazione.setOpaque(false);
+			labelEffrazione.setOpaque(true);
 			labelEffrazione.setBackground(Color.RED);
 		}
 		else {
@@ -182,7 +183,7 @@ public class AllarmeView extends JPanel {
 	public void setLabelGas() {
 		if(casa.getAllarme().isEmergenza()) {
 			(new Alert()).info("C'è un emergenza, apri la finestra dell'allarme per verificare di cosa si tratta", "Emergenza");
-			labelGas.setOpaque(false);
+			labelGas.setOpaque(true);
 			labelGas.setBackground(Color.RED);
 		}
 		else {
@@ -194,7 +195,7 @@ public class AllarmeView extends JPanel {
 	public void setLabelMovimenti() {
 		if(casa.getAllarme().isEmergenza()) {
 			(new Alert()).info("C'è un emergenza, apri la finestra dell'allarme per verificare di cosa si tratta", "Emergenza");
-			labelMovimenti.setOpaque(false);
+			labelMovimenti.setOpaque(true);
 			labelMovimenti.setBackground(Color.RED);
 		}
 		else {

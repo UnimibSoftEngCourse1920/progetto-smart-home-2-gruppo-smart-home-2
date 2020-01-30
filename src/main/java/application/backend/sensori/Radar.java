@@ -23,7 +23,9 @@ public class Radar extends Sensore {
 	@Override
 	public void run() {
 		double casuale = Math.random();
-		if(casuale >= 0.9) {
+		System.out.println(casuale);
+		if(casuale >= 0.5) {
+			System.out.println(this);
 			this.rilevatoMovimento= true;
 			super.getAllarme().notifica(this);
 		}

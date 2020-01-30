@@ -128,8 +128,11 @@ public class Stanza {
 		timerEventi.purge();
 		if(this.sensoreGas != null)
 			this.sensoreGas =new SensoreGas(this.sensoreGas.getAllarme());
-		if(this.radar != null)
+		if(this.radar != null) {
+			//System.out.print(getNome());
 			this.radar = new Radar(this.radar.getAllarme());
+			this.radar.cambiaStato();
+		}
 		for (Finestra f: finestre)
 			f.riallocaSensore();
 	}
