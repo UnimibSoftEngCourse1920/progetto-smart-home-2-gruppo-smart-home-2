@@ -244,8 +244,7 @@ public class StanzeView extends JPanel {
 			       
 			}
 		});
-		btnInvia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnInvia.addActionListener((e) ->{
 					try {
 						double temperaturaInserita = Double.parseDouble(textValore.getText());
 						controllerCasa.cambiaTempDesiderata(getStanzaSelezionata().getNome(), temperaturaInserita);
@@ -256,7 +255,6 @@ public class StanzeView extends JPanel {
 					catch(Exception ex) {
 						(new Alert()).errore("Il valore è vuoto oppure non contiene un numero", "Errore");
 					}
-			}
 		});
 	}
 	

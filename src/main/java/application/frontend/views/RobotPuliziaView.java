@@ -56,8 +56,7 @@ public class RobotPuliziaView extends JPanel {
 	}
 
 	public void gestioneRobot() {
-		cambiaStato.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		cambiaStato.addActionListener((e) -> {
 				if(casa.getRobot() != null) {
 					if(casa.getRobot().isInFunzione())
 						casa.spegniRobot();
@@ -67,19 +66,16 @@ public class RobotPuliziaView extends JPanel {
 				}	
 				else
 					(new Alert()).errore("La casa non ha un robot della pulizia", "Attenzione");
-			}
 		});
 	}
 	
 	private void gestionePosizione() {
-		aggiornaPosizioneRobot.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		aggiornaPosizioneRobot.addActionListener((e) ->{
 				if(casa.getRobot() != null) {
 					posizioneRobot.setText("Il robot ora si trova in "+casa.getRobot().getPosizione().getNome());
 				}	
 				else
 					(new Alert()).errore("La casa non ha un robot della pulizia", "Attenzione");
-			}
 		});
 	}
 	

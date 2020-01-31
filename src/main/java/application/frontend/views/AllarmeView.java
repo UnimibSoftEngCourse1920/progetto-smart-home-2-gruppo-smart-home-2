@@ -134,8 +134,7 @@ public class AllarmeView extends JPanel {
 	}
 	
 	public void gestioneAllarme() {
-		bottoneAccendiSpegni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneAccendiSpegni.addActionListener((e) -> {
 				Allarme a = casa.getAllarme();
 				if(a != null) {
 					if(a.isEmergenza() && a.isAttivo())
@@ -145,20 +144,17 @@ public class AllarmeView extends JPanel {
 						setBottoneAccendiSpegni();
 					}
 				}
-			}
 		});
 	}
 	
 	public void terminaEmergenza() {
-		bottoneTerminaEmergenza.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneTerminaEmergenza.addActionListener((e) -> {
 				Allarme a = casa.getAllarme();
 				if(a.isAttivo() && a.isEmergenza()) {
 					a.terminaEmergenza();
 				}
 				else
 					(new Alert()).errore("Non puoi terminare l'emergenza se non c'è emergenza o se l'allarme è spento", "Errore");
-			}
 		});
 	}
 	

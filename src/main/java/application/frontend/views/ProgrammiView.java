@@ -225,13 +225,11 @@ public class ProgrammiView extends JPanel {
 	}
 	
 	public void gestioneProgrammi() {
-		bottoneAggiungiProgramma.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneAggiungiProgramma.addActionListener((e) -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelAggiuntaProgramma);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
-			}
 		});
 		tabellaProgrammiGiornalieri.addMouseListener(new MouseAdapter() {			
 			@Override

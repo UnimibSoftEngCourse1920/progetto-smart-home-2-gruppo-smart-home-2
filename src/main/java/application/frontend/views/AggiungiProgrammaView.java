@@ -400,8 +400,7 @@ public class AggiungiProgrammaView extends JPanel {
 	}
 	
 	public void gestioneProgramma() {
-		comboBoxSelezioneStanza.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		comboBoxSelezioneStanza.addActionListener((e) -> {
 				panelSelezioneGiornaliero.setVisible(false);
             	panelSelezioneSettimanale.setVisible(false);
 				comboBoxSelezioneElemento.removeAllItems();
@@ -413,10 +412,8 @@ public class AggiungiProgrammaView extends JPanel {
                     if(stanza != null)
                     	comboBoxElementi(nomeStanza);
             	}
-			}
 		});
-		comboBoxSelezioneTipo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		comboBoxSelezioneTipo.addActionListener((e) -> {
 				if(comboBoxSelezioneElemento.isEnabled()) {
 					String elemento = comboBoxSelezioneElemento.getSelectedItem().toString();
 					if (comboBoxSelezioneTipo.getSelectedItem() != null) {
@@ -433,16 +430,13 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 				else
 					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
-			}
 		});
-		comboBoxSelezioneElemento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		comboBoxSelezioneElemento.addActionListener((e) -> {
 				oggettoSelezionato = comboBoxSelezioneElemento.getSelectedItem().toString();
             	panelSelezioneSettimanale.setVisible(false);
             	panelSelezioneGiornaliero.setVisible(false); 
             	
             	comboBoxTipo();
-        	}
 		});
 	}
 	
@@ -507,8 +501,7 @@ public class AggiungiProgrammaView extends JPanel {
 		}	
 		
 		//CHECKBOX LUNEDI----------------------------------------------------
-		checkBoxSettimanale[0].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		checkBoxSettimanale[0].addActionListener((e) -> {
 				if(checkBoxSettimanale[0].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[0].setVisible(true);
@@ -521,11 +514,9 @@ public class AggiungiProgrammaView extends JPanel {
 					labelTempSettimanale[0].setVisible(false);
 					textTempSettimanale[0].setVisible(false);
 				}
-			}
 		});
 		//CHECKBOX MARTEDI----------------------------------------------------
-		checkBoxSettimanale[1].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		checkBoxSettimanale[1].addActionListener((e) -> {
 				if(checkBoxSettimanale[1].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[1].setVisible(true);
@@ -538,11 +529,9 @@ public class AggiungiProgrammaView extends JPanel {
 					labelTempSettimanale[1].setVisible(false);
 					textTempSettimanale[1].setVisible(false);
 				}
-			}
 		});
 		//CHECKBOX MERCOLEDI----------------------------------------------------
-		checkBoxSettimanale[2].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		checkBoxSettimanale[2].addActionListener((e) -> {
 				if(checkBoxSettimanale[2].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[2].setVisible(true);
@@ -555,11 +544,9 @@ public class AggiungiProgrammaView extends JPanel {
 					labelTempSettimanale[2].setVisible(false);
 					textTempSettimanale[2].setVisible(false);
 				}
-			}
 		});
 		//CHECKBOX GIOVEDI----------------------------------------------------
-		checkBoxSettimanale[3].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		checkBoxSettimanale[3].addActionListener((e) -> {
 				if(checkBoxSettimanale[3].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[3].setVisible(true);
@@ -572,11 +559,9 @@ public class AggiungiProgrammaView extends JPanel {
 					labelTempSettimanale[3].setVisible(false);
 					textTempSettimanale[3].setVisible(false);
 				}
-			}
 		});
 		//CHECKBOX VENERDI----------------------------------------------------
-		checkBoxSettimanale[4].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		checkBoxSettimanale[4].addActionListener((e) -> {
 				if(checkBoxSettimanale[4].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[4].setVisible(true);
@@ -589,11 +574,9 @@ public class AggiungiProgrammaView extends JPanel {
 					labelTempSettimanale[4].setVisible(false);
 					textTempSettimanale[4].setVisible(false);
 				}
-			}
 		});
 		//CHECKBOX SABATO----------------------------------------------------
-		checkBoxSettimanale[5].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		checkBoxSettimanale[5].addActionListener((e) -> {
 				if(checkBoxSettimanale[5].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[5].setVisible(true);
@@ -606,11 +589,9 @@ public class AggiungiProgrammaView extends JPanel {
 					labelTempSettimanale[5].setVisible(false);
 					textTempSettimanale[5].setVisible(false);
 				}
-			}
 		});
 		//CHECKBOX DOMENICA----------------------------------------------------
-		checkBoxSettimanale[6].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		checkBoxSettimanale[6].addActionListener((e) -> {
 				if(checkBoxSettimanale[6].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[6].setVisible(true);
@@ -623,13 +604,11 @@ public class AggiungiProgrammaView extends JPanel {
 					labelTempSettimanale[6].setVisible(false);
 					textTempSettimanale[6].setVisible(false);
 				}
-			}
 		});
 	}
 	
 	public void gestioneAggiungiGiornaliero() {
-		bottoneAggiungiGiornaliero.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneAggiungiGiornaliero.addActionListener((e) ->{
 				boolean errore = false;
 				String nomeStanza = null;
 				
@@ -705,13 +684,11 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 				else
 					(new Alert()).errore("Devi selezionare una stanza", "Attenzione");
-			}
 		});
 	}
 	
 	public void gestioneAggiungiSettimanale() {
-		bottoneAggiungiSettimanale.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneAggiungiSettimanale.addActionListener((e) -> {
 				boolean errore = false;
 				String nomeStanza = null;
 				String nomeClasseElemento = null;
@@ -789,7 +766,6 @@ public class AggiungiProgrammaView extends JPanel {
 				(new Alert()).info("Il ProgrammaSettimanale è stato aggiunto", "Operazione effettuata con successo");
 				caricaProgrammiView();
 				}
-			}
 				
 		});
 	}

@@ -70,8 +70,7 @@ public class MainJFrame extends JFrame {
 
 	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+		EventQueue.invokeLater(()-> {
 				try {
 					MainJFrame mainJFrame = new MainJFrame();
 					mainJFrame.setVisible(true);
@@ -80,7 +79,6 @@ public class MainJFrame extends JFrame {
 				} catch (Exception e) {
 					(new Alert()).errore("Problema caricamento programma", "Errore");
 				}
-			}
 		});
 	}
 	
@@ -195,43 +193,35 @@ public class MainJFrame extends JFrame {
 	}
 	
 	public void gestioneMenu() {		
-		bottoneMenuProgrammi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneMenuProgrammi.addActionListener((e) ->{
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelProgrammi);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
-			}
 		});
-		bottoneMenuStanze.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneMenuStanze.addActionListener((e) -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelStanze);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
-			}
+			
 		});
 		labelSmartHome.addMouseListener(new MouseAdapter() {  
-			@Override
 		    public void mouseClicked(MouseEvent e)  {  
 		    	viewHomepage();
 		    }  
 		}); 
-		bottoneMenuRobotPulizia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneMenuRobotPulizia.addActionListener((e) -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelRobot);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
-			}
 		});
-		bottoneMenuAllarme.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		bottoneMenuAllarme.addActionListener((e) -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelAllarme);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
-			}
 		});
 	}
 	
