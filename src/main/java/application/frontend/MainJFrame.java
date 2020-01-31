@@ -2,41 +2,23 @@ package application.frontend;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-
 import application.controllers.ControllerCasa;
 import application.controllers.ControllerProgramma;
 import application.controllers.Simulazione;
 import application.frontend.support.Alert;
 import application.frontend.views.*;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Color;
-
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-
-
-
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
-
-
-
-
 import javax.swing.*;
 import java.util.Timer;
-import java.awt.event.ActionEvent;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -193,31 +175,32 @@ public class MainJFrame extends JFrame {
 	}
 	
 	public void gestioneMenu() {		
-		bottoneMenuProgrammi.addActionListener((e) ->{
+		bottoneMenuProgrammi.addActionListener(e ->{
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelProgrammi);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
 		});
-		bottoneMenuStanze.addActionListener((e) -> {
+		bottoneMenuStanze.addActionListener(e -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelStanze);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
 			
 		});
-		labelSmartHome.addMouseListener(new MouseAdapter() {  
+		labelSmartHome.addMouseListener(new MouseAdapter() { 
+			@Override
 		    public void mouseClicked(MouseEvent e)  {  
 		    	viewHomepage();
 		    }  
 		}); 
-		bottoneMenuRobotPulizia.addActionListener((e) -> {
+		bottoneMenuRobotPulizia.addActionListener(e -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelRobot);
 				panelPrincipale.repaint();
 				panelPrincipale.revalidate();
 		});
-		bottoneMenuAllarme.addActionListener((e) -> {
+		bottoneMenuAllarme.addActionListener(e -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelAllarme);
 				panelPrincipale.repaint();
@@ -233,13 +216,8 @@ public class MainJFrame extends JFrame {
 	}
 	
 	public void startClock() {
-		javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clock.setText(s.getGiorno() + ": "+ s.getOra().toString());
-			}
-		});
+		javax.swing.Timer timer = new javax.swing.Timer(1000, e -> 
+				clock.setText(s.getGiorno() + ": "+ s.getOra().toString()));
 		
 		timer.start();
 	}

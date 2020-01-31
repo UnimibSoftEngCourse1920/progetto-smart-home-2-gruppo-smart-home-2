@@ -12,8 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -225,7 +223,7 @@ public class ProgrammiView extends JPanel {
 	}
 	
 	public void gestioneProgrammi() {
-		bottoneAggiungiProgramma.addActionListener((e) -> {
+		bottoneAggiungiProgramma.addActionListener(e -> {
 				panelPrincipale.removeAll();
 				panelPrincipale.add(panelAggiuntaProgramma);
 				panelPrincipale.repaint();

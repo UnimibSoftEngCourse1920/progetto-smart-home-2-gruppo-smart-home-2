@@ -2,27 +2,18 @@ package application.frontend.views;
 
 
 import javax.swing.JPanel;
-
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import java.util.List;
-
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-
 import application.backend.dominio.*;
 import application.backend.sensori.SensoreTemperatura;
 import application.controllers.*;
 import application.frontend.support.Alert;
 import application.frontend.support.ColoreCellaTabella;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -174,8 +165,7 @@ public class StanzeView extends JPanel {
 	}
 	
 	public void gestioneStanze() {
-		comboBoxSelezioneStanza.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+		comboBoxSelezioneStanza.addActionListener(e->{
             	rimuoviRigheTabellaStanze();
             	String nomeStanza;
             	if (comboBoxSelezioneStanza.getSelectedItem() != null) {
@@ -192,7 +182,6 @@ public class StanzeView extends JPanel {
                     	
                     }
             	}
-            }
         });
 		tabellaStanze.addMouseListener(new MouseAdapter() {
 			@Override
@@ -244,7 +233,7 @@ public class StanzeView extends JPanel {
 			       
 			}
 		});
-		btnInvia.addActionListener((e) ->{
+		btnInvia.addActionListener(e ->{
 					try {
 						double temperaturaInserita = Double.parseDouble(textValore.getText());
 						controllerCasa.cambiaTempDesiderata(getStanzaSelezionata().getNome(), temperaturaInserita);

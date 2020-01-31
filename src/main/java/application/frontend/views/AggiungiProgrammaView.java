@@ -1,6 +1,7 @@
 package application.frontend.views;
 
 import javax.swing.JLayeredPane;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -15,13 +16,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.awt.event.ActionEvent;
 import javax.swing.SpinnerDateModel;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
@@ -400,7 +399,7 @@ public class AggiungiProgrammaView extends JPanel {
 	}
 	
 	public void gestioneProgramma() {
-		comboBoxSelezioneStanza.addActionListener((e) -> {
+		comboBoxSelezioneStanza.addActionListener(e -> {
 				panelSelezioneGiornaliero.setVisible(false);
             	panelSelezioneSettimanale.setVisible(false);
 				comboBoxSelezioneElemento.removeAllItems();
@@ -413,7 +412,7 @@ public class AggiungiProgrammaView extends JPanel {
                     	comboBoxElementi(nomeStanza);
             	}
 		});
-		comboBoxSelezioneTipo.addActionListener((e) -> {
+		comboBoxSelezioneTipo.addActionListener(e -> {
 				if(comboBoxSelezioneElemento.isEnabled()) {
 					String elemento = comboBoxSelezioneElemento.getSelectedItem().toString();
 					if (comboBoxSelezioneTipo.getSelectedItem() != null) {
@@ -431,7 +430,7 @@ public class AggiungiProgrammaView extends JPanel {
 				else
 					(new Alert()).errore("Devi selezionare un oggetto", "Attenzione");
 		});
-		comboBoxSelezioneElemento.addActionListener((e) -> {
+		comboBoxSelezioneElemento.addActionListener(e -> {
 				oggettoSelezionato = comboBoxSelezioneElemento.getSelectedItem().toString();
             	panelSelezioneSettimanale.setVisible(false);
             	panelSelezioneGiornaliero.setVisible(false); 
@@ -501,7 +500,7 @@ public class AggiungiProgrammaView extends JPanel {
 		}	
 		
 		//CHECKBOX LUNEDI----------------------------------------------------
-		checkBoxSettimanale[0].addActionListener((e) -> {
+		checkBoxSettimanale[0].addActionListener(e -> {
 				if(checkBoxSettimanale[0].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[0].setVisible(true);
@@ -516,7 +515,7 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 		});
 		//CHECKBOX MARTEDI----------------------------------------------------
-		checkBoxSettimanale[1].addActionListener((e) -> {
+		checkBoxSettimanale[1].addActionListener(e -> {
 				if(checkBoxSettimanale[1].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[1].setVisible(true);
@@ -531,7 +530,7 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 		});
 		//CHECKBOX MERCOLEDI----------------------------------------------------
-		checkBoxSettimanale[2].addActionListener((e) -> {
+		checkBoxSettimanale[2].addActionListener(e -> {
 				if(checkBoxSettimanale[2].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[2].setVisible(true);
@@ -546,7 +545,7 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 		});
 		//CHECKBOX GIOVEDI----------------------------------------------------
-		checkBoxSettimanale[3].addActionListener((e) -> {
+		checkBoxSettimanale[3].addActionListener(e -> {
 				if(checkBoxSettimanale[3].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[3].setVisible(true);
@@ -561,7 +560,7 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 		});
 		//CHECKBOX VENERDI----------------------------------------------------
-		checkBoxSettimanale[4].addActionListener((e) -> {
+		checkBoxSettimanale[4].addActionListener(e -> {
 				if(checkBoxSettimanale[4].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[4].setVisible(true);
@@ -576,7 +575,7 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 		});
 		//CHECKBOX SABATO----------------------------------------------------
-		checkBoxSettimanale[5].addActionListener((e) -> {
+		checkBoxSettimanale[5].addActionListener(e -> {
 				if(checkBoxSettimanale[5].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[5].setVisible(true);
@@ -591,7 +590,7 @@ public class AggiungiProgrammaView extends JPanel {
 				}
 		});
 		//CHECKBOX DOMENICA----------------------------------------------------
-		checkBoxSettimanale[6].addActionListener((e) -> {
+		checkBoxSettimanale[6].addActionListener(e -> {
 				if(checkBoxSettimanale[6].isSelected()) {
 					if(oggettoSelezionato.equals("SensoreTemperatura")) {
 						labelTempSettimanale[6].setVisible(true);
@@ -608,11 +607,11 @@ public class AggiungiProgrammaView extends JPanel {
 	}
 	
 	public void gestioneAggiungiGiornaliero() {
-		bottoneAggiungiGiornaliero.addActionListener((e) ->{
+		bottoneAggiungiGiornaliero.addActionListener(e ->{
 				boolean errore = false;
 				String nomeStanza = null;
-				
 				if(comboBoxSelezioneStanza.getSelectedItem() != null) {
+					
                     nomeStanza = comboBoxSelezioneStanza.getSelectedItem().toString();
                     
                     if(comboBoxSelezioneElemento.getSelectedItem() != null) {
@@ -688,7 +687,7 @@ public class AggiungiProgrammaView extends JPanel {
 	}
 	
 	public void gestioneAggiungiSettimanale() {
-		bottoneAggiungiSettimanale.addActionListener((e) -> {
+		bottoneAggiungiSettimanale.addActionListener(e -> {
 				boolean errore = false;
 				String nomeStanza = null;
 				String nomeClasseElemento = null;

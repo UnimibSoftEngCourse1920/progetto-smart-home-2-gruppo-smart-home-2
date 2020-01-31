@@ -2,6 +2,7 @@ package application.frontend.views;
 
 import javax.swing.JPanel;
 
+
 import application.backend.sensori.Allarme;
 import application.controllers.ControllerCasa;
 import application.frontend.support.Alert;
@@ -16,8 +17,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AllarmeView extends JPanel {
 	private transient ControllerCasa casa;
@@ -134,7 +133,7 @@ public class AllarmeView extends JPanel {
 	}
 	
 	public void gestioneAllarme() {
-		bottoneAccendiSpegni.addActionListener((e) -> {
+		bottoneAccendiSpegni.addActionListener(e -> {
 				Allarme a = casa.getAllarme();
 				if(a != null) {
 					if(a.isEmergenza() && a.isAttivo())
@@ -148,7 +147,7 @@ public class AllarmeView extends JPanel {
 	}
 	
 	public void terminaEmergenza() {
-		bottoneTerminaEmergenza.addActionListener((e) -> {
+		bottoneTerminaEmergenza.addActionListener(e -> {
 				Allarme a = casa.getAllarme();
 				if(a.isAttivo() && a.isEmergenza()) {
 					a.terminaEmergenza();

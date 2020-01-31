@@ -8,8 +8,6 @@ import application.frontend.support.Alert;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class RobotPuliziaView extends JPanel {
 	private transient ControllerCasa casa;
@@ -56,7 +54,7 @@ public class RobotPuliziaView extends JPanel {
 	}
 
 	public void gestioneRobot() {
-		cambiaStato.addActionListener((e) -> {
+		cambiaStato.addActionListener(e -> {
 				if(casa.getRobot() != null) {
 					if(casa.getRobot().isInFunzione())
 						casa.spegniRobot();
@@ -70,7 +68,7 @@ public class RobotPuliziaView extends JPanel {
 	}
 	
 	private void gestionePosizione() {
-		aggiornaPosizioneRobot.addActionListener((e) ->{
+		aggiornaPosizioneRobot.addActionListener(e ->{
 				if(casa.getRobot() != null) {
 					posizioneRobot.setText("Il robot ora si trova in "+casa.getRobot().getPosizione().getNome());
 				}	
