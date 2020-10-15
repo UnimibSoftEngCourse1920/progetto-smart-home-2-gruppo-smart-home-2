@@ -1,22 +1,29 @@
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\ClasseBackend.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\programmi\ProgrammaSettimanale.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\programmi\ProgrammaGiornaliero.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\controllers\Simulazione.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\Tapparella.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\programmi\Programma.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\controllers\ControllerCasa.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\sensori\Radar.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\Lavatrice.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\sensori\Allarme.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\sensori\SensoreTemperatura.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\RobotPulizia.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\ElementoProgrammabile.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\Finestra.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\frontend\Main.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\sensori\Sensore.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\sensori\SensoreGas.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\Lampada.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\controllers\ControllerProgramma.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\Lavastoviglie.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\sensori\SensoreFinestra.java
-C:\Users\lenovo\eclipse-workspace\SmartHome2\src\main\java\application\backend\Stanza.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\views\AllarmeView.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\dominio\Lavatrice.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\views\AggiungiProgrammaView.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\dominio\RobotPulizia.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\controllers\ControllerCasa.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\dominio\Lampada.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\support\Alert.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\sensori\Radar.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\sensori\SensoreTemperatura.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\sensori\Allarme.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\support\ColoreCellaTabella.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\programmi\Programma.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\sensori\SensoreGas.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\views\HomepageView.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\controllers\Simulazione.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\views\RobotPuliziaView.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\views\ProgrammaSettimanaleView.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\dominio\Tapparella.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\controllers\ControllerProgramma.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\views\StanzeView.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\dominio\Finestra.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\views\ProgrammiView.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\sensori\SensoreFinestra.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\programmi\ProgrammaGiornaliero.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\dominio\Stanza.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\dominio\Lavastoviglie.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\sensori\Sensore.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\backend\programmi\ProgrammaSettimanale.java
+F:\uni\magistrale\Progettazione software\ass1\progetto-smart-home-2-gruppo-smart-home-2\src\main\java\application\frontend\MainJFrame.java
