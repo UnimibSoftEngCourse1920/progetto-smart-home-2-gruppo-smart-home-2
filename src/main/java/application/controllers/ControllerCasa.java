@@ -26,7 +26,7 @@ public class ControllerCasa {
 		this.allarme = Allarme.getInstance();
 		this.allarme.aggiungiCasa(this);
 		
-		creazioneCasa();
+		//creazioneCasa();
 	}
 
 	public void accendiRobot() {
@@ -99,7 +99,7 @@ public class ControllerCasa {
 			if(s.getFinestra(id) != null && !s.getSensoreGas().getFuga())
 				s.getFinestra(id).cambiaStato();
 			if(s.getSensoreGas().getFuga())
-				(new Alert()).errore("Non puoi chiudere la finestra se c'è una figa di gas", "Errore");
+				(new Alert()).errore("Non puoi chiudere la finestra se c'ï¿½ una figa di gas", "Errore");
 		}
 	}
 	
@@ -108,7 +108,7 @@ public class ControllerCasa {
 			if(s.getFinestra(id).getTapparella() != null && !s.getSensoreGas().getFuga())
 				s.getFinestra(id).getTapparella().cambiaStato();
 			if(s.getSensoreGas().getFuga())
-				(new Alert()).errore("Non puoi chiudere la tapparella se c'è una figa di gas", "Errore");
+				(new Alert()).errore("Non puoi chiudere la tapparella se c'ï¿½ una figa di gas", "Errore");
 		}
 	}
 	
