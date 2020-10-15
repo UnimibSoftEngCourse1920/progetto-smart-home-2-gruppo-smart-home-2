@@ -14,7 +14,7 @@ import java.util.Timer;
 
 public class ControllerCasa {
 	private MainJFrame main;
-	private ArrayList<Stanza> stanze ;
+	private ArrayList<Stanza> stanze;
 	private RobotPulizia robot ;
 	private Allarme allarme;
 	private Timer timer;
