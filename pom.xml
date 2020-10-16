@@ -12,9 +12,6 @@
 	<sonar.organization>unimibsoftengcourse1920</sonar.organization>
 	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	<sonar.login>4ef19e88ab8d00786630510198d4ff63583fbddc</sonar.login>
-	<skipTests>false</skipTests>
-    <skipITs>${skipTests}</skipITs>
-    <skipUTs>${skipTests}</skipUTs>
 	
 </properties>
     <dependencies>
@@ -35,8 +32,6 @@
     <version>3.6.0</version>
 </dependency>
     </dependencies> 
-  
-  
   <build>
         <plugins>
             <plugin>
@@ -48,21 +43,34 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+            
             <plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-failsafe-plugin</artifactId>
-		        <configuration>
-		          <skipTests>${skipTests}</skipTests>
-		          <skipITs>${skipITs}</skipITs>
-		        </configuration>
-		      </plugin>
-		      <plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-surefire-plugin</artifactId>
-		        <configuration>
-		          <skipTests>${skipUTs}</skipTests>
-		        </configuration>
-		      </plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId> <!-- surefire plugin version managed by Spring Boot -->
+        <configuration>
+            <skipTests>${skipUTs}</skipTests>
+        </configuration>
+    </plugin>
+
+    <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.0.0-M3</version>
+        <executions>
+            <execution>
+                <id>run-integration-tests</id>
+                <phase>integration-test</phase>
+                <goals>
+                    <goal>integration-test</goal>
+                    <goal>verify</goal>
+                </goals>
+            </execution>
+        </executions>
+        <configuration>
+            <skipTests>${skipTests}</skipTests>
+            <skipITs>${skipITs}</skipITs>
+        </configuration>
+    </plugin>
+            
         </plugins>
     </build>
 </project>

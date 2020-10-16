@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 import java.sql.*;
 
-public class IntegrationTest {
+public class CasaIT {
 	Connection conn = null;
 	
 	@Before

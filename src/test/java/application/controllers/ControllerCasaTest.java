@@ -5,7 +5,7 @@ import org.junit.Test;
 import application.backend.dominio.*;
 
 
-public class TestControllerCasa {
+public class ControllerCasaTest {
 
 	@Test
 	public void testAddStanza() {
