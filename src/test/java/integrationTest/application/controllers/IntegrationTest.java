@@ -28,6 +28,26 @@ public class IntegrationTest {
 	
 	@Test
 	public void checkStanze() {
+		insertStanze();
+		
+		String select = "SELECT * FROM stanze";
+		int count = 0;
+        
+        try {
+        	Statement stmt  = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(select);
+            
+            while(rs.next()) {
+            	count++;
+            }
+            
+            assertTrue(count == 3);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+	}
+	
+	public void insertStanze() {
 		ControllerCasa controller = new ControllerCasa(null);
 		Stanza cucina = new Stanza("Cucina");
 		Stanza sala = new Stanza("Sala");
@@ -36,5 +56,17 @@ public class IntegrationTest {
 		controller.addStanza(cucina);
 		controller.addStanza(sala);
 		controller.addStanza(cameraDaLetto);
+		
+		for(int i = 0; i < 3; i++) {
+			String insert = "INSERT INTO stanze(nome) VALUES(?)";
+			
+			try {
+	        	PreparedStatement pstmt = conn.prepareStatement(insert);
+	        	pstmt.setString(1, controller.getStanze().get(i).getNome());
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		}
 	}
 }
